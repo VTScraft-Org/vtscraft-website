@@ -1,0 +1,100 @@
+<div class="page-container">
+  <section class="page-hero circuit-bg">
+    <div class="container">
+      <span class="badge-tag">Selected Works & Case Studies</span>
+      <h1 class="page-title">
+        Real Solutions Built For <span class="highlight-blue">Real Problems</span>
+      </h1>
+      <p class="page-lead">
+        Explore how VTS Craft engineers custom software architectures, administrative consoles, scalable mobile apps, and enterprise web solutions that solve tangible operational bottlenecks.
+      </p>
+
+      <!-- Category Filter Tabs -->
+      <div class="filter-tab-bar">
+        @for (c of categories; track c.value) {
+          <button 
+            type="button" 
+            class="filter-pill" 
+            [class.active]="selectedCategory() === c.value" 
+            (click)="setCategory(c.value)">
+            {{ c.label }}
+          </button>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Grid -->
+  <section class="work-grid-section section-padding">
+    <div class="container">
+      <div class="work-cards-grid">
+        @for (item of filteredProjects(); track item.id) {
+          <div class="work-card">
+            <div class="work-media">
+              <img [src]="item.image" [alt]="item.title" class="work-img" />
+              <div class="work-badge-group">
+                <span class="work-cat">{{ item.category }}</span>
+                <span class="work-region">{{ item.region }}</span>
+              </div>
+            </div>
+
+            <div class="work-info">
+              <span class="client-type">{{ item.clientType }}</span>
+              <h2 class="work-title">{{ item.title }}</h2>
+              <p class="work-tagline">{{ item.tagline }}</p>
+              <p class="work-desc">{{ item.description }}</p>
+
+              <!-- Problem & Solution Split -->
+              <div class="challenge-solution-box">
+                <div class="cs-row">
+                  <span class="cs-label problem">The Challenge:</span>
+                  <p class="cs-text">{{ item.problem }}</p>
+                </div>
+                <div class="cs-row">
+                  <span class="cs-label solution">The Solution:</span>
+                  <p class="cs-text">{{ item.solution }}</p>
+                </div>
+              </div>
+
+              <!-- Quantified Results -->
+              <div class="results-box">
+                <span class="res-title">Key Measurable Outcomes:</span>
+                <ul class="res-list">
+                  @for (r of item.results; track r) {
+                    <li>
+                      <span class="green-check">✓</span>
+                      <span>{{ r }}</span>
+                    </li>
+                  }
+                </ul>
+              </div>
+
+              <!-- Tech Stack & Action -->
+              <div class="work-footer">
+                <div class="tech-pills">
+                  @for (t of item.techStack; track t) {
+                    <span class="t-tag">{{ t }}</span>
+                  }
+                </div>
+                <a routerLink="/contact" class="btn btn-outline btn-sm">
+                  <span>Start Similar Project</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom CTA -->
+  <section class="work-bottom-cta section-padding circuit-bg">
+    <div class="container text-center">
+      <h2 class="cta-title">Have a project similar to these?</h2>
+      <p class="cta-sub">Let's discuss how we can tailor our engineering approach to solve your unique operational challenge.</p>
+      <a routerLink="/contact" class="btn btn-primary">
+        <span>Book a Discovery Call</span>
+      </a>
+    </div>
+  </section>
+</div>

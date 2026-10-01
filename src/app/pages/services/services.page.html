@@ -1,0 +1,97 @@
+<div class="page-container">
+  <!-- Page Header -->
+  <section class="page-hero circuit-bg">
+    <div class="container">
+      <div class="hero-badge-wrap">
+        <span class="badge-tag badge-green">Tailored Capabilities</span>
+      </div>
+      <h1 class="page-title">
+        End-to-End <span class="highlight-blue">Engineering Services</span>
+      </h1>
+      <p class="page-lead">
+        We architect, design, build, and maintain digital systems that fit like a glove. Whether building a breakthrough mobile app from scratch or consolidating enterprise workflows into a real-time admin portal, our team provides senior technical craftsmanship.
+      </p>
+    </div>
+  </section>
+
+  <!-- Services Detailed Cards List -->
+  <section class="services-detail-section section-padding">
+    <div class="container">
+      <div class="services-vertical-list">
+        @for (s of services; track s.id; let idx = $index) {
+          <div [id]="s.id" class="service-detail-card" [class.reverse]="idx % 2 !== 0">
+            <div class="detail-content">
+              <span class="service-number">0{{ idx + 1 }}</span>
+              <div class="badge-row">
+                <span class="pill-badge">{{ s.badge }}</span>
+              </div>
+              <h2 class="service-heading">{{ s.title }}</h2>
+              <p class="service-subheading">{{ s.subtitle }}</p>
+              <p class="service-paragraph">{{ s.description }}</p>
+
+              <div class="capabilities-box">
+                <h3 class="cap-title">Deliverables & Standards:</h3>
+                <ul class="cap-list">
+                  @for (feat of s.features; track feat) {
+                    <li>
+                      <span class="check-mark">✓</span>
+                      <span>{{ feat }}</span>
+                    </li>
+                  }
+                </ul>
+              </div>
+
+              <div class="tech-stack-row">
+                <span class="ts-label">Tech Stack:</span>
+                <div class="ts-pills">
+                  @for (t of s.techStack; track t) {
+                    <span class="t-pill">{{ t }}</span>
+                  }
+                </div>
+              </div>
+
+              <div class="action-btn-row">
+                <a routerLink="/contact" class="btn btn-primary btn-sm">
+                  <span>Inquire for {{ s.title }}</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <div class="detail-visual">
+              <div class="visual-panel">
+                <div class="panel-header">
+                  <span class="status-indicator"></span>
+                  <span class="panel-tag">{{ s.title }} Architecture</span>
+                </div>
+                <div class="panel-body">
+                  <div class="architecture-diagram-box">
+                    <div class="arch-layer">Client Viewport / Native UI</div>
+                    <div class="arch-arrow">↓</div>
+                    <div class="arch-layer highlight">Business Logic & Offline Cache</div>
+                    <div class="arch-arrow">↓</div>
+                    <div class="arch-layer dark">Secure API Gateway & Cloud DB</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom CTA -->
+  <section class="services-cta-section section-padding circuit-bg">
+    <div class="container text-center">
+      <h2 class="cta-heading">Need a custom scope or technical feasibility study?</h2>
+      <p class="cta-lead">We offer free discovery sessions with senior architects to evaluate your architecture, timeline, and budget.</p>
+      <a routerLink="/contact" class="btn btn-green">
+        <span>Book a Discovery Call</span>
+      </a>
+    </div>
+  </section>
+</div>

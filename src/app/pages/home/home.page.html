@@ -1,0 +1,363 @@
+<!-- HERO SECTION (Styled like Zypher Solutions with VTS Craft Brand) -->
+<section class="zy-hero-section circuit-bg">
+  <div class="hero-glow-blob blue-blob"></div>
+  <div class="hero-glow-blob green-blob"></div>
+
+  <div class="container zy-hero-container">
+    <div class="hero-copy">
+      <!-- Eyebrow Badge -->
+      <div class="hero-eyebrow">
+        <span class="badge-tag badge-green">
+          <span class="pulse-dot"></span>
+          Your Digital Excellence Partner • Based in India
+        </span>
+      </div>
+
+      <!-- Main Headline (Inspired by Zypher's split title) -->
+      <h1 class="hero-title">
+        <span class="title-accent">Digital Excellence that moves</span>
+        <span class="title-main">the way your enterprise <span class="highlight-blue">already does</span></span>
+      </h1>
+
+      <!-- Subtitle Description -->
+      <p class="hero-description">
+        No generic templates, no bolt-on features you'll never touch. Just resilient Mobile Apps, high-performance Websites, intelligent Admin Panels, and Custom Software systems shaped around how you actually work — built by a dedicated team that stays in the room after launch.
+      </p>
+
+      <!-- Actions -->
+      <div class="hero-actions">
+        <a routerLink="/contact" class="btn btn-primary">
+          <span>Book a Discovery Call</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+        <a routerLink="/work" class="btn btn-outline">
+          <span>See Our Work</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Hero Visual / Device Mockup Preview -->
+    <div class="hero-visual">
+      <div class="visual-card">
+        <div class="visual-header-bar">
+          <div class="window-controls">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <span class="window-title">vtscraft.com/digital-solutions</span>
+          <span class="status-live">Live Ecosystem</span>
+        </div>
+        <div class="image-wrapper">
+          <img src="images/showcase-banner.jpg" alt="VTS Craft Solutions" class="hero-banner-img" />
+        </div>
+
+        <div class="floating-badge badge-top-left">
+          <div class="badge-icon icon-blue">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <div class="badge-text-wrap">
+            <span class="b-title">100% On-Time</span>
+            <span class="b-sub">Agile Delivery</span>
+          </div>
+        </div>
+
+        <div class="floating-badge badge-bottom-right">
+          <div class="badge-icon icon-green">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+          </div>
+          <div class="badge-text-wrap">
+            <span class="b-title">High Speed & Scale</span>
+            <span class="b-sub">Cloud-Native Architecture</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCALE SECTION: TRUSTED BY TEAMS AT EVERY SCALE (Matching Zypher) -->
+<section class="scale-section section-padding">
+  <div class="container">
+    <div class="scale-top-header">
+      <span class="sub-label">PROVEN TRACK RECORD</span>
+      <h2 class="scale-main-title">
+        TRUSTED BY TEAMS AT <span class="highlight-blue">EVERY SCALE</span>
+      </h2>
+      <p class="scale-desc">
+        From early-stage visionaries to established cross-border enterprises, we deliver software that performs reliably in the real world.
+      </p>
+    </div>
+
+    <!-- 3 Core Metric Cards -->
+    <div class="metrics-grid">
+      @for (m of scaleMetrics; track m.label) {
+        <div class="metric-card">
+          <div class="metric-value">{{ m.value }}</div>
+          <div class="metric-label">{{ m.label }}</div>
+          <p class="metric-desc">{{ m.desc }}</p>
+        </div>
+      }
+    </div>
+
+    <!-- Client Logo Marquee -->
+    <div class="logo-marquee-viewport">
+      <div class="logo-marquee-track">
+        @for (logo of clientLogos; track logo) {
+          <div class="logo-item">
+            <span class="logo-dot"></span>
+            <span class="logo-text">{{ logo }}</span>
+          </div>
+        }
+        <!-- Duplicate for continuous loop -->
+        @for (logo of clientLogos; track 'dup-' + logo) {
+          <div class="logo-item">
+            <span class="logo-dot"></span>
+            <span class="logo-text">{{ logo }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAILORED SOLUTIONS, BUILT FOR REAL PROBLEMS (Featured Work) -->
+<section class="featured-work-section section-padding circuit-bg">
+  <div class="container">
+    <div class="work-section-header">
+      <div>
+        <span class="badge-tag">Featured Case Studies</span>
+        <h2 class="section-title">
+          TAILORED SOLUTIONS, BUILT FOR <span class="highlight-blue">REAL PROBLEMS</span>
+        </h2>
+      </div>
+      <a routerLink="/work" class="btn btn-outline btn-sm">
+        <span>View All Works</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+
+    <div class="projects-grid">
+      @for (p of projects; track p.id) {
+        <div class="project-card">
+          <div class="card-image-box">
+            <img [src]="p.image" [alt]="p.title" class="p-img" />
+            <span class="p-category">{{ p.category }}</span>
+          </div>
+          <div class="card-content">
+            <h3 class="p-title">{{ p.title }}</h3>
+            <p class="p-tagline">{{ p.tagline }}</p>
+            <p class="p-desc">{{ p.description }}</p>
+
+            <div class="p-results">
+              <span class="r-heading">Impact:</span>
+              <ul class="r-list">
+                @for (res of p.results; track res) {
+                  <li>✓ {{ res }}</li>
+                }
+              </ul>
+            </div>
+
+            <div class="p-footer">
+              <div class="p-techs">
+                @for (tech of p.techStack; track tech) {
+                  <span class="tech-pill">{{ tech }}</span>
+                }
+              </div>
+              <a routerLink="/work" class="project-arrow-btn" aria-label="View case study">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="7" y1="17" x2="17" y2="7"></line>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- PAIN POINTS: MOST SOFTWARE ISN'T BROKEN, IT'S JUST NOT YOURS (Matching Zypher) -->
+<section class="pain-points-section section-padding">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge-tag badge-green">The Industry Problem</span>
+      <h2 class="section-title">
+        Most Software isn’t broken, <br /><span class="highlight-blue">It’s just not yours.</span>
+      </h2>
+      <p class="section-desc">
+        Why standard agency formulas and off-the-shelf subscriptions fail modern businesses — and how VTS Craft engineers the antidote.
+      </p>
+    </div>
+
+    <div class="pain-points-grid">
+      @for (item of painPoints; track item.title; let idx = $index) {
+        <div 
+          class="pain-card" 
+          [class.active]="activePainPointIndex() === idx" 
+          (click)="selectPainPoint(idx)">
+          <div class="pain-header">
+            <span class="pain-num">0{{ idx + 1 }}</span>
+            <h4 class="pain-title">{{ item.title }}</h4>
+          </div>
+          <div class="pain-body">
+            <div class="problem-box">
+              <span class="label">The Usual Reality:</span>
+              <p>{{ item.desc }}</p>
+            </div>
+            <div class="solution-box">
+              <span class="label">The VTS Craft Standard:</span>
+              <p>{{ item.ourAnswer }}</p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- WHY VTS CRAFT IS DIFFERENT (Matching Zypher) -->
+<section class="why-different-section section-padding circuit-bg">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge-tag">Our Guarantee</span>
+      <h2 class="section-title">
+        Why VTS Craft is different <br /><span class="highlight-blue">from everyone else you’ve worked with</span>
+      </h2>
+    </div>
+
+    <div class="why-grid">
+      @for (w of whyChooseUs; track w.title) {
+        <div class="why-card">
+          <div class="why-icon-box">
+            @switch (w.icon) {
+              @case ('shield') {
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              }
+              @case ('users') {
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              }
+              @case ('code') {
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+              }
+              @case ('cpu') {
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                  <rect x="9" y="9" width="6" height="6"></rect>
+                </svg>
+              }
+            }
+          </div>
+          <h3 class="why-title">{{ w.title }}</h3>
+          <p class="why-desc">{{ w.desc }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE WORK: STEP-BY-STEP (Matching Zypher) -->
+<section class="how-we-work-section section-padding">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge-tag badge-green">Proven Process</span>
+      <h2 class="section-title">
+        HOW <span class="highlight-blue">WE WORK</span>
+      </h2>
+      <p class="section-desc">
+        A predictable, collaborative engineering pipeline designed to eliminate surprises and maximize speed to market.
+      </p>
+    </div>
+
+    <div class="process-grid">
+      @for (step of processSteps; track step.number) {
+        <div class="process-card">
+          <div class="step-num">{{ step.number }}</div>
+          <h3 class="step-title">{{ step.title }}</h3>
+          <p class="step-desc">{{ step.desc }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER & LEADERSHIP MESSAGE SNIPPET -->
+<section class="founder-snippet-section section-padding circuit-bg">
+  <div class="container">
+    <div class="founder-box">
+      <div class="f-left">
+        <span class="f-badge">Leadership Perspective</span>
+        <blockquote class="f-quote">"{{ founder.quote }}"</blockquote>
+        <p class="f-note">{{ founder.bio[0] }}</p>
+        <div class="f-author">
+          <strong>{{ founder.name }}</strong>
+          <span>{{ founder.role }} • {{ founder.companyTag }}</span>
+        </div>
+        <div class="f-cta-row">
+          <a routerLink="/about" class="btn btn-outline btn-sm">Read Full Founder Profile</a>
+          <a routerLink="/contact" class="btn btn-primary btn-sm">Book A Direct Discovery Call</a>
+        </div>
+      </div>
+      <div class="f-right">
+        <div class="f-avatar-circle">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span class="f-tag">VTS Leadership</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQS SECTION (Matching Zypher) -->
+<section class="faq-section section-padding">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge-tag">Clarity & Confidence</span>
+      <h2 class="section-title">
+        Questions you’re probably <span class="highlight-blue">already asking</span>
+      </h2>
+      <p class="section-desc">Clear answers to help you evaluate your technology partnership with VTS Craft.</p>
+    </div>
+
+    <div class="faq-container">
+      @for (item of faqs; track item.q; let idx = $index) {
+        <div class="faq-item" [class.open]="activeFaqIndex() === idx">
+          <button type="button" class="faq-question" (click)="toggleFaq(idx)">
+            <span>{{ item.q }}</span>
+            <span class="faq-icon">{{ activeFaqIndex() === idx ? '−' : '+' }}</span>
+          </button>
+          @if (activeFaqIndex() === idx) {
+            <div class="faq-answer">
+              <p>{{ item.a }}</p>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</section>

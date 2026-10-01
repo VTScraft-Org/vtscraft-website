@@ -1,0 +1,111 @@
+// VTS Craft Design System Tokens & Brand Colors
+:root {
+  // Brand Primary & Accents (Derived directly from VTS Craft Logo)
+  --color-primary-blue: #0052D4;
+  --color-primary-blue-dark: #003db3;
+  --color-azure-blue: #00A3FF;
+  --color-azure-light: #e0f2fe;
+  --color-electric-green: #70C800;
+  --color-electric-green-dark: #5ca300;
+  --color-electric-green-light: #f0fdf4;
+  --color-emerald: #10b981;
+
+  // Dark & Neutral Palette (fixed/brand colours stay the same)
+  --color-navy-dark: #0A192F;
+  --color-navy-slate: #0F172A;
+  --color-slate-800: #1E293B;
+  --color-slate-700: #334155;
+  --color-slate-600: #475569;
+  --color-slate-500: #64748B;
+  --color-slate-400: #94A3B8;
+  --color-slate-200: #E2E8F0;
+  --color-slate-100: #F1F5F9;
+  --color-slate-50: #F8FAFC;
+  --color-white: #FFFFFF;
+
+  // ── Semantic surface tokens (override in dark mode below) ──────────────────
+  --surface-page: #F8FAFC;
+  --surface-card: #FFFFFF;
+  --surface-card-hover: #F0F7FF;
+  --surface-header: rgba(248, 250, 252, 0.92);
+  --surface-header-scrolled: rgba(255, 255, 255, 0.97);
+  --surface-drawer: #FFFFFF;
+  --surface-input: #FFFFFF;
+  --surface-dropdown: #FFFFFF;
+
+  --text-primary: #0A192F;
+  --text-secondary: #334155;
+  --text-muted: #475569;
+  --text-placeholder: #94A3B8;
+
+  --border-default: #E2E8F0;
+  --border-subtle: rgba(15, 23, 42, 0.08);
+  --border-card: rgba(0, 82, 212, 0.1);
+
+  --grad-hero-bg: linear-gradient(180deg, #F0F7FF 0%, #F8FCF5 50%, #FFFFFF 100%);
+  --grad-section-alt: #F1F5F9;
+
+  // Gradients
+  --grad-brand: linear-gradient(135deg, #0052D4 0%, #00A3FF 45%, #70C800 100%);
+  --grad-blue: linear-gradient(135deg, #0052D4 0%, #00A3FF 100%);
+  --grad-green: linear-gradient(135deg, #70C800 0%, #4CAF50 100%);
+  --grad-green-blue: linear-gradient(135deg, #00A3FF 0%, #70C800 100%);
+  --grad-dark-surface: linear-gradient(145deg, #0A192F 0%, #0F172A 100%);
+  --grad-light-hero: linear-gradient(180deg, #F0F7FF 0%, #F8FCF5 50%, #FFFFFF 100%);
+  --grad-card-hover: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 247, 255, 0.7) 100%);
+
+  // Glows & Shadows
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.12);
+  --shadow-xl: 0 24px 60px rgba(0, 82, 212, 0.14);
+  --shadow-glow-blue: 0 10px 30px rgba(0, 82, 212, 0.28);
+  --shadow-glow-green: 0 10px 30px rgba(112, 200, 0, 0.35);
+
+  // Borders & Radii
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  // Typography
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  // Transitions
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+// ── DARK MODE overrides ───────────────────────────────────────────────────────
+[data-theme="dark"] {
+  --surface-page: #060D1A;
+  --surface-card: #0E1B2E;
+  --surface-card-hover: #152033;
+  --surface-header: rgba(6, 13, 26, 0.90);
+  --surface-header-scrolled: rgba(10, 20, 38, 0.98);
+  --surface-drawer: #0C1829;
+  --surface-input: #0E1B2E;
+  --surface-dropdown: #0E1B2E;
+
+  --text-primary: #E8F0FE;
+  --text-secondary: #B8CCE8;
+  --text-muted: #7A9BC0;
+  --text-placeholder: #4A6A8A;
+
+  --border-default: rgba(100, 140, 200, 0.12);
+  --border-subtle: rgba(100, 140, 200, 0.07);
+  --border-card: rgba(0, 163, 255, 0.15);
+
+  --grad-hero-bg: linear-gradient(180deg, #060D1A 0%, #080F1E 60%, #060D1A 100%);
+  --grad-section-alt: #080F1E;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 24px 60px rgba(0, 82, 212, 0.2);
+  --shadow-glow-blue: 0 10px 30px rgba(0, 163, 255, 0.3);
+  --shadow-glow-green: 0 10px 30px rgba(112, 200, 0, 0.25);
+}

@@ -1,0 +1,166 @@
+<section id="contact" class="contact-section section-padding circuit-bg">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge-tag badge-green">Let's Build Something Great</span>
+      <h2 class="section-title">
+        Start Your Project With <span class="highlight-blue">VTS Craft</span>
+      </h2>
+      <p class="section-desc">
+        Tell us about your product goals, technical roadmap, or project scope. Our senior engineering leads will review your inquiry and schedule a discovery call within 24 hours.
+      </p>
+    </div>
+
+    <div class="contact-card">
+      <!-- Left Column: Contact Channels & Trust Points -->
+      <div class="contact-info-panel">
+        <h3 class="panel-title">Get In Touch</h3>
+        <p class="panel-desc">
+          Whether you need a full development squad or architectural consultation, we're here to craft excellence with you.
+        </p>
+
+        <div class="info-items">
+          <div class="info-row">
+            <div class="icon-circle icon-blue">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </div>
+            <div class="info-text">
+              <span class="label">Direct Inquiries</span>
+              <a href="mailto:contact@vtscraft.com" class="val">contact&#64;vtscraft.com</a>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <div class="icon-circle icon-green">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+            <div class="info-text">
+              <span class="label">Headquarters</span>
+              <span class="val">India • Serving Global Clients</span>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <div class="icon-circle icon-blue">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div class="info-text">
+              <span class="label">Response Time</span>
+              <span class="val">Within 24 Business Hours</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="trust-box">
+          <div class="trust-badge">
+            <span class="t-icon">🔒</span>
+            <span>Strict NDA & IP Protection</span>
+          </div>
+          <div class="trust-badge">
+            <span class="t-icon">⚡</span>
+            <span>Direct Access to Tech Leads</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive Form -->
+      <div class="contact-form-panel">
+        @if (formSubmitted()) {
+          <div class="form-success">
+            <div class="success-icon">✓</div>
+            <h4 class="success-title">Inquiry Received Successfully!</h4>
+            <p class="success-desc">
+              Thank you, <strong>{{ formData.fullName }}</strong>. Our team will review your project details and reach out to <strong>{{ formData.email }}</strong> shortly.
+            </p>
+            <button type="button" class="btn btn-outline btn-sm" (click)="resetForm()">
+              Send Another Inquiry
+            </button>
+          </div>
+        } @else {
+          <form class="project-form" (ngSubmit)="onSubmit()">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="fullName">Your Full Name *</label>
+                <input 
+                  type="text" 
+                  id="fullName" 
+                  name="fullName" 
+                  [(ngModel)]="formData.fullName" 
+                  placeholder="e.g. Alex Morgan" 
+                  required 
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Work Email *</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  [(ngModel)]="formData.email" 
+                  placeholder="alex@company.com" 
+                  required 
+                />
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="company">Company / Organization</label>
+                <input 
+                  type="text" 
+                  id="company" 
+                  name="company" 
+                  [(ngModel)]="formData.company" 
+                  placeholder="e.g. Acme Corp" 
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="service">Primary Service Needed</label>
+                <select id="service" name="service" [(ngModel)]="formData.service">
+                  @for (s of servicesList; track s) {
+                    <option [value]="s">{{ s }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Brief Project Overview *</label>
+              <textarea 
+                id="message" 
+                name="message" 
+                rows="4" 
+                [(ngModel)]="formData.message" 
+                placeholder="Describe your requirements, goals, preferred timeline or target platform..."
+                required>
+              </textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100" [disabled]="isSubmitting()">
+              @if (isSubmitting()) {
+                <span>Processing...</span>
+              } @else {
+                <span>Submit Project Inquiry</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              }
+            </button>
+          </form>
+        }
+      </div>
+    </div>
+  </div>
+</section>

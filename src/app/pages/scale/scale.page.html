@@ -1,0 +1,142 @@
+<div class="page-container">
+  <section class="page-hero circuit-bg">
+    <div class="container">
+      <span class="badge-tag badge-green">Enterprise Infrastructure</span>
+      <h1 class="page-title">
+        Engineered for High Concurrency & <span class="highlight-blue">Global Scale</span>
+      </h1>
+      <p class="page-lead">
+        VTS Craft builds digital products that don't choke when traffic spikes. From distributed cloud backends to battery-optimized mobile apps, our architectures are stress-tested for uninterrupted scale.
+      </p>
+    </div>
+  </section>
+
+  <!-- Scale Numbers -->
+  <section class="scale-stats-section section-padding">
+    <div class="container">
+      <div class="stats-cards-grid">
+        @for (m of scaleMetrics; track m.label) {
+          <div class="scale-stat-card">
+            <span class="val">{{ m.value }}</span>
+            <h3 class="lbl">{{ m.label }}</h3>
+            <p class="desc">{{ m.desc }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Global Delivery Model: India to the World -->
+  <section class="global-delivery-section section-padding circuit-bg">
+    <div class="container">
+      <div class="delivery-grid">
+        <div class="delivery-copy">
+          <span class="badge-tag">Our Competitive Edge</span>
+          <h2 class="delivery-title">
+            The Global Delivery Model: <br /><span class="highlight-blue">Engineered in India, Trusted Worldwide</span>
+          </h2>
+          <p class="delivery-lead">
+            By operating out of India’s premier software hubs, VTS Craft pairs tier-1 engineering talent with round-the-clock delivery cycles and transparent pricing.
+          </p>
+
+          <div class="delivery-benefits">
+            <div class="benefit-item">
+              <span class="b-dot">✓</span>
+              <div>
+                <strong>Overlapping Global Timezones:</strong>
+                <p>Smooth daily communication across Europe, Middle East, Southeast Asia, and the Americas.</p>
+              </div>
+            </div>
+            <div class="benefit-item">
+              <span class="b-dot">✓</span>
+              <div>
+                <strong>Elite Software Talent:</strong>
+                <p>Engineers with rigorous backgrounds in Angular, Flutter, Cloud Microservices, and DevOps.</p>
+              </div>
+            </div>
+            <div class="benefit-item">
+              <span class="b-dot">✓</span>
+              <div>
+                <strong>Maximized ROI:</strong>
+                <p>Get enterprise-grade custom engineering without bloated Silicon Valley agency overhead.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="delivery-visual">
+          <div class="global-map-card">
+            <div class="map-header">
+              <span class="live-dot"></span>
+              <span>Active Deployment Zones</span>
+            </div>
+            <div class="map-zones">
+              <div class="zone-card active-hub">
+                <span class="flag">🇮🇳</span>
+                <div>
+                  <strong>India (HQ)</strong>
+                  <span>Engineering & Architecture Core</span>
+                </div>
+              </div>
+              <div class="zone-card">
+                <span class="flag">🇺🇸</span>
+                <div>
+                  <strong>North America</strong>
+                  <span>FinTech & Enterprise SaaS</span>
+                </div>
+              </div>
+              <div class="zone-card">
+                <span class="flag">🇬🇧</span>
+                <div>
+                  <strong>United Kingdom & Europe</strong>
+                  <span>Logistics & Portals</span>
+                </div>
+              </div>
+              <div class="zone-card">
+                <span class="flag">🇦🇪</span>
+                <div>
+                  <strong>Middle East (UAE, Qatar)</strong>
+                  <span>Commercial Systems & CRM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Security & Enterprise Rigor -->
+  <section class="security-section section-padding">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge-tag">Zero Compromises</span>
+        <h2 class="section-title">
+          Security, Reliability & <span class="highlight-blue">Compliance</span>
+        </h2>
+        <p class="section-desc">Every line of code and database schema meets modern enterprise criteria.</p>
+      </div>
+
+      <div class="security-grid">
+        @for (sec of securityPillars; track sec.title) {
+          <div class="sec-card">
+            <div class="sec-icon">🔒</div>
+            <h3 class="sec-title">{{ sec.title }}</h3>
+            <p class="sec-desc">{{ sec.desc }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="scale-cta section-padding circuit-bg">
+    <div class="container text-center">
+      <h2 class="cta-title">Ready to scale your technical infrastructure?</h2>
+      <p class="cta-sub">Speak directly with an enterprise architect to plan your expansion.</p>
+      <a routerLink="/contact" class="btn btn-primary">
+        <span>Book a Discovery Call</span>
+      </a>
+    </div>
+  </section>
+</div>

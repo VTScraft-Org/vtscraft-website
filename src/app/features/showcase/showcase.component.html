@@ -1,0 +1,111 @@
+<section id="showcase" class="showcase-section section-padding">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge-tag badge-green">Product Showcase</span>
+      <h2 class="section-title">
+        Engineered for Every <span class="highlight-blue">Screen & Platform</span>
+      </h2>
+      <p class="section-desc">
+        Explore how VTS Craft delivers seamless digital experiences across desktop admin suites, enterprise web portals, and mobile touchpoints.
+      </p>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="tab-control-bar">
+      <button 
+        type="button" 
+        class="tab-btn" 
+        [class.active]="activeTab() === 'admin'" 
+        (click)="selectTab('admin')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21"></line>
+          <line x1="12" y1="17" x2="12" y2="21"></line>
+        </svg>
+        <span>Admin Panels (Desktop)</span>
+      </button>
+
+      <button 
+        type="button" 
+        class="tab-btn" 
+        [class.active]="activeTab() === 'mobile'" 
+        (click)="selectTab('mobile')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="5" y="2" width="14" height="20" rx="2"></rect>
+          <line x1="12" y1="18" x2="12.01" y2="18"></line>
+        </svg>
+        <span>Mobile Apps (iOS & Android)</span>
+      </button>
+
+      <button 
+        type="button" 
+        class="tab-btn" 
+        [class.active]="activeTab() === 'website'" 
+        (click)="selectTab('website')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+        <span>Websites & Portals (Tablet & Web)</span>
+      </button>
+    </div>
+
+    <!-- Active Showcase Content Card -->
+    @let active = showcases[activeTab()];
+    <div class="showcase-display-card">
+      <div class="display-left">
+        <span class="category-pill">{{ active.category }}</span>
+        <h3 class="display-title">{{ active.title }}</h3>
+        <p class="display-tagline">{{ active.tagline }}</p>
+        <p class="display-desc">{{ active.description }}</p>
+
+        <div class="highlights-box">
+          <h4 class="h-title">Engineering Standards</h4>
+          <ul class="highlight-list">
+            @for (hl of active.highlights; track hl) {
+              <li>
+                <span class="bullet-dot"></span>
+                <span>{{ hl }}</span>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <!-- Metrics Row -->
+        <div class="metrics-row">
+          @for (metric of active.metrics; track metric.label) {
+            <div class="metric-item">
+              <span class="m-val">{{ metric.value }}</span>
+              <span class="m-lbl">{{ metric.label }}</span>
+            </div>
+          }
+        </div>
+
+        <div class="display-actions">
+          <a href="#contact" class="btn btn-primary btn-sm">
+            <span>Inquire About This Solution</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="display-right">
+        <div class="mockup-frame">
+          <img 
+            src="images/showcase-banner.jpg" 
+            alt="VTS Craft Ecosystem" 
+            class="mockup-img"
+          />
+          <div class="frame-tag">
+            <span class="tag-status"></span>
+            <span>VTS Craft Production Multi-Device View</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

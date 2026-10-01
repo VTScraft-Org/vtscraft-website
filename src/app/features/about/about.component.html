@@ -1,0 +1,46 @@
+<section id="about" class="about-section section-padding">
+  <div class="container">
+    <div class="about-grid">
+      <!-- Left Column: Story & Philosophy -->
+      <div class="about-left">
+        <span class="badge-tag">Who We Are</span>
+        <h2 class="about-title">
+          Your Strategic Partner In <span class="highlight-blue">Digital Evolution</span>
+        </h2>
+        <p class="about-lead">
+          <strong>VTS Craft</strong> was founded with a singular conviction: technology should not merely support business — it should catalyze exponential growth.
+        </p>
+        <p class="about-body">
+          Based in India, we collaborate with ambitious businesses, entrepreneurs, and global brands to build digital products that combine stunning UI aesthetics with bulletproof architecture. Whether launching a groundbreaking mobile application or upgrading an enterprise back-office with intelligent admin panels, our team crafts software with passion and precision.
+        </p>
+
+        <!-- Stats Bar -->
+        <div class="stats-grid">
+          @for (s of stats; track s.label) {
+            <div class="stat-card">
+              <span class="stat-num">{{ s.number }}</span>
+              <span class="stat-lbl">{{ s.label }}</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Right Column: Core Values Cards -->
+      <div class="about-right">
+        <div class="values-grid">
+          @for (val of coreValues; track val.title) {
+            <div class="value-card">
+              <div class="value-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                </svg>
+              </div>
+              <h4 class="val-title">{{ val.title }}</h4>
+              <p class="val-desc">{{ val.desc }}</p>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

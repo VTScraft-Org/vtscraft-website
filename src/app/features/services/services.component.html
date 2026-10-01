@@ -1,0 +1,115 @@
+<section id="services" class="services-section section-padding">
+  <div class="container">
+    <!-- Header -->
+    <div class="section-header">
+      <span class="badge-tag">Our Core Expertise</span>
+      <h2 class="section-title">
+        End-to-End <span class="highlight-blue">IT Services</span> Engineered for Excellence
+      </h2>
+      <p class="section-desc">
+        We specialize in the four key technology pillars modern businesses need to lead their markets — delivered with speed, craftsmanship, and unwavering reliability.
+      </p>
+    </div>
+
+    <!-- Services Grid -->
+    <div class="services-grid">
+      @for (service of services; track service.id) {
+        <div class="service-card" [ngClass]="'theme-' + service.colorTheme">
+          <div class="card-top">
+            <div class="icon-container">
+              @switch (service.iconName) {
+                @case ('mobile') {
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                    <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                  </svg>
+                }
+                @case ('website') {
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="2" y1="10" x2="22" y2="10"></line>
+                    <line x1="7" y1="21" x2="17" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                  </svg>
+                }
+                @case ('admin') {
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="9"></rect>
+                    <rect x="14" y="3" width="7" height="5"></rect>
+                    <rect x="14" y="12" width="7" height="9"></rect>
+                    <rect x="3" y="16" width="7" height="5"></rect>
+                  </svg>
+                }
+                @case ('software') {
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                    <rect x="9" y="9" width="6" height="6"></rect>
+                    <line x1="9" y1="1" x2="9" y2="4"></line>
+                    <line x1="15" y1="1" x2="15" y2="4"></line>
+                    <line x1="9" y1="20" x2="9" y2="23"></line>
+                    <line x1="15" y1="20" x2="15" y2="23"></line>
+                    <line x1="20" y1="9" x2="23" y2="9"></line>
+                    <line x1="20" y1="14" x2="23" y2="14"></line>
+                    <line x1="1" y1="9" x2="4" y2="9"></line>
+                    <line x1="1" y1="14" x2="4" y2="14"></line>
+                  </svg>
+                }
+              }
+            </div>
+
+            @if (service.badge) {
+              <span class="card-badge">{{ service.badge }}</span>
+            }
+          </div>
+
+          <h3 class="service-title">{{ service.title }}</h3>
+          <p class="service-subtitle">{{ service.subtitle }}</p>
+          <p class="service-description">{{ service.description }}</p>
+
+          <!-- Features List -->
+          <div class="features-block">
+            <span class="features-label">Key Capabilities:</span>
+            <ul class="feature-bullets">
+              @for (feat of service.features; track feat) {
+                <li>
+                  <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span>{{ feat }}</span>
+                </li>
+              }
+            </ul>
+          </div>
+
+          <!-- Tech Stack Tags -->
+          <div class="tech-tags">
+            @for (tech of service.techStack; track tech) {
+              <span class="tech-tag">{{ tech }}</span>
+            }
+          </div>
+
+          <div class="card-bottom">
+            <a href="#contact" class="card-action-link">
+              <span>Discuss {{ service.title }}</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Quick Callout Banner -->
+    <div class="services-callout">
+      <div class="callout-content">
+        <h4 class="callout-title">Have a unique requirement or custom architectural challenge?</h4>
+        <p class="callout-text">We engineer tailored solutions suited to your specific enterprise security, compliance, and performance needs.</p>
+      </div>
+      <a href="#contact" class="btn btn-green">
+        <span>Request Technical Consultation</span>
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,230 @@
+.page-hero {
+  padding: 8.5rem 0 3.5rem;
+  background: var(--grad-light-hero);
+  text-align: center;
+  border-bottom: 1px solid var(--border-default);
+
+  .page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+
+    @media (max-width: 640px) { font-size: 2.2rem; }
+  }
+
+  .page-lead {
+    font-size: 1.12rem;
+    color: var(--text-muted);
+    max-width: 720px;
+    margin: 0 auto;
+    line-height: 1.65;
+  }
+}
+
+.contact-main-grid {
+  background: var(--surface-card);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-default);
+  box-shadow: 0 16px 45px rgba(15, 23, 42, 0.06);
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  overflow: hidden;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contact-info-col {
+  background: var(--color-navy-dark);
+  color: #ffffff;
+  padding: 3.5rem;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 640px) { padding: 2rem; }
+
+  .col-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 2rem;
+  }
+
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+
+    .step-entry {
+      display: flex;
+      gap: 1rem;
+
+      .step-badge {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(0, 82, 212, 0.3);
+        color: var(--color-azure-blue);
+        border: 1px solid var(--color-azure-blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 0.88rem;
+        flex-shrink: 0;
+      }
+
+      strong {
+        font-size: 0.95rem;
+        color: #ffffff;
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+
+      p {
+        font-size: 0.86rem;
+        color: var(--color-slate-400);
+        line-height: 1.5;
+      }
+    }
+  }
+
+  .info-badges-card {
+    margin-top: auto;
+    padding-top: 1.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .i-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      .i-icon { font-size: 1.1rem; }
+
+      .i-label {
+        font-size: 0.74rem;
+        color: var(--color-slate-400);
+        text-transform: uppercase;
+        display: block;
+      }
+
+      .i-val {
+        font-size: 0.92rem;
+        color: #ffffff;
+        font-weight: 600;
+
+        &:hover { color: var(--color-azure-blue); }
+      }
+    }
+  }
+}
+
+.contact-form-col {
+  padding: 3.5rem;
+  background: var(--surface-card);
+
+  @media (max-width: 640px) { padding: 2rem; }
+
+  .form-title {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+  }
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    label {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      background: var(--color-slate-50);
+      transition: all 0.2s ease;
+
+      &:focus {
+        outline: none;
+        border-color: var(--color-primary-blue);
+        background: var(--surface-card);
+        box-shadow: 0 0 0 3px rgba(0, 82, 212, 0.1);
+      }
+    }
+
+    textarea { resize: vertical; }
+  }
+
+  .w-100 {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+
+.success-screen {
+  text-align: center;
+  padding: 3rem 1.5rem;
+
+  .s-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--color-electric-green);
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 900;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem auto;
+    box-shadow: 0 10px 25px rgba(112, 200, 0, 0.4);
+  }
+
+  .s-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .s-desc {
+    font-size: 0.96rem;
+    color: var(--text-muted);
+    max-width: 440px;
+    margin: 0 auto 1.5rem auto;
+    line-height: 1.6;
+  }
+}

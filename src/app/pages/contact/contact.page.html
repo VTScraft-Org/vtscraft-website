@@ -1,0 +1,161 @@
+<div class="page-container">
+  <section class="page-hero circuit-bg">
+    <div class="container">
+      <span class="badge-tag badge-green">Direct Technical Dialogue</span>
+      <h1 class="page-title">
+        Book a <span class="highlight-blue">Discovery Call</span>
+      </h1>
+      <p class="page-lead">
+        No sales reps reading scripts. Tell us what you want to build and you'll speak directly with senior software architects who will evaluate feasibility, timelines, and scope.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Form Section -->
+  <section class="contact-section section-padding">
+    <div class="container">
+      <div class="contact-main-grid">
+        <!-- Direct Info & Trust Column -->
+        <div class="contact-info-col">
+          <h2 class="col-title">What Happens Next?</h2>
+          <div class="steps-list">
+            <div class="step-entry">
+              <span class="step-badge">1</span>
+              <div>
+                <strong>Initial Review (Within 24 Hours)</strong>
+                <p>A technical lead reviews your requirements, tech preferences, and timeline.</p>
+              </div>
+            </div>
+            <div class="step-entry">
+              <span class="step-badge">2</span>
+              <div>
+                <strong>30-Minute Discovery Session</strong>
+                <p>We jump on a video call to drill into edge cases, architecture options, and milestone priorities.</p>
+              </div>
+            </div>
+            <div class="step-entry">
+              <span class="step-badge">3</span>
+              <div>
+                <strong>Fixed Scope & Price Proposal</strong>
+                <p>You receive a comprehensive blueprint with transparent milestone deliverables and fixed cost.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-badges-card">
+            <div class="i-row">
+              <span class="i-icon">📧</span>
+              <div>
+                <span class="i-label">Direct Email</span>
+                <a href="mailto:contact@vtscraft.com" class="i-val">contact&#64;vtscraft.com</a>
+              </div>
+            </div>
+            <div class="i-row">
+              <span class="i-icon">📍</span>
+              <div>
+                <span class="i-label">Headquarters</span>
+                <span class="i-val">India • Delivering Worldwide</span>
+              </div>
+            </div>
+            <div class="i-row">
+              <span class="i-icon">🔒</span>
+              <div>
+                <span class="i-label">Mutual Protection</span>
+                <span class="i-val">Mutual NDA signed upon request</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Column -->
+        <div class="contact-form-col">
+          @if (formSubmitted()) {
+            <div class="success-screen">
+              <div class="s-icon">✓</div>
+              <h3 class="s-title">Discovery Call Requested!</h3>
+              <p class="s-desc">
+                Thank you, <strong>{{ formData.fullName }}</strong>. Our engineering leads will review your inquiry and email <strong>{{ formData.email }}</strong> within 24 hours to schedule the session.
+              </p>
+              <button type="button" class="btn btn-outline btn-sm" (click)="resetForm()">
+                Submit Another Request
+              </button>
+            </div>
+          } @else {
+            <form class="booking-form" (ngSubmit)="onSubmit()">
+              <h3 class="form-title">Tell Us About Your Project</h3>
+
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="fullName">Your Full Name *</label>
+                  <input type="text" id="fullName" name="fullName" [(ngModel)]="formData.fullName" placeholder="e.g. Alex Morgan" required />
+                </div>
+                <div class="form-field">
+                  <label for="email">Work Email *</label>
+                  <input type="email" id="email" name="email" [(ngModel)]="formData.email" placeholder="alex@company.com" required />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="company">Company / Venture Name</label>
+                  <input type="text" id="company" name="company" [(ngModel)]="formData.company" placeholder="e.g. Acme Corp" />
+                </div>
+                <div class="form-field">
+                  <label for="service">Primary Capability Needed</label>
+                  <select id="service" name="service" [(ngModel)]="formData.service">
+                    @for (s of servicesList; track s) {
+                      <option [value]="s">{{ s }}</option>
+                    }
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="budget">Estimated Budget</label>
+                  <select id="budget" name="budget" [(ngModel)]="formData.budget">
+                    @for (b of budgets; track b) {
+                      <option [value]="b">{{ b }}</option>
+                    }
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="timeline">Target Timeline</label>
+                  <select id="timeline" name="timeline" [(ngModel)]="formData.timeline">
+                    @for (t of timelines; track t) {
+                      <option [value]="t">{{ t }}</option>
+                    }
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label for="message">Project Scope & Core Objectives *</label>
+                <textarea 
+                  id="message" 
+                  name="message" 
+                  rows="4" 
+                  [(ngModel)]="formData.message" 
+                  placeholder="Describe what you want to build, current challenges, target platforms, or existing systems..."
+                  required>
+                </textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100" [disabled]="isSubmitting()">
+                @if (isSubmitting()) {
+                  <span>Booking Session...</span>
+                } @else {
+                  <span>Book Discovery Call</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                }
+              </button>
+            </form>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
