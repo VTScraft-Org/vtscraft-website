@@ -1,0 +1,11 @@
+.why-us-section {
+  position: relative;
+  background-color: #F4F7F4;
+}
+
+.why-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+  &:hover {
+    transform: translateY(-6px);
+  }
+}

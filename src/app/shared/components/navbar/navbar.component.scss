@@ -1,0 +1,353 @@
+/*
+ * VTScraft Navbar — Floating Pill Design
+ * Matches Zypher Solutions reference: white pill, centered links,
+ * navy active pill, navy Contact Us button, subtle shadow on scroll.
+ */
+
+// ─── Wrapper (full-width strip) ──────────────────────────────────────────────
+.navbar-wrapper {
+  padding-top: 16px;
+  transition: padding-top 0.3s ease;
+
+  &.scrolled {
+    padding-top: 8px;
+  }
+}
+
+// ─── Floating Pill ───────────────────────────────────────────────────────────
+.navbar-pill {
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 9999px;        // full pill
+  padding: 8px 16px 8px 10px;
+  max-width: 960px;
+  width: 100%;
+
+  // Subtle shadow + faint border ring
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.06),
+    0 4px 20px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+
+  transition:
+    box-shadow 0.3s ease,
+    padding 0.3s ease,
+    border-radius 0.3s ease;
+
+  // Stronger shadow on scroll
+  &.pill-scrolled {
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.10),
+      0 8px 32px rgba(0, 0, 0, 0.14),
+      0 0 0 1px rgba(0, 0, 0, 0.06);
+  }
+
+  @media (max-width: 1023px) {
+    border-radius: 24px;    // slightly less round on mobile when drawer open
+    padding: 10px 14px;
+    max-width: 100%;
+  }
+}
+
+// ─── Logo ────────────────────────────────────────────────────────────────────
+.logo-link {
+  text-decoration: none;
+  outline-offset: 4px;
+}
+
+.logo-img-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.logo-fallback {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #0D1B2A, #1A3A6B);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.logo-brand {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0D1B2A;
+  letter-spacing: -0.4px;
+  line-height: 1.1;
+}
+
+.logo-tagline {
+  font-size: 9.5px;
+  font-weight: 500;
+  color: #9ca3af;  // gray-400
+  letter-spacing: 0.02em;
+  margin-top: 1px;
+  white-space: nowrap;
+}
+
+// ─── Desktop Nav Links ───────────────────────────────────────────────────────
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #374151;       // gray-700
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease;
+  outline: none;
+
+  &:hover {
+    background-color: #f3f4f6;  // gray-100
+    color: #0D1B2A;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #0D1B2A;
+    outline-offset: 2px;
+  }
+}
+
+// Active state — dark navy pill (matches Zypher "Home" active style)
+.nav-link-active {
+  background-color: #0D1B2A !important;
+  color: #ffffff !important;
+
+  &:hover {
+    background-color: #1A3A6B !important;
+  }
+}
+
+// ─── Services Dropdown ───────────────────────────────────────────────────────
+.nav-dropdown-trigger {
+  gap: 4px;
+
+  .chevron {
+    color: currentColor;
+    opacity: 0.7;
+  }
+}
+
+.dropdown-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 6px;
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.05),
+    0 10px 40px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+
+  // Pointer arrow
+  &::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    border-left: 1px solid rgba(0,0,0,0.06);
+    border-top: 1px solid rgba(0,0,0,0.06);
+    rotate: 45deg;
+    border-radius: 2px 0 0 0;
+  }
+
+  // Slide-in animation
+  animation: dropdownIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background-color: #f3f4f6;
+    color: #0D1B2A;
+  }
+}
+
+.dropdown-icon {
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+// ─── Contact Us Button ───────────────────────────────────────────────────────
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 20px;
+  border-radius: 9999px;
+  background-color: #0D1B2A;
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 0.18s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+  box-shadow: 0 1px 3px rgba(13, 27, 42, 0.25);
+
+  &:hover {
+    background-color: #1A3A6B;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(13, 27, 42, 0.35);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #0D1B2A;
+    outline-offset: 3px;
+  }
+}
+
+// ─── Mobile Menu Button ──────────────────────────────────────────────────────
+.mobile-menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  background: transparent;
+  border: none;
+  color: #374151;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: #f3f4f6;
+    color: #0D1B2A;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #0D1B2A;
+    outline-offset: 2px;
+  }
+}
+
+// ─── Mobile Drawer ───────────────────────────────────────────────────────────
+.mobile-drawer {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 12px;
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.05),
+    0 16px 48px rgba(0, 0, 0, 0.14),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+  animation: drawerIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.mobile-link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background-color: #f3f4f6;
+    color: #0D1B2A;
+  }
+}
+
+.mobile-link-active {
+  background-color: #0D1B2A !important;
+  color: #ffffff !important;
+}
+
+.mobile-child-link {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;   // gray-500
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background-color: #f3f4f6;
+    color: #0D1B2A;
+  }
+}
+
+// ─── Animations ──────────────────────────────────────────────────────────────
+@keyframes dropdownIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@keyframes drawerIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

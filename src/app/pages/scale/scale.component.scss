@@ -1,0 +1,12 @@
+.scale-page {
+  position: relative;
+}
+
+.dot-grid-bg {
+  background-image: radial-gradient(rgba(39, 174, 96, 0.15) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+}
+
+.industry-card, .testimonial-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}

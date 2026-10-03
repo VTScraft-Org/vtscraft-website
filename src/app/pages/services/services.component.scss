@@ -1,0 +1,12 @@
+.dot-grid-bg {
+  background-image: radial-gradient(rgba(39, 174, 96, 0.15) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+}
+
+.service-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -10px rgba(13, 27, 42, 0.08);
+  }
+}

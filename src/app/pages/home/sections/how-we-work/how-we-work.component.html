@@ -1,0 +1,161 @@
+<section id="how-we-work" class="how-we-work-section bg-[#F4F7F4] py-20 sm:py-28 relative overflow-hidden border-t border-gray-200/50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      
+      <!-- ── Left Column: Title + Numbered Steps List ──────────────────────── -->
+      <div class="lg:col-span-5">
+        
+        <!-- Large Heading: "HOW" thin text + "WE WORK" bold -->
+        <div class="mb-10 sm:mb-12">
+          <span class="text-4xl sm:text-6xl font-light text-gray-400 block tracking-tight leading-none">
+            HOW
+          </span>
+          <span class="text-4xl sm:text-6xl font-black text-[#0D1B2A] block tracking-tight leading-none mt-1">
+            WE WORK
+          </span>
+          <p class="text-sm text-gray-500 mt-4 leading-relaxed max-w-sm">
+            A battle-tested methodology shaped around agility, transparency, and post-launch permanence.
+          </p>
+        </div>
+
+        <!-- Numbered steps list -->
+        <div class="space-y-4">
+          @for (step of steps; track step.id) {
+            <div
+              (click)="setStep(step.id)"
+              class="step-item p-4 sm:p-5 rounded-2xl transition-all duration-300 cursor-pointer border"
+              [class.bg-white]="activeStepId() === step.id"
+              [class.border-gray-200]="activeStepId() === step.id"
+              [class.shadow-md]="activeStepId() === step.id"
+              [class.bg-transparent]="activeStepId() !== step.id"
+              [class.border-transparent]="activeStepId() !== step.id"
+              [class.hover:bg-white/60]="activeStepId() !== step.id"
+            >
+              <div class="flex items-center gap-4">
+                <!-- Circle with green filled for active step -->
+                <div
+                  class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 flex-shrink-0"
+                  [class.bg-[#27AE60]]="activeStepId() === step.id"
+                  [class.text-white]="activeStepId() === step.id"
+                  [class.shadow-md]="activeStepId() === step.id"
+                  [class.shadow-[#27AE60]/30]="activeStepId() === step.id"
+                  [class.bg-gray-200]="activeStepId() !== step.id"
+                  [class.text-gray-600]="activeStepId() !== step.id"
+                >
+                  {{ step.id }}
+                </div>
+
+                <div class="flex-1">
+                  <h4
+                    class="text-lg font-bold transition-colors"
+                    [class.text-[#0D1B2A]]="activeStepId() === step.id"
+                    [class.text-gray-600]="activeStepId() !== step.id"
+                  >
+                    {{ step.label }}
+                  </h4>
+
+                  <!-- Sub-bullets if present (for step 3 Build) -->
+                  @if (step.subBullets && step.subBullets.length > 0) {
+                    <div class="flex flex-wrap gap-2 mt-2">
+                      @for (bullet of step.subBullets; track bullet) {
+                        <span class="inline-flex items-center gap-1 text-[11px] px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-700 font-medium">
+                          <span class="w-1.5 h-1.5 rounded-full bg-[#27AE60]"></span>
+                          {{ bullet }}
+                        </span>
+                      }
+                    </div>
+                  }
+                </div>
+
+                <!-- Active chevron indicator -->
+                @if (activeStepId() === step.id) {
+                  <svg class="w-5 h-5 text-[#27AE60] flex-shrink-0 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                  </svg>
+                }
+              </div>
+            </div>
+          }
+        </div>
+
+      </div>
+
+      <!-- ── Right Column: Dynamic Step Details + Halftone Photo Placeholder ── -->
+      <div class="lg:col-span-7">
+        <div class="detail-card bg-white rounded-3xl p-8 sm:p-12 shadow-xl border border-gray-100 relative overflow-hidden transition-all duration-300">
+          
+          <!-- Ambient gradient glow -->
+          <div class="absolute -top-24 -right-24 w-72 h-72 bg-[#27AE60]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+          <!-- Step Badge -->
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#27AE60]/10 text-[#27AE60] text-xs font-bold uppercase tracking-wider mb-6">
+            {{ currentStep.badge }}
+          </div>
+
+          <!-- Header with WhatsApp icon when active -->
+          <div class="flex items-center gap-4 mb-4">
+            @if (currentStep.showWhatsAppIcon) {
+              <!-- WhatsApp Icon in emerald pill -->
+              <div class="w-12 h-12 rounded-2xl bg-[#25D366] flex items-center justify-center text-white shadow-lg shadow-[#25D366]/25 flex-shrink-0">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.976.58 2.028.928 3.149.929 3.182 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.768-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.072.376-.043.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.203c.043.072.043.419-.101.824z"/>
+                </svg>
+              </div>
+            } @else {
+              <div class="w-12 h-12 rounded-2xl bg-[#0D1B2A] flex items-center justify-center text-white shadow-lg flex-shrink-0">
+                <span class="text-sm font-black font-mono text-[#27AE60]">0{{ currentStep.id }}</span>
+              </div>
+            }
+
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-[#0D1B2A] tracking-tight">
+              {{ currentStep.heading }}
+            </h3>
+          </div>
+
+          <!-- Description text -->
+          <p class="text-gray-600 text-base sm:text-lg leading-relaxed mb-8">
+            {{ currentStep.description }}
+          </p>
+
+          <!-- Halftone style photo placeholder / graphic container -->
+          <div class="halftone-photo-box relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0D1B2A] to-[#1A3A6B] h-60 sm:h-72 p-6 flex flex-col justify-between text-white border border-gray-200">
+            <!-- Halftone dot layer -->
+            <div class="halftone-dot-grid absolute inset-0 opacity-20 pointer-events-none"></div>
+
+            <!-- Header of visual box -->
+            <div class="relative z-10 flex items-center justify-between">
+              <span class="text-xs font-mono uppercase tracking-widest text-[#27AE60] font-bold">
+                COLLABORATIVE WORKBENCH
+              </span>
+              <span class="text-xs text-white/50 font-mono">STEP_0{{ currentStep.id }}_ACTIVE</span>
+            </div>
+
+            <!-- Stylized workbench graphic -->
+            <div class="relative z-10 flex flex-col items-center justify-center my-auto py-2">
+              <div class="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center mb-3">
+                <svg class="w-8 h-8 text-[#27AE60]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+              </div>
+              <p class="text-white font-semibold text-sm">Direct Collaboration & Fast Iteration</p>
+              <p class="text-white/60 text-xs mt-1">Daily transparency, live staging builds, zero red tape</p>
+            </div>
+
+            <!-- Bottom status -->
+            <div class="relative z-10 flex items-center justify-between pt-3 border-t border-white/10 text-xs text-white/60">
+              <span class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-[#27AE60] animate-ping"></span>
+                Active Sprint
+              </span>
+              <span>VTScraft Dedicated Squad</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
