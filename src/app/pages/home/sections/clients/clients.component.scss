@@ -1,0 +1,23 @@
+.client-logos-section {
+  user-select: none;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 25s linear infinite;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    // 6 logos * (w-56 (224px) + gap-12 (48px)) = 272px * 6 = 1632px
+    transform: translateX(calc(-100% / 3));
+  }
+}

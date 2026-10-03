@@ -1,0 +1,290 @@
+<div class="career-page bg-[#F4F7F4] min-h-screen">
+
+  <!-- ── 1. HERO SECTION ────────────────────────────────────────────────── -->
+  <section class="career-hero pt-32 pb-20 sm:pt-40 sm:pb-28 text-center relative overflow-hidden border-b border-gray-200">
+    <div class="dot-grid-bg absolute inset-0 pointer-events-none opacity-60"></div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+      
+      <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#27AE60]/30 shadow-sm text-xs font-bold uppercase tracking-[0.25em] text-[#27AE60] mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#27AE60]"></span>
+        CAREERS AT VTSCRAFT
+      </span>
+
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-[#0D1B2A] tracking-tight leading-tight mb-6">
+        Join Our Team
+      </h1>
+
+      <p class="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+        Work with high-autonomy principal engineers. We build custom software that solves genuine business friction—zero micromanagement, zero corporate bureaucracy.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- ── 2. OPEN POSITIONS LIST ─────────────────────────────────────────── -->
+  <section class="positions-section py-20 sm:py-28">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex items-center justify-between mb-12">
+        <div>
+          <h2 class="text-3xl font-extrabold text-[#0D1B2A] tracking-tight">Open Positions</h2>
+          <p class="text-sm text-gray-500 mt-1">Found {{ activeJobs.length }} active engineering & design roles</p>
+        </div>
+      </div>
+
+      <!-- Job Cards List -->
+      <div class="space-y-6">
+        @for (job of activeJobs; track job.id) {
+          <div class="job-card bg-white rounded-3xl p-8 sm:p-10 shadow-sm hover:shadow-xl border border-gray-100 transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-6 group">
+            
+            <div class="space-y-3 flex-1">
+              <!-- Department & Type Badges -->
+              <div class="flex items-center gap-2.5 flex-wrap">
+                <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-[#27AE60]/10 text-[#27AE60]">
+                  {{ job.department }}
+                </span>
+                <span class="text-xs font-medium px-3 py-1 rounded-full bg-gray-100 text-gray-700">
+                  {{ job.type }}
+                </span>
+                <span class="text-xs text-gray-400 flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                  </svg>
+                  {{ job.location }}
+                </span>
+              </div>
+
+              <!-- Title -->
+              <h3 class="text-xl sm:text-2xl font-extrabold text-[#0D1B2A] group-hover:text-[#27AE60] transition-colors">
+                {{ job.title }}
+              </h3>
+
+              <!-- Description -->
+              <p class="text-sm text-gray-600 leading-relaxed max-w-2xl">
+                {{ job.description }}
+              </p>
+            </div>
+
+            <!-- Apply Now Button -->
+            <div class="flex-shrink-0">
+              <button
+                type="button"
+                (click)="openApplyModal(job.title)"
+                class="w-full sm:w-auto px-7 py-3.5 rounded-full bg-[#0D1B2A] hover:bg-[#27AE60] text-white font-bold text-sm transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 cursor-pointer inline-flex items-center justify-center gap-2"
+              >
+                <span>Apply Now</span>
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </button>
+            </div>
+
+          </div>
+        }
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── 4. "NO OPEN ROLES?" GENERAL APPLICATION SECTION ────────────────── -->
+  <section class="general-apply-section py-20 bg-white border-t border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      
+      <div class="text-center mb-10">
+        <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#27AE60] block mb-2">
+          SPECULATIVE CANDIDACIES
+        </span>
+        <h2 class="text-3xl font-extrabold text-[#0D1B2A]">
+          Don't see the right role open?
+        </h2>
+        <p class="text-gray-600 text-sm sm:text-base mt-2">
+          We’re always keen to connect with exceptional engineers, AI researchers, and designers. Send us your profile.
+        </p>
+      </div>
+
+      @if (generalSubmitted()) {
+        <div class="p-8 rounded-2xl bg-[#27AE60]/10 border border-[#27AE60] text-center text-[#0D1B2A]">
+          <h3 class="text-xl font-bold text-[#27AE60] mb-2">Application Received!</h3>
+          <p class="text-sm">Thank you for reaching out. Our engineering leadership reviews general applications weekly.</p>
+        </div>
+      } @else {
+        <form (ngSubmit)="submitGeneralApplication()" class="space-y-5 bg-[#F4F7F4] p-8 sm:p-10 rounded-3xl border border-gray-200/70">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">Full Name *</label>
+              <input
+                type="text"
+                [(ngModel)]="generalFormData.name"
+                name="genName"
+                required
+                placeholder="Ada Lovelace"
+                class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:border-[#27AE60] focus:outline-none text-sm text-gray-900"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">Email Address *</label>
+              <input
+                type="email"
+                [(ngModel)]="generalFormData.email"
+                name="genEmail"
+                required
+                placeholder="ada@domain.com"
+                class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:border-[#27AE60] focus:outline-none text-sm text-gray-900"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">Phone Number *</label>
+              <input
+                type="tel"
+                [(ngModel)]="generalFormData.phone"
+                name="genPhone"
+                required
+                placeholder="+91 98765 43210"
+                class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:border-[#27AE60] focus:outline-none text-sm text-gray-900"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">Resume Upload</label>
+              <input
+                type="file"
+                (change)="handleGeneralFileUpload($event)"
+                class="w-full px-3 py-2.5 rounded-xl bg-white border border-gray-200 text-xs text-gray-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-[#27AE60]/10 file:text-[#27AE60]"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">What are you excited to build with us?</label>
+            <textarea
+              [(ngModel)]="generalFormData.coverLetter"
+              name="genCover"
+              rows="3"
+              placeholder="Tell us about the hardest engineering problem you've tackled recently..."
+              class="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:border-[#27AE60] focus:outline-none text-sm text-gray-900"
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="px-8 py-3.5 rounded-full bg-[#27AE60] hover:bg-[#219653] text-white font-bold text-sm transition-all shadow-md cursor-pointer"
+          >
+            Submit General Application
+          </button>
+        </form>
+      }
+
+    </div>
+  </section>
+
+  <!-- ── 3. APPLICATION FORM MODAL (Opens on "Apply Now") ───────────────── -->
+  @if (isModalOpen()) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+      <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+        
+        <!-- Close button -->
+        <button
+          type="button"
+          (click)="closeModal()"
+          class="absolute top-6 right-6 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 transition-colors"
+        >
+          ✕
+        </button>
+
+        @if (isSubmitted()) {
+          <div class="text-center py-12 space-y-4">
+            <div class="w-16 h-16 rounded-full bg-[#27AE60]/20 text-[#27AE60] flex items-center justify-center mx-auto text-2xl font-bold">
+              ✓
+            </div>
+            <h3 class="text-2xl font-extrabold text-[#0D1B2A]">Application Submitted!</h3>
+            <p class="text-sm text-gray-600">
+              We've dispatched your application details to our hiring team (contact.vtscraft&#64;gmail.com). We will get back to you shortly.
+            </p>
+          </div>
+        } @else {
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-[#27AE60] block mb-1">APPLY FOR POSITION</span>
+            <h3 class="text-2xl font-extrabold text-[#0D1B2A] mb-4">{{ selectedPosition() }}</h3>
+
+            <form (ngSubmit)="submitModalApplication()" class="space-y-4">
+              <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Full Name *</label>
+                <input
+                  type="text"
+                  [(ngModel)]="formData.name"
+                  name="modalName"
+                  required
+                  class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#27AE60] focus:outline-none text-sm text-gray-900"
+                />
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Email *</label>
+                  <input
+                    type="email"
+                    [(ngModel)]="formData.email"
+                    name="modalEmail"
+                    required
+                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#27AE60] focus:outline-none text-sm text-gray-900"
+                  />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Phone *</label>
+                  <input
+                    type="tel"
+                    [(ngModel)]="formData.phone"
+                    name="modalPhone"
+                    required
+                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#27AE60] focus:outline-none text-sm text-gray-900"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Resume Upload</label>
+                <input
+                  type="file"
+                  (change)="handleFileUpload($event)"
+                  class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs text-gray-600 file:mr-3 file:py-1 file:px-2.5 file:rounded-md file:border-0 file:bg-[#27AE60]/10 file:text-[#27AE60] file:font-semibold"
+                />
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Cover Note / Key Highlights</label>
+                <textarea
+                  [(ngModel)]="formData.coverLetter"
+                  name="modalCover"
+                  rows="3"
+                  placeholder="Share links to GitHub, portfolio, or proudest engineering accomplishment..."
+                  class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#27AE60] focus:outline-none text-sm text-gray-900"
+                ></textarea>
+              </div>
+
+              <div class="pt-2 flex justify-end gap-3">
+                <button
+                  type="button"
+                  (click)="closeModal()"
+                  class="px-5 py-2.5 rounded-full border border-gray-200 text-sm font-semibold text-gray-600 hover:bg-gray-100"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  class="px-7 py-2.5 rounded-full bg-[#27AE60] hover:bg-[#219653] text-white text-sm font-bold shadow-md cursor-pointer"
+                >
+                  Submit Application
+                </button>
+              </div>
+            </form>
+          </div>
+        }
+
+      </div>
+    </div>
+  }
+
+</div>
