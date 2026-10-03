@@ -1,0 +1,96 @@
+<section id="stats" class="stats-section relative bg-[#F4F7F4] py-16 sm:py-20 border-t border-gray-200/60 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Top row: Heading on left, Halftone globe illustration on right -->
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8 mb-12 sm:mb-16">
+      <div class="max-w-xl">
+        <span class="text-xs sm:text-sm font-bold tracking-[0.2em] text-gray-500 uppercase block mb-2">
+          TRUSTED BY TEAMS AT
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0D1B2A] tracking-tight">
+          EVERY SCALE
+        </h2>
+        <p class="mt-4 text-gray-600 text-base leading-relaxed">
+          From fast-moving startups building their first MVP to scaling enterprises replacing legacy monoliths, we deliver systems engineered for endurance.
+        </p>
+      </div>
+
+      <!-- Halftone globe illustration with people silhouettes -->
+      <div class="globe-illustration relative flex-shrink-0 flex items-center justify-center w-full lg:w-96 h-48 sm:h-56">
+        <svg class="w-full h-full max-w-sm" viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="globeGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#27AE60" stop-opacity="0.25" />
+              <stop offset="100%" stop-color="#F4F7F4" stop-opacity="0" />
+            </radialGradient>
+            <pattern id="halftonePattern" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+              <circle cx="8" cy="8" r="2.2" fill="#27AE60" opacity="0.4" />
+            </pattern>
+          </defs>
+
+          <!-- Globe Glow backdrop -->
+          <circle cx="200" cy="110" r="95" fill="url(#globeGlow)" />
+
+          <!-- Globe Halftone Spherical Grid -->
+          <circle cx="200" cy="110" r="80" stroke="#0D1B2A" stroke-opacity="0.12" stroke-width="1.5" />
+          <ellipse cx="200" cy="110" rx="80" ry="32" stroke="#27AE60" stroke-opacity="0.3" stroke-width="1.5" stroke-dasharray="4 4" />
+          <ellipse cx="200" cy="110" rx="42" ry="80" stroke="#0D1B2A" stroke-opacity="0.12" stroke-width="1.2" />
+          <line x1="120" y1="110" x2="280" y2="110" stroke="#27AE60" stroke-opacity="0.35" stroke-width="1.5" />
+
+          <!-- Halftone Dot Clusters inside globe -->
+          <circle cx="160" cy="85" r="3" fill="#27AE60" opacity="0.8" />
+          <circle cx="180" cy="75" r="2" fill="#0D1B2A" opacity="0.6" />
+          <circle cx="230" cy="90" r="3.5" fill="#27AE60" opacity="0.9" />
+          <circle cx="245" cy="120" r="2.5" fill="#0D1B2A" opacity="0.7" />
+          <circle cx="165" cy="130" r="3" fill="#27AE60" opacity="0.75" />
+          <circle cx="200" cy="105" r="4" fill="#27AE60" />
+          <circle cx="200" cy="145" r="2" fill="#0D1B2A" opacity="0.5" />
+
+          <!-- Connecting network pulses -->
+          <path d="M160 85 Q 200 105 230 90" stroke="#27AE60" stroke-width="1.5" stroke-dasharray="2 3" opacity="0.7"/>
+          <path d="M230 90 Q 245 120 200 145" stroke="#27AE60" stroke-width="1.5" stroke-dasharray="2 3" opacity="0.7"/>
+          <path d="M165 130 Q 200 105 160 85" stroke="#27AE60" stroke-width="1.5" stroke-dasharray="2 3" opacity="0.7"/>
+
+          <!-- Stylized people silhouettes around the network nodes -->
+          <!-- Person 1 (Left) -->
+          <g transform="translate(130, 80)">
+            <circle cx="10" cy="4" r="4" fill="#0D1B2A" opacity="0.85" />
+            <path d="M3 18 C3 13 7 11 10 11 C13 11 17 13 17 18 Z" fill="#0D1B2A" opacity="0.85" />
+          </g>
+          <!-- Person 2 (Center-Right, highlight green) -->
+          <g transform="translate(250, 75)">
+            <circle cx="10" cy="4" r="4.5" fill="#27AE60" />
+            <path d="M2 19 C2 13 6 11 10 11 C14 11 18 13 18 19 Z" fill="#27AE60" />
+          </g>
+          <!-- Person 3 (Bottom Center) -->
+          <g transform="translate(190, 155)">
+            <circle cx="10" cy="4" r="4" fill="#0D1B2A" opacity="0.8" />
+            <path d="M3 18 C3 13 7 11 10 11 C13 11 17 13 17 18 Z" fill="#0D1B2A" opacity="0.8" />
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 3 white cards side by side -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+      @for (card of stats; track card.title) {
+        <div class="stat-card bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 border border-gray-100 flex flex-col justify-between group">
+          <div>
+            <div class="text-4xl sm:text-5xl lg:text-6xl font-black text-[#27AE60] tracking-tight mb-3 group-hover:scale-105 transition-transform duration-300 origin-left">
+              {{ card.number }}
+            </div>
+            <h3 class="text-xl font-bold text-[#0D1B2A] mb-2 tracking-tight">
+              {{ card.title }}
+            </h3>
+            <p class="text-sm text-gray-500 leading-relaxed">
+              {{ card.subtext }}
+            </p>
+          </div>
+          <!-- Subtle green accent bar on hover -->
+          <div class="mt-6 w-12 h-1 bg-gray-100 group-hover:bg-[#27AE60] group-hover:w-full transition-all duration-300 rounded-full"></div>
+        </div>
+      }
+    </div>
+
+  </div>
+</section>

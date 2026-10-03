@@ -1,0 +1,83 @@
+/* ─── Hero Section Styling ─────────────────────────────────────────────── */
+
+.hero-section {
+  position: relative;
+  background-color: #F4F7F4;
+}
+
+// Subtle dot grid pattern in background
+.dot-grid-bg {
+  background-image: radial-gradient(rgba(39, 174, 96, 0.18) 1.2px, transparent 1.2px);
+  background-size: 28px 28px;
+  background-position: 0 0;
+  opacity: 0.75;
+}
+
+// ─── Isometric 3D Stacks ─────────────────────────────────────────────────────
+.left-decoration, .right-decoration {
+  perspective: 1200px;
+}
+
+.isometric-stack {
+  transform-style: preserve-3d;
+}
+
+.iso-card {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  backdrop-filter: blur(8px);
+}
+
+// Left side isometric tilts
+.iso-card-1 {
+  transform: rotate(-10deg) skewX(8deg) translateY(0);
+}
+
+.iso-card-2 {
+  transform: rotate(-6deg) skewX(5deg) translateY(-10px);
+}
+
+// Right side isometric tilts
+.iso-card-right-1 {
+  transform: rotate(10deg) skewX(-8deg) translateY(0);
+}
+
+.iso-card-right-2 {
+  transform: rotate(6deg) skewX(-5deg) translateY(-10px);
+}
+
+// ─── Floating Animations ──────────────────────────────────────────────────────
+@keyframes floatUpAndDown {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes floatUpAndDownDelayed {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(12px);
+  }
+}
+
+.animate-float {
+  animation: floatUpAndDown 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: floatUpAndDownDelayed 7s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.25; }
+}

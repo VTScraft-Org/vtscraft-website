@@ -1,0 +1,127 @@
+<section id="faq" class="faq-section relative overflow-hidden">
+  
+  <!-- ── Top Banner Dark (#0D1B2A) ────────────────────────────────────────── -->
+  <div class="top-banner bg-[#0D1B2A] py-16 sm:py-20 px-4 text-center border-b border-white/10 relative">
+    <div class="max-w-3xl mx-auto">
+      <span class="inline-block text-xs font-bold uppercase tracking-[0.25em] text-[#27AE60] mb-3">
+        TRANSPARENCY FIRST
+      </span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
+        Questions you're probably already asking
+      </h2>
+      <p class="text-base sm:text-lg text-white/70 mt-4 leading-relaxed font-normal">
+        No generic answers, just what you'd actually want to know.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Below (Light bg #F4F7F4): 2 Columns ─────────────────────────────── -->
+  <div class="faq-content-area bg-[#F4F7F4] py-16 sm:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        
+        <!-- Left Column: Numbered Question List (7 questions) -->
+        <div class="lg:col-span-6 space-y-3">
+          @for (faq of faqs; track faq.id) {
+            <button
+              type="button"
+              (click)="setActive(faq.id)"
+              class="w-full text-left p-4 sm:p-5 rounded-2xl sm:rounded-full transition-all duration-300 flex items-center justify-between gap-4 cursor-pointer"
+              [class.active-pill]="activeId() === faq.id"
+              [class.inactive-pill]="activeId() !== faq.id"
+            >
+              <div class="flex items-center gap-3.5 sm:gap-4 overflow-hidden">
+                <span
+                  class="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs font-mono font-bold flex-shrink-0 transition-colors"
+                  [class.bg-[#27AE60]]="activeId() === faq.id"
+                  [class.text-white]="activeId() === faq.id"
+                  [class.bg-gray-200]="activeId() !== faq.id"
+                  [class.text-gray-600]="activeId() !== faq.id"
+                >
+                  0{{ faq.id }}
+                </span>
+                <span
+                  class="text-sm sm:text-base font-bold truncate transition-colors"
+                  [class.text-[#0D1B2A]]="activeId() === faq.id"
+                  [class.text-gray-700]="activeId() !== faq.id"
+                >
+                  {{ faq.question }}
+                </span>
+              </div>
+
+              <!-- Chevron indicator -->
+              <svg
+                class="w-5 h-5 flex-shrink-0 transition-transform duration-200"
+                [class.text-[#27AE60]]="activeId() === faq.id"
+                [class.translate-x-1]="activeId() === faq.id"
+                [class.text-gray-400]="activeId() !== faq.id"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
+          }
+        </div>
+
+        <!-- Right Column: "The Answers to the Questions" + Active Answer -->
+        <div class="lg:col-span-6">
+          <div class="answer-card bg-white rounded-3xl p-8 sm:p-12 shadow-xl border border-gray-100 relative overflow-hidden transition-all duration-300">
+            
+            <!-- Top badge -->
+            <div class="flex items-center justify-between pb-6 border-b border-gray-100 mb-6">
+              <span class="text-xs font-bold uppercase tracking-widest text-[#27AE60] bg-[#27AE60]/10 px-3 py-1 rounded-full">
+                FAQ #0{{ currentFaq.id }}
+              </span>
+              <span class="text-xs text-gray-400 font-mono">VTScraft Insights</span>
+            </div>
+
+            <!-- Heading: The Answers to the Questions -->
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-[#0D1B2A] tracking-tight mb-4">
+              The Answers to the Questions
+            </h3>
+
+            <!-- Active Question Label -->
+            <h4 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b border-gray-100">
+              {{ currentFaq.question }}
+            </h4>
+
+            <!-- Active Answer Paragraph -->
+            <p class="text-gray-600 text-base sm:text-lg leading-relaxed mb-6">
+              {{ currentFaq.answer }}
+            </p>
+
+            <!-- Key Highlight Callout Box -->
+            <div class="bg-[#27AE60]/10 border-l-4 border-[#27AE60] p-4 rounded-r-2xl mb-8">
+              <span class="text-xs font-bold uppercase tracking-wider text-[#27AE60] block mb-1">Takeaway</span>
+              <p class="text-sm font-semibold text-[#0D1B2A]">
+                {{ currentFaq.keyHighlight }}
+              </p>
+            </div>
+
+            <!-- Still have questions footer CTA -->
+            <div class="pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <p class="text-xs text-gray-500 font-medium">Have a question not listed here?</p>
+                <p class="text-sm font-bold text-[#0D1B2A]">We're happy to answer anything directly.</p>
+              </div>
+              <a
+                routerLink="/contact"
+                class="px-5 py-2.5 rounded-full bg-[#0D1B2A] hover:bg-[#27AE60] text-white text-xs font-bold transition-colors cursor-pointer"
+              >
+                Ask Us Directly →
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</section>

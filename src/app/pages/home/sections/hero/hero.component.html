@@ -1,0 +1,233 @@
+<section id="hero" class="hero-section relative min-h-screen flex items-center justify-center bg-[#F4F7F4] overflow-hidden pt-28 sm:pt-32 pb-16 lg:py-24">
+
+  <!-- Subtle dot grid pattern in background -->
+  <div class="dot-grid-bg absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+
+  <!-- Ambient light gradients -->
+  <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[720px] h-[380px] bg-[#27AE60]/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute bottom-10 left-10 w-96 h-96 bg-[#1A3A6B]/5 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+  <!-- SVG Curved Dotted Line connecting left through center to right (Zypher style) -->
+  <svg class="absolute inset-0 w-full h-full pointer-events-none hidden md:block" viewBox="0 0 1440 820" preserveAspectRatio="none" fill="none" aria-hidden="true">
+    <path
+      d="M 60,540 C 260,340 380,680 720,430 C 1040,190 1200,560 1380,320"
+      stroke="#27AE60"
+      stroke-width="2.5"
+      stroke-dasharray="6 10"
+      stroke-linecap="round"
+      opacity="0.55"
+      class="animate-pulse-slow"
+    />
+    <!-- Glowing marker dots along the path -->
+    <circle cx="280" cy="420" r="5" fill="#27AE60" opacity="0.8" />
+    <circle cx="720" cy="430" r="6" fill="#27AE60" opacity="0.9" />
+    <circle cx="1180" cy="380" r="5" fill="#27AE60" opacity="0.8" />
+  </svg>
+
+  <div class="container-custom relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-between">
+
+    <!-- ── LEFT DECORATION: Isometric Tech Illustration ─────────────────── -->
+    <div class="left-decoration hidden xl:flex flex-col items-center justify-center flex-shrink-0 w-72 pointer-events-none select-none">
+      <div class="isometric-stack relative w-64 h-80 animate-float">
+        <!-- Floating Backdrop Glow -->
+        <div class="absolute inset-0 bg-gradient-to-tr from-[#1A3A6B]/30 to-[#27AE60]/30 rounded-3xl blur-2xl transform -rotate-12 scale-90"></div>
+
+        <!-- Layer 1: Base Tech Surface -->
+        <div class="iso-card iso-card-1 absolute top-16 left-0 w-60 h-44 rounded-2xl bg-gradient-to-br from-[#0D1B2A] to-[#1A3A6B] p-4 shadow-2xl border border-white/10 text-white">
+          <div class="flex items-center justify-between pb-2 border-b border-white/10">
+            <div class="flex gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-400 inline-block"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block"></span>
+            </div>
+            <span class="text-[10px] text-white/50 font-mono tracking-wider">LIVE_METRICS</span>
+          </div>
+          <!-- Sparkline / bar charts -->
+          <div class="mt-3 flex items-end gap-2 h-16 pt-2">
+            <div class="w-3 bg-white/20 rounded-t h-8"></div>
+            <div class="w-3 bg-white/30 rounded-t h-12"></div>
+            <div class="w-3 bg-[#27AE60]/60 rounded-t h-10"></div>
+            <div class="w-3 bg-[#27AE60] rounded-t h-16 shadow-sm shadow-[#27AE60]"></div>
+            <div class="w-3 bg-white/30 rounded-t h-11"></div>
+            <div class="w-3 bg-[#27AE60]/80 rounded-t h-14"></div>
+            <div class="w-3 bg-white/20 rounded-t h-7"></div>
+          </div>
+          <div class="mt-2 flex justify-between items-center text-[10px] text-white/70">
+            <span>Latency: 12ms</span>
+            <span class="text-[#27AE60] font-semibold">99.98% Uptime</span>
+          </div>
+        </div>
+
+        <!-- Layer 2: Floating Analytics Card -->
+        <div class="iso-card iso-card-2 absolute top-0 left-8 w-56 h-36 rounded-2xl bg-white/95 backdrop-blur-md p-3.5 shadow-xl border border-white/80 text-[#0D1B2A] animate-float-delayed">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Active Workflows</span>
+            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[#27AE60]/10 text-[#27AE60]">
+              +38% MoM
+            </span>
+          </div>
+          <div class="mt-2 text-2xl font-extrabold text-[#0D1B2A]">1,280<span class="text-[#27AE60] text-sm"> req/s</span></div>
+          <div class="mt-2.5 w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+            <div class="bg-gradient-to-r from-[#1A3A6B] to-[#27AE60] h-1.5 rounded-full" style="width: 78%"></div>
+          </div>
+          <div class="mt-2 text-[10px] text-gray-400 flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#27AE60] animate-pulse"></span>
+            Real-time pipeline active
+          </div>
+        </div>
+
+        <!-- Layer 3: Floating Mini Pill Badge -->
+        <div class="iso-card absolute bottom-2 right-2 px-3 py-1.5 rounded-full bg-[#0D1B2A] text-white text-[11px] font-medium shadow-lg flex items-center gap-2 border border-white/10">
+          <span class="w-2 h-2 rounded-full bg-[#27AE60]"></span>
+          <span>Zero Bolt-on</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CENTER CONTENT ───────────────────────────────────────────────── -->
+    <div class="center-content max-w-3xl mx-auto text-center flex-1 px-2 sm:px-4">
+      
+      <!-- Small caps overline -->
+      <div class="inline-block mb-4 sm:mb-6">
+        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-[#27AE60]/30 shadow-sm text-xs font-bold uppercase tracking-[0.22em] text-[#27AE60]">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#27AE60]"></span>
+          CRAFTING DIGITAL EXCELLENCE
+        </span>
+      </div>
+
+      <!-- H1 Large Bold (64px) -->
+      <h1 class="text-4xl sm:text-5xl lg:text-[64px] font-extrabold text-[#0D1B2A] leading-[1.08] tracking-tight mb-6">
+        Solutions Built Around<br />
+        <span class="text-[#0D1B2A] relative inline-block">
+          How Your Business Works
+          <svg class="absolute -bottom-2 left-0 w-full h-2.5 text-[#27AE60]/40 -z-10" viewBox="0 0 200 8" fill="none" preserveAspectRatio="none">
+            <path d="M1 5.5C40 2 160 2 199 5.5" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </h1>
+
+      <!-- Subtext (18px, gray) -->
+      <p class="text-base sm:text-lg lg:text-[18px] text-gray-600 max-w-2xl mx-auto leading-relaxed mb-10 font-normal">
+        No generic templates. No bolt-on features.<br class="hidden sm:inline" />
+        Just digital systems shaped around you, built by a team that stays after launch.
+      </p>
+
+      <!-- Two CTA Buttons side by side -->
+      <div class="cta-buttons flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5">
+        <!-- 1. Book a Discovery Call (filled green #27AE60, white text, pill shape) -->
+        <a
+          routerLink="/contact"
+          class="w-full sm:w-auto px-8 py-4 rounded-full bg-[#27AE60] hover:bg-[#219653] text-white font-semibold text-base transition-all duration-300 shadow-lg shadow-[#27AE60]/25 hover:shadow-xl hover:shadow-[#27AE60]/40 hover:-translate-y-0.5 inline-flex items-center justify-center gap-2 group cursor-pointer"
+        >
+          <span>Book a Discovery Call</span>
+          <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        </a>
+
+        <!-- 2. See Our Work (outline border navy, navy text, pill shape) -->
+        <a
+          routerLink="/work"
+          class="w-full sm:w-auto px-8 py-4 rounded-full border-2 border-[#0D1B2A] text-[#0D1B2A] hover:bg-[#0D1B2A] hover:text-white font-semibold text-base transition-all duration-300 hover:-translate-y-0.5 inline-flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+        >
+          <span>See Our Work</span>
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- Trust micro-line below CTAs -->
+      <div class="mt-8 flex items-center justify-center gap-6 text-xs text-gray-500 font-medium">
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-[#27AE60]" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          100% Code Ownership
+        </span>
+        <span class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-[#27AE60]" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          Dedicated Team
+        </span>
+        <span class="hidden sm:flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-[#27AE60]" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          Post-Launch Support
+        </span>
+      </div>
+
+    </div>
+
+    <!-- ── RIGHT DECORATION: Isometric City/Infrastructure Illustration ── -->
+    <div class="right-decoration hidden xl:flex flex-col items-center justify-center flex-shrink-0 w-72 pointer-events-none select-none">
+      <div class="isometric-stack relative w-64 h-80 animate-float-delayed">
+        <!-- Floating Backdrop Glow (Green-toned) -->
+        <div class="absolute inset-0 bg-gradient-to-bl from-[#27AE60]/30 to-[#1A3A6B]/20 rounded-3xl blur-2xl transform rotate-12 scale-90"></div>
+
+        <!-- Layer 1: Infrastructure Main Building Block -->
+        <div class="iso-card iso-card-right-1 absolute top-12 right-0 w-60 h-48 rounded-2xl bg-white/95 backdrop-blur-md p-4 shadow-2xl border border-[#27AE60]/20 text-[#0D1B2A]">
+          <div class="flex items-center justify-between pb-2 border-b border-gray-100">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#27AE60] animate-ping"></span>
+              <span class="text-[11px] font-bold text-[#0D1B2A]">INFRASTRUCTURE</span>
+            </div>
+            <span class="text-[10px] text-[#27AE60] font-mono font-semibold">GLOBAL_NODE</span>
+          </div>
+
+          <!-- Isometric Tower Graphics -->
+          <div class="mt-3 grid grid-cols-3 gap-2">
+            <div class="bg-[#F4F7F4] rounded-lg p-2 flex flex-col items-center justify-center border border-[#27AE60]/15">
+              <span class="text-[9px] text-gray-500 uppercase font-mono">NODE A</span>
+              <div class="w-5 h-7 mt-1 rounded bg-[#27AE60]/20 flex items-center justify-center">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#27AE60]"></span>
+              </div>
+            </div>
+            <div class="bg-[#0D1B2A] text-white rounded-lg p-2 flex flex-col items-center justify-center shadow-sm">
+              <span class="text-[9px] text-[#27AE60] uppercase font-mono">CORE</span>
+              <div class="w-5 h-7 mt-1 rounded bg-[#27AE60] flex items-center justify-center">
+                <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+              </div>
+            </div>
+            <div class="bg-[#F4F7F4] rounded-lg p-2 flex flex-col items-center justify-center border border-[#27AE60]/15">
+              <span class="text-[9px] text-gray-500 uppercase font-mono">NODE B</span>
+              <div class="w-5 h-7 mt-1 rounded bg-[#27AE60]/20 flex items-center justify-center">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#27AE60]"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-3 flex items-center justify-between text-[11px]">
+            <span class="text-gray-500">Global Mesh</span>
+            <span class="text-[#27AE60] font-bold">100% Redundant</span>
+          </div>
+        </div>
+
+        <!-- Layer 2: Floating City / Cloud Node -->
+        <div class="iso-card iso-card-right-2 absolute -top-2 right-8 w-52 h-32 rounded-2xl bg-gradient-to-tr from-[#0D1B2A] to-[#1A3A6B] p-3.5 shadow-xl border border-white/10 text-white animate-float">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] uppercase font-mono text-[#27AE60] font-bold">Cloud Fabric</span>
+            <span class="text-[10px] text-white/50">v4.2</span>
+          </div>
+          <div class="mt-2 text-xl font-bold text-white flex items-center gap-1.5">
+            <svg class="w-5 h-5 text-[#27AE60]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+            <span>Hybrid Scale</span>
+          </div>
+          <div class="mt-2 text-[10px] text-white/60">Distributed across 8 global regions</div>
+        </div>
+
+        <!-- Layer 3: Mini Badge -->
+        <div class="iso-card absolute bottom-4 left-2 px-3 py-1.5 rounded-full bg-[#27AE60] text-white text-[11px] font-semibold shadow-lg flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+          <span>Scalable Systems</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>

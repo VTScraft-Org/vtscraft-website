@@ -1,0 +1,237 @@
+<!-- ═══════════════════════════════════════════════════════════════════════
+     VTScraft Floating Pill Navbar
+     Matches Zypher Solutions design: centered floating pill, white bg,
+     active link = dark navy pill, Contact Us = dark navy pill button
+     ═══════════════════════════════════════════════════════════════════════ -->
+
+<!-- Outer wrapper: full-width fixed strip, provides horizontal centering -->
+<header
+  class="navbar-wrapper fixed top-0 left-0 right-0 z-50 flex justify-center px-4 sm:px-6"
+  [class.scrolled]="isScrolled()"
+  aria-label="Main navigation">
+
+  <!-- ── The floating pill ──────────────────────────────────────────────── -->
+  <nav
+    class="navbar-pill flex items-center w-full"
+    [class.pill-scrolled]="isScrolled()"
+    role="navigation">
+
+    <!-- ── LOGO ─────────────────────────────────────────────────────────── -->
+    <a
+      routerLink="/"
+      (click)="closeMobile()"
+      class="logo-link flex items-center gap-2.5 flex-shrink-0"
+      aria-label="VTScraft home">
+
+      <!-- Logo image — falls back to initials badge if image not present -->
+      <div class="logo-img-wrap flex-shrink-0">
+        <img
+          src="/images/logo.png"
+          alt="VTScraft logo"
+          class="logo-img"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        />
+        <!-- Fallback badge -->
+        <div class="logo-fallback" style="display:none">
+          <span>VTS</span>
+        </div>
+      </div>
+
+      <!-- Text lockup -->
+      <div class="logo-text flex flex-col leading-none">
+        <span class="logo-brand">VTScraft</span>
+        <span class="logo-tagline hidden sm:block">Crafting Digital Excellence</span>
+      </div>
+    </a>
+
+    <!-- ── DESKTOP NAV LINKS (centered via flex-1) ───────────────────────── -->
+    <ul class="nav-links hidden lg:flex items-center gap-1 flex-1 justify-center" role="list">
+
+      @for (item of navItems; track item.label) {
+
+        @if (!item.children) {
+          <!-- Regular link -->
+          <li>
+            <a
+              [routerLink]="item.route"
+              routerLinkActive="nav-link-active"
+              [routerLinkActiveOptions]="{ exact: item.route === '/' }"
+              class="nav-link"
+              (click)="closeMobile()">
+              {{ item.label }}
+            </a>
+          </li>
+
+        } @else {
+          <!-- Services dropdown (hover on desktop) -->
+          <li
+            class="relative"
+            (mouseenter)="onServicesEnter()"
+            (mouseleave)="onServicesLeave()">
+
+            <!-- Trigger button — visually identical to nav-link but with chevron -->
+            <button
+              type="button"
+              class="nav-link nav-dropdown-trigger flex items-center gap-1"
+              [class.nav-link-active]="isServicesHovered()"
+              [attr.aria-expanded]="isServicesHovered()"
+              aria-haspopup="true"
+              id="services-menu-btn">
+              {{ item.label }}
+              <!-- Chevron -->
+              <svg
+                class="chevron w-3.5 h-3.5 transition-transform duration-200"
+                [class.-rotate-180]="isServicesHovered()"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true">
+                <path fill-rule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                  clip-rule="evenodd" />
+              </svg>
+            </button>
+
+            <!-- Dropdown panel -->
+            @if (isServicesHovered()) {
+              <div
+                class="dropdown-panel"
+                role="menu"
+                aria-labelledby="services-menu-btn"
+                (mouseenter)="onServicesEnter()"
+                (mouseleave)="onServicesLeave()">
+
+                @for (child of item.children; track child.label) {
+                  <a
+                    [routerLink]="child.route"
+                    (click)="isServicesHovered.set(false)"
+                    class="dropdown-item"
+                    role="menuitem">
+                    <span class="dropdown-icon">{{ child.icon }}</span>
+                    <span>{{ child.label }}</span>
+                  </a>
+                }
+              </div>
+            }
+          </li>
+        }
+
+      }
+    </ul>
+
+    <!-- ── DESKTOP: Contact Us CTA ──────────────────────────────────────── -->
+    <div class="hidden lg:flex items-center flex-shrink-0">
+      <a
+        routerLink="/contact"
+        id="nav-contact-btn"
+        class="contact-btn">
+        Contact Us
+      </a>
+    </div>
+
+    <!-- ── MOBILE: Hamburger ─────────────────────────────────────────────── -->
+    <button
+      type="button"
+      class="mobile-menu-btn lg:hidden ml-auto"
+      (click)="toggleMobile()"
+      [attr.aria-expanded]="isMobileOpen()"
+      aria-controls="mobile-menu"
+      aria-label="Toggle navigation menu">
+
+      @if (isMobileOpen()) {
+        <!-- X icon -->
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      } @else {
+        <!-- Hamburger icon -->
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="3" y1="6"  x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      }
+    </button>
+
+  </nav><!-- /pill -->
+
+  <!-- ── MOBILE DRAWER ──────────────────────────────────────────────────── -->
+  @if (isMobileOpen()) {
+    <div
+      id="mobile-menu"
+      class="mobile-drawer"
+      role="dialog"
+      aria-label="Mobile navigation menu">
+
+      <ul class="space-y-1" role="list">
+
+        @for (item of navItems; track item.label) {
+
+          @if (!item.children) {
+            <li>
+              <a
+                [routerLink]="item.route"
+                (click)="closeMobile()"
+                routerLinkActive="mobile-link-active"
+                [routerLinkActiveOptions]="{ exact: item.route === '/' }"
+                class="mobile-link">
+                {{ item.label }}
+              </a>
+            </li>
+
+          } @else {
+            <li>
+              <!-- Services accordion trigger -->
+              <button
+                type="button"
+                class="mobile-link w-full flex items-center justify-between"
+                (click)="toggleMobileServices()"
+                [attr.aria-expanded]="isMobileServicesOpen()">
+                {{ item.label }}
+                <svg
+                  class="w-4 h-4 transition-transform duration-200 text-gray-400"
+                  [class.-rotate-180]="isMobileServicesOpen()"
+                  viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                    clip-rule="evenodd"/>
+                </svg>
+              </button>
+
+              <!-- Accordion body -->
+              @if (isMobileServicesOpen()) {
+                <ul class="mt-1 ml-4 space-y-1 border-l-2 border-gray-100 pl-3" role="list">
+                  @for (child of item.children; track child.label) {
+                    <li>
+                      <a
+                        [routerLink]="child.route"
+                        (click)="closeMobile()"
+                        class="mobile-child-link flex items-center gap-2">
+                        <span class="text-base leading-none">{{ child.icon }}</span>
+                        <span>{{ child.label }}</span>
+                      </a>
+                    </li>
+                  }
+                </ul>
+              }
+            </li>
+          }
+
+        }
+      </ul>
+
+      <!-- Mobile CTA -->
+      <div class="mt-4 pt-4 border-t border-gray-100">
+        <a
+          routerLink="/contact"
+          (click)="closeMobile()"
+          id="mobile-contact-btn"
+          class="block text-center w-full py-3 rounded-full bg-[#0D1B2A] text-white text-sm font-semibold hover:bg-[#1A3A6B] transition-colors duration-200">
+          Contact Us
+        </a>
+      </div>
+
+    </div><!-- /mobile-drawer -->
+  }
+
+</header>
