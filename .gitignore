@@ -1,17 +1,58 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
+# ═══════════════════════════════════════════════════
 # Compiled output
+# ═══════════════════════════════════════════════════
 /dist
 /tmp
 /out-tsc
 /bazel-out
 
+# ═══════════════════════════════════════════════════
 # Node
+# ═══════════════════════════════════════════════════
 /node_modules
 npm-debug.log
 yarn-error.log
+yarn.lock
+pnpm-lock.yaml
 
+# ═══════════════════════════════════════════════════
+# Environment Variables & Secrets (CRITICAL)
+# ═══════════════════════════════════════════════════
+.env
+.env.*
+.env.local
+.env.development
+.env.staging
+.env.production
+.env.test
+*.env
+
+# ═══════════════════════════════════════════════════
+# API Keys, Tokens & Credentials
+# ═══════════════════════════════════════════════════
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
+*.jks
+**/credentials.json
+**/serviceAccountKey.json
+**/firebase-adminsdk*.json
+**/gcloud*.json
+
+# ═══════════════════════════════════════════════════
+# Vercel (deployment configs with tokens & project IDs)
+# ═══════════════════════════════════════════════════
+.vercel/
+.vercel
+
+# ═══════════════════════════════════════════════════
 # IDEs and editors
+# ═══════════════════════════════════════════════════
 .idea/
 .project
 .classpath
@@ -19,6 +60,10 @@ yarn-error.log
 *.launch
 .settings/
 *.sublime-workspace
+*.sublime-project
+*.swp
+*.swo
+*~
 
 # Visual Studio Code
 .vscode/*
@@ -29,7 +74,14 @@ yarn-error.log
 !.vscode/mcp.json
 .history/*
 
-# Miscellaneous
+# JetBrains
+*.iml
+*.iws
+*.ipr
+
+# ═══════════════════════════════════════════════════
+# Angular specific
+# ═══════════════════════════════════════════════════
 /.angular/cache
 .sass-cache/
 /connect.lock
@@ -39,8 +91,46 @@ testem.log
 /typings
 __screenshots__/
 
+# ═══════════════════════════════════════════════════
 # System files
+# ═══════════════════════════════════════════════════
 .DS_Store
+.DS_Store?
+._*
 Thumbs.db
-.env.local
-.vercel/README.txt
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ═══════════════════════════════════════════════════
+# Logs & Debug
+# ═══════════════════════════════════════════════════
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ═══════════════════════════════════════════════════
+# Text files (notes, drafts, todos - not source code)
+# ═══════════════════════════════════════════════════
+*.txt
+!LICENSE.txt
+!README.txt
+
+# ═══════════════════════════════════════════════════
+# Testing & Coverage
+# ═══════════════════════════════════════════════════
+/coverage
+/.nyc_output
+junit.xml
+
+# ═══════════════════════════════════════════════════
+# Misc build artifacts
+# ═══════════════════════════════════════════════════
+*.tgz
+*.tar.gz
+*.zip
+.cache/
+.parcel-cache/

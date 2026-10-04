@@ -1,11 +1,30 @@
+// ─── VTScraft Footer ──────────────────────────────────────────────────────────
+
 .footer-wrapper {
-  background-color: #0D1B2A;
+  background-color: #0A3228;
+  position: relative;
+}
+
+.footer-bg-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.footer-bg-img {
+  opacity: 0.22;
+  filter: saturate(1.2) contrast(1.15);
+  mix-blend-mode: screen;
+}
+
+.footer-bg-overlay {
+  background: radial-gradient(circle at 20% 40%, rgba(10, 50, 40, 0.72) 0%, rgba(8, 38, 30, 0.94) 85%);
+  pointer-events: none;
 }
 
 .social-btn {
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.25);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
   }
 }

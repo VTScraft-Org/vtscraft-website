@@ -18,7 +18,12 @@ export class CareerComponent {
   // Modal state
   isModalOpen = signal(false);
   isSubmitted = signal(false);
+  isUploading = signal(false);
   selectedPosition = signal('');
+
+  // Selected files
+  private modalResumeFile: File | null = null;
+  private generalResumeFile: File | null = null;
 
   // Form model
   formData = {
@@ -40,6 +45,7 @@ export class CareerComponent {
     coverLetter: ''
   };
   generalSubmitted = signal(false);
+  isGeneralUploading = signal(false);
 
   get activeJobs(): JobPosting[] {
     return this.jobsService.getActiveJobs();
@@ -53,7 +59,9 @@ export class CareerComponent {
     this.formData.phone = '';
     this.formData.resumeFileName = '';
     this.formData.coverLetter = '';
+    this.modalResumeFile = null;
     this.isSubmitted.set(false);
+    this.isUploading.set(false);
     this.isModalOpen.set(true);
   }
 
@@ -64,6 +72,7 @@ export class CareerComponent {
   handleFileUpload(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
+      this.modalResumeFile = input.files[0];
       this.formData.resumeFileName = input.files[0].name;
     }
   }
@@ -71,46 +80,79 @@ export class CareerComponent {
   handleGeneralFileUpload(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
+      this.generalResumeFile = input.files[0];
       this.generalFormData.resumeFileName = input.files[0].name;
     }
   }
 
-  submitModalApplication() {
+  async submitModalApplication() {
     if (!this.formData.name || !this.formData.email || !this.formData.phone) {
       alert('Please fill in required fields (Name, Email, Phone).');
       return;
     }
 
-    this.applicationsService.submitApplication({
+    this.isUploading.set(true);
+    let resumeUrl = '';
+    let resumeFileName = this.formData.resumeFileName || 'Resume.pdf';
+
+    if (this.modalResumeFile) {
+      try {
+        const res = await this.applicationsService.uploadResumeFile(this.modalResumeFile);
+        resumeUrl = res.publicUrl;
+        resumeFileName = res.fileName;
+      } catch (err) {
+        console.warn('Resume upload to storage failed, saving application without upload:', err);
+      }
+    }
+
+    await this.applicationsService.submitApplication({
       name: this.formData.name,
       email: this.formData.email,
       phone: this.formData.phone,
       position: this.formData.position || this.selectedPosition(),
-      resumeFileName: this.formData.resumeFileName || 'Resume_Attached.pdf',
+      resumeFileName,
+      resumeUrl,
       coverLetter: this.formData.coverLetter
     });
 
+    this.isUploading.set(false);
     this.isSubmitted.set(true);
     setTimeout(() => {
       this.closeModal();
     }, 2500);
   }
 
-  submitGeneralApplication() {
+  async submitGeneralApplication() {
     if (!this.generalFormData.name || !this.generalFormData.email || !this.generalFormData.phone) {
       alert('Please fill in required fields (Name, Email, Phone).');
       return;
     }
 
-    this.applicationsService.submitApplication({
+    this.isGeneralUploading.set(true);
+    let resumeUrl = '';
+    let resumeFileName = this.generalFormData.resumeFileName || 'General_Resume.pdf';
+
+    if (this.generalResumeFile) {
+      try {
+        const res = await this.applicationsService.uploadResumeFile(this.generalResumeFile);
+        resumeUrl = res.publicUrl;
+        resumeFileName = res.fileName;
+      } catch (err) {
+        console.warn('Resume upload to storage failed, saving application without upload:', err);
+      }
+    }
+
+    await this.applicationsService.submitApplication({
       name: this.generalFormData.name,
       email: this.generalFormData.email,
       phone: this.generalFormData.phone,
       position: this.generalFormData.position,
-      resumeFileName: this.generalFormData.resumeFileName || 'General_Resume.pdf',
+      resumeFileName,
+      resumeUrl,
       coverLetter: this.generalFormData.coverLetter
     });
 
+    this.isGeneralUploading.set(false);
     this.generalSubmitted.set(true);
   }
 }

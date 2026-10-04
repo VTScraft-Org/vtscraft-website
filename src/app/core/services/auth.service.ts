@@ -1,35 +1,45 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
+import { SupabaseService } from './supabase.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly ADMIN_USER = 'vtscraft_admin';
-  private readonly ADMIN_PASS = 'VTS@2026#secure';
-
   private _isLoggedIn = signal(false);
   readonly isLoggedIn = this._isLoggedIn.asReadonly();
+  private supabase = inject(SupabaseService);
 
   constructor() {
     this.checkSession();
+    
+    this.supabase.clientInstance.auth.onAuthStateChange((event, session) => {
+      this._isLoggedIn.set(!!session);
+    });
   }
 
-  login(username: string, password: string): boolean {
-    if (username === this.ADMIN_USER && password === this.ADMIN_PASS) {
-      this._isLoggedIn.set(true);
-      localStorage.setItem('isAdmin', 'true');
-      return true;
+  async login(email: string, password: string): Promise<boolean> {
+    const { error } = await this.supabase.clientInstance.auth.signInWithPassword({
+      email,
+      password
+    });
+    
+    if (error) {
+      console.error('Login error:', error.message);
+      return false;
     }
-    return false;
+    
+    this._isLoggedIn.set(true);
+    return true;
   }
 
-  logout(): void {
+  async logout(): Promise<void> {
+    await this.supabase.clientInstance.auth.signOut();
     this._isLoggedIn.set(false);
-    localStorage.removeItem('isAdmin');
   }
 
-  checkSession(): boolean {
-    const active = localStorage.getItem('isAdmin') === 'true';
+  async checkSession(): Promise<boolean> {
+    const { data: { session } } = await this.supabase.clientInstance.auth.getSession();
+    const active = !!session;
     this._isLoggedIn.set(active);
     return active;
   }

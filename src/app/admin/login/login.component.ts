@@ -23,7 +23,7 @@ export class AdminLoginComponent {
     this.error.set('');
     this.loading.set(true);
     await new Promise((r) => setTimeout(r, 400)); // UX delay
-    const ok = this.auth.login(this.username, this.password);
+    const ok = await this.auth.login(this.username, this.password);
     this.loading.set(false);
     if (ok) {
       this.router.navigate(['/admin/dashboard']);
