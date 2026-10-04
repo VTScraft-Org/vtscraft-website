@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { HeroComponent } from './sections/hero/hero.component';
 import { StatsComponent } from './sections/stats/stats.component';
-import { ClientsComponent } from './sections/clients/clients.component';
 import { WorkShowcaseComponent } from './sections/work-showcase/work-showcase.component';
 import { ExecutionGapComponent } from './sections/execution-gap/execution-gap.component';
 import { WhyUsComponent } from './sections/why-us/why-us.component';
@@ -18,7 +17,6 @@ import { CtaComponent } from './sections/cta/cta.component';
     CommonModule,
     HeroComponent,
     StatsComponent,
-    ClientsComponent,
     WorkShowcaseComponent,
     ExecutionGapComponent,
     WhyUsComponent,

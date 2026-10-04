@@ -1,4 +1,5 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
+import { SupabaseService } from './supabase.service';
 
 export interface JobApplication {
   id: string;
@@ -7,117 +8,185 @@ export interface JobApplication {
   phone: string;
   position: string;
   resumeFileName: string;
+  resumeUrl?: string;
   coverLetter: string;
   date: string;
-  status: 'Pending' | 'Reviewed' | 'Shortlisted' | 'Rejected';
+  status: 'Submitted' | 'Pending' | 'Reviewed' | 'Shortlisted' | 'Rejected';
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApplicationsService {
+  private supabaseService = inject(SupabaseService);
+  private supabase = this.supabaseService.clientInstance;
   private readonly STORAGE_KEY = 'vtscraft_applications';
-
-  private initialApplications: JobApplication[] = [
-    {
-      id: 'app-1',
-      name: 'Aarav Sharma',
-      email: 'aarav.sharma@example.com',
-      phone: '+91 98765 43210',
-      position: 'Senior Full Stack Engineer (Angular & Node.js)',
-      resumeFileName: 'Aarav_Sharma_Resume.pdf',
-      coverLetter: 'Experienced full stack developer with 5 years leading Angular frontend architecture and REST/GraphQL microservices.',
-      date: '2026-09-28',
-      status: 'Reviewed'
-    },
-    {
-      id: 'app-2',
-      name: 'Priya Patel',
-      email: 'priya.patel@example.com',
-      phone: '+91 98112 34567',
-      position: 'AI / LLM Solutions Architect',
-      resumeFileName: 'Priya_Patel_CV.pdf',
-      coverLetter: 'Passionate AI engineer building agentic RAG workflows and autonomous multi-agent systems using LangChain and FastAPI.',
-      date: '2026-09-30',
-      status: 'Shortlisted'
-    },
-    {
-      id: 'app-3',
-      name: 'Rohan Verma',
-      email: 'rohan.v@example.com',
-      phone: '+91 99887 76655',
-      position: 'Product Designer (UI/UX)',
-      resumeFileName: 'Rohan_Verma_Portfolio.pdf',
-      coverLetter: 'SaaS product designer focused on clean typography, accessibility, and high-velocity Figma design system libraries.',
-      date: '2026-10-01',
-      status: 'Pending'
-    }
-  ];
 
   private _applications = signal<JobApplication[]>([]);
   readonly applications = this._applications.asReadonly();
+  isLoading = signal<boolean>(false);
 
   constructor() {
     this.loadApplications();
   }
 
-  private loadApplications() {
-    const data = localStorage.getItem(this.STORAGE_KEY);
-    if (data) {
-      try {
-        this._applications.set(JSON.parse(data));
-      } catch {
-        this._applications.set(this.initialApplications);
-        this.saveApplications(this.initialApplications);
+  async loadApplications() {
+    this.isLoading.set(true);
+    try {
+      const { data, error } = await this.supabase
+        .from('applications')
+        .select('*')
+        .order('applied_date', { ascending: false });
+
+      if (error) {
+        console.warn('Could not fetch applications from Supabase, checking local cache:', error);
+        this.loadLocalFallback();
+      } else {
+        const mapped: JobApplication[] = (data || []).map((row: any) => ({
+          id: row.id,
+          name: row.name,
+          email: row.email,
+          phone: row.phone,
+          position: row.position,
+          resumeFileName: row.resume_filename || 'Resume.pdf',
+          resumeUrl: row.resume_url || '',
+          coverLetter: row.cover_letter || '',
+          date: row.applied_date ? new Date(row.applied_date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+          status: row.status || 'Pending'
+        }));
+        this._applications.set(mapped);
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(mapped));
       }
-    } else {
-      this._applications.set(this.initialApplications);
-      this.saveApplications(this.initialApplications);
+    } catch {
+      this.loadLocalFallback();
+    } finally {
+      this.isLoading.set(false);
     }
   }
 
-  private saveApplications(apps: JobApplication[]) {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(apps));
-    this._applications.set([...apps]);
+  private loadLocalFallback() {
+    const local = localStorage.getItem(this.STORAGE_KEY);
+    if (local) {
+      try {
+        const parsed: JobApplication[] = JSON.parse(local);
+        // Exclude legacy mock seeds
+        const realOnly = parsed.filter(a => !['app-1', 'app-2', 'app-3'].includes(a.id));
+        this._applications.set(realOnly);
+      } catch {
+        this._applications.set([]);
+      }
+    } else {
+      this._applications.set([]);
+    }
   }
 
-  submitApplication(app: Omit<JobApplication, 'id' | 'date' | 'status'>): JobApplication {
-    const newApp: JobApplication = {
+  async uploadResumeFile(file: File): Promise<{ publicUrl: string; fileName: string }> {
+    return this.supabaseService.uploadResume(file);
+  }
+
+  async submitApplication(app: Omit<JobApplication, 'id' | 'date' | 'status'> & { status?: JobApplication['status'] }): Promise<JobApplication> {
+    const today = new Date().toISOString().split('T')[0];
+    const optimisticApp: JobApplication = {
       ...app,
       id: 'app-' + Date.now(),
-      date: new Date().toISOString().split('T')[0],
-      status: 'Pending'
+      date: today,
+      status: app.status || 'Pending',
+      resumeUrl: app.resumeUrl || ''
     };
-    const updated = [newApp, ...this._applications()];
-    this.saveApplications(updated);
-    return newApp;
+
+    // Optimistic UI update
+    this._applications.update(prev => [optimisticApp, ...prev]);
+
+    try {
+      const { data, error } = await this.supabase
+        .from('applications')
+        .insert({
+          name: app.name,
+          email: app.email,
+          phone: app.phone,
+          position: app.position,
+          resume_url: app.resumeUrl || '',
+          resume_filename: app.resumeFileName || '',
+          cover_letter: app.coverLetter || '',
+          status: app.status || 'Pending'
+        })
+        .select()
+        .single();
+
+      if (!error && data) {
+        const persistedApp: JobApplication = {
+          id: data.id,
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          position: data.position,
+          resumeFileName: data.resume_filename || app.resumeFileName,
+          resumeUrl: data.resume_url || app.resumeUrl,
+          coverLetter: data.cover_letter || app.coverLetter,
+          date: new Date(data.applied_date).toISOString().split('T')[0],
+          status: data.status || 'Pending'
+        };
+        this._applications.update(prev => prev.map(a => a.id === optimisticApp.id ? persistedApp : a));
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this._applications()));
+        return persistedApp;
+      }
+    } catch (err) {
+      console.warn('Failed to sync application to Supabase, saved locally:', err);
+    }
+
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this._applications()));
+    return optimisticApp;
   }
 
-  updateStatus(id: string, status: JobApplication['status']) {
-    const updated = this._applications().map(a => a.id === id ? { ...a, status } : a);
-    this.saveApplications(updated);
+  async updateStatus(id: string, status: JobApplication['status']) {
+    this._applications.update(prev => prev.map(a => a.id === id ? { ...a, status } : a));
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this._applications()));
+
+    try {
+      await this.supabase.from('applications').update({ status }).eq('id', id);
+    } catch (err) {
+      console.warn('Failed to update status in Supabase:', err);
+    }
   }
 
-  deleteApplication(id: string) {
-    const updated = this._applications().filter(a => a.id !== id);
-    this.saveApplications(updated);
+  async deleteApplication(id: string) {
+    this._applications.update(prev => prev.filter(a => a.id !== id));
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this._applications()));
+
+    try {
+      await this.supabase.from('applications').delete().eq('id', id);
+    } catch (err) {
+      console.warn('Failed to delete application in Supabase:', err);
+    }
   }
 
   exportToExcel() {
     const apps = this._applications();
-    const headers = ['ID', 'Name', 'Email', 'Phone', 'Position Applied', 'Resume File', 'Cover Letter', 'Date', 'Status'];
+    const headers = [
+      'Candidate ID',
+      'Name',
+      'Email',
+      'Phone',
+      'Position Applied',
+      'Status',
+      'Date Applied',
+      'Resume File Name',
+      'Direct Resume Link (Click to View PDF)',
+      'Cover Letter'
+    ];
     
     // Create CSV content with UTF-8 BOM for flawless Excel rendering
     const rows = apps.map(a => [
       `"${a.id}"`,
-      `"${a.name.replace(/"/g, '""')}"`,
-      `"${a.email}"`,
-      `"${a.phone}"`,
-      `"${a.position.replace(/"/g, '""')}"`,
-      `"${a.resumeFileName}"`,
-      `"${a.coverLetter.replace(/"/g, '""').replace(/\n/g, ' ')}"`,
+      `"${(a.name || '').replace(/"/g, '""')}"`,
+      `"${a.email || ''}"`,
+      `"${a.phone || ''}"`,
+      `"${(a.position || '').replace(/"/g, '""')}"`,
+      `"${a.status}"`,
       `"${a.date}"`,
-      `"${a.status}"`
+      `"${(a.resumeFileName || '').replace(/"/g, '""')}"`,
+      `"${a.resumeUrl || 'No file attached'}"`,
+      `"${(a.coverLetter || '').replace(/"/g, '""').replace(/\r?\n/g, ' ')}"`
     ]);
 
     const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\r\n');

@@ -37,7 +37,7 @@
             Most software agencies follow the same broken model: send charismatic sales reps to win the deal, then outsource execution to junior bench developers behind layers of non-technical account managers.
           </p>
           <p class="text-gray-600 text-base leading-relaxed">
-            VTScraft was founded in New Delhi with a different philosophy: assemble elite principal engineers, automate the operational plumbing, and collaborate directly with clients in real-time. Today, we partner with founders and enterprises across India, UAE, the US, and the UK.
+            VTScraft was founded in Whitefield, Bangalore with a different philosophy: assemble elite principal engineers, automate the operational plumbing, and collaborate directly with clients in real-time. Today, we partner with founders and enterprises across India, UAE, the US, and the UK.
           </p>
           <div class="pt-4 flex items-center gap-8 text-sm font-bold text-[#0D1B2A]">
             <div>
@@ -145,26 +145,45 @@
   </section>
 
   <!-- ── 5. VALUES GRID ─────────────────────────────────────────────────── -->
-  <section class="values-section py-20 sm:py-28 bg-[#F4F7F4]">
+  <section class="values-section py-20 sm:py-28 bg-[#F4F7F4] border-t border-gray-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="text-center max-w-2xl mx-auto mb-16">
-        <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#27AE60] block mb-2">
-          CORE PRINCIPLES
-        </span>
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0D1B2A]">
-          The Values That Guide Every Sprint
-        </h2>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-        @for (v of values; track v.number) {
-          <div class="value-card bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-            <div class="text-2xl font-black font-mono text-[#27AE60] mb-3">/{{ v.number }}</div>
-            <h3 class="text-xl font-bold text-[#0D1B2A] mb-2">{{ v.title }}</h3>
-            <p class="text-sm text-gray-600 leading-relaxed">{{ v.desc }}</p>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        
+        <!-- Left Column: Sticky Header -->
+        <div class="lg:col-span-4 lg:pr-8">
+          <div class="lg:sticky lg:top-32">
+            <span class="text-xs font-bold uppercase tracking-[0.15em] text-[#0D1B2A] block mb-6">
+              OUR VALUES
+            </span>
+            <h2 class="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold text-[#0D1B2A] tracking-tight leading-tight mb-8">
+              Structured doesn't mean slow.<br/>Fast doesn't mean loose.
+            </h2>
+            <p class="text-gray-600 text-sm sm:text-base leading-relaxed">
+              Everything at VTScraft, the fixed scope, the direct access to the people building your product, the stack chosen for the job, comes from the same place. We've been the client who got burned, and we built VTScraft to not be that.
+            </p>
           </div>
-        }
+        </div>
+
+        <!-- Right Column: Values Grid -->
+        <div class="lg:col-span-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-16 relative">
+            
+            <!-- Horizontal Divider (only visible on sm and above, between row 1 and row 2) -->
+            <div class="hidden sm:block absolute top-[50%] left-0 w-full h-[1px] border-t border-dashed border-gray-300"></div>
+
+            @for (v of values; track v.title; let i = $index) {
+              <div class="value-item group z-10 bg-[#F4F7F4]" [class.sm:pt-6]="i > 1" [class.sm:pb-6]="i < 2">
+                <div class="w-20 h-20 mb-6 bg-white rounded-2xl shadow-sm border border-gray-200 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 overflow-hidden">
+                  <img [src]="v.image" [alt]="v.title" class="w-full h-full object-cover">
+                </div>
+                <h3 class="text-sm sm:text-base font-extrabold text-[#0D1B2A] mb-2">{{ v.title }}</h3>
+                <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">{{ v.desc }}</p>
+              </div>
+            }
+          </div>
+        </div>
+
       </div>
 
     </div>

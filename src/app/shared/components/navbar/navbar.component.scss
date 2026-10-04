@@ -1,52 +1,48 @@
 /*
  * VTScraft Navbar — Floating Pill Design
- * Matches Zypher Solutions reference: white pill, centered links,
- * navy active pill, navy Contact Us button, subtle shadow on scroll.
+ * Matches Zypher Solutions reference:
+ * - Clean white floating pill with delicate border & soft elevation
+ * - Brand logo & lockup on left
+ * - Inner light grey pill container housing navigation links
+ * - Active nav link highlighted with deep pine teal pill (#0A3D2F)
+ * - Deep pine teal Contact Us pill button on right (#0A3D2F)
+ * - No hamburger button
  */
 
-// ─── Wrapper (full-width strip) ──────────────────────────────────────────────
+// ─── Wrapper (full-width fixed strip) ─────────────────────────────────────────
 .navbar-wrapper {
-  padding-top: 16px;
+  padding-top: 18px;
   transition: padding-top 0.3s ease;
 
   &.scrolled {
-    padding-top: 8px;
+    padding-top: 10px;
   }
 }
 
 // ─── Floating Pill ───────────────────────────────────────────────────────────
 .navbar-pill {
-  background: rgba(255, 255, 255, 0.97);
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-radius: 9999px;        // full pill
-  padding: 8px 16px 8px 10px;
-  max-width: 960px;
-  width: 100%;
+  border-radius: 9999px;
+  padding: 6px 8px 6px 14px;
+  max-width: 860px;
+  width: auto;
+  margin: 0 auto;
 
-  // Subtle shadow + faint border ring
+  // Clean soft shadow and boundary line matching reference
   box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.06),
-    0 4px 20px rgba(0, 0, 0, 0.08),
+    0 2px 4px rgba(0, 0, 0, 0.03),
+    0 10px 28px rgba(0, 0, 0, 0.08),
     0 0 0 1px rgba(0, 0, 0, 0.05);
 
-  transition:
-    box-shadow 0.3s ease,
-    padding 0.3s ease,
-    border-radius 0.3s ease;
+  transition: box-shadow 0.3s ease, padding 0.3s ease;
 
-  // Stronger shadow on scroll
   &.pill-scrolled {
     box-shadow:
-      0 2px 8px rgba(0, 0, 0, 0.10),
-      0 8px 32px rgba(0, 0, 0, 0.14),
-      0 0 0 1px rgba(0, 0, 0, 0.06);
-  }
-
-  @media (max-width: 1023px) {
-    border-radius: 24px;    // slightly less round on mobile when drawer open
-    padding: 10px 14px;
-    max-width: 100%;
+      0 4px 8px rgba(0, 0, 0, 0.06),
+      0 14px 34px rgba(0, 0, 0, 0.12),
+      0 0 0 1px rgba(0, 0, 0, 0.07);
   }
 }
 
@@ -57,8 +53,8 @@
 }
 
 .logo-img-wrap {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 8px;
   overflow: hidden;
   flex-shrink: 0;
@@ -71,73 +67,86 @@
 }
 
 .logo-fallback {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 8px;
-  background: linear-gradient(135deg, #0D1B2A, #1A3A6B);
+  background: linear-gradient(135deg, #0A3D2F, #10B981);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 800;
   color: #fff;
   letter-spacing: -0.5px;
 }
 
 .logo-brand {
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 800;
-  color: #0D1B2A;
+  color: #0A3D2F;
   letter-spacing: -0.4px;
   line-height: 1.1;
 }
 
 .logo-tagline {
-  font-size: 9.5px;
+  font-size: 8.5px;
   font-weight: 500;
-  color: #9ca3af;  // gray-400
+  color: #9ca3af;
   letter-spacing: 0.02em;
   margin-top: 1px;
   white-space: nowrap;
 }
 
-// ─── Desktop Nav Links ───────────────────────────────────────────────────────
+// ─── Inner Grey Pill for Nav Links (Like Zypher Reference) ───────────────────
+.nav-links-container {
+  background-color: #E2E6E5;
+  border-radius: 9999px;
+  padding: 3px 4px;
+  margin: 0 14px;
+}
+
+.nav-links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .nav-link {
   display: inline-flex;
   align-items: center;
-  padding: 6px 14px;
+  padding: 5px 14px;
   border-radius: 9999px;
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 500;
-  color: #374151;       // gray-700
+  color: #4B5563;       // subtle slate text
   text-decoration: none;
   background: transparent;
   border: none;
   cursor: pointer;
   white-space: nowrap;
-  transition:
-    background-color 0.18s ease,
-    color 0.18s ease;
+  transition: all 0.2s ease;
   outline: none;
 
   &:hover {
-    background-color: #f3f4f6;  // gray-100
-    color: #0D1B2A;
+    color: #0A3D2F;
   }
 
   &:focus-visible {
-    outline: 2px solid #0D1B2A;
-    outline-offset: 2px;
+    outline: 2px solid #0A3D2F;
+    outline-offset: 1px;
   }
 }
 
-// Active state — dark navy pill (matches Zypher "Home" active style)
+// Active state — deep pine teal pill (matches Zypher Work active pill)
 .nav-link-active {
-  background-color: #0D1B2A !important;
+  background-color: #0A3D2F !important;
   color: #ffffff !important;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(10, 61, 47, 0.25);
 
   &:hover {
-    background-color: #1A3A6B !important;
+    background-color: #0d4a39 !important;
+    color: #ffffff !important;
   }
 }
 
@@ -153,17 +162,19 @@
 
 .dropdown-panel {
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 12px);
   left: 50%;
   transform: translateX(-50%);
-  width: 240px;
+  width: 260px;
+  max-height: 380px;
+  overflow-y: auto;
   background: #ffffff;
   border-radius: 16px;
-  padding: 6px;
+  padding: 8px 6px;
   box-shadow:
-    0 4px 6px rgba(0, 0, 0, 0.05),
-    0 10px 40px rgba(0, 0, 0, 0.12),
-    0 0 0 1px rgba(0, 0, 0, 0.05);
+    0 4px 6px rgba(0, 0, 0, 0.04),
+    0 16px 40px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(0, 0, 0, 0.06);
 
   // Pointer arrow
   &::before {
@@ -181,32 +192,35 @@
     border-radius: 2px 0 0 0;
   }
 
-  // Slide-in animation
   animation: dropdownIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+
+  // Clean subtle scrollbar
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #E2E6E5;
+    border-radius: 4px;
+  }
 }
 
 .dropdown-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 12px;
+  padding: 8px 14px;
   border-radius: 10px;
   font-size: 13px;
   font-weight: 500;
   color: #374151;
   text-decoration: none;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: all 0.16s ease;
 
   &:hover {
-    background-color: #f3f4f6;
-    color: #0D1B2A;
+    background-color: #F4F7F5;
+    color: #0A3D2F;
+    font-weight: 600;
+    padding-left: 17px;
   }
-}
-
-.dropdown-icon {
-  font-size: 16px;
-  line-height: 1;
-  flex-shrink: 0;
 }
 
 // ─── Contact Us Button ───────────────────────────────────────────────────────
@@ -214,11 +228,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 20px;
+  padding: 7px 18px;
   border-radius: 9999px;
-  background-color: #0D1B2A;
+  background-color: #0A3D2F;
   color: #ffffff;
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
@@ -226,12 +240,12 @@
     background-color 0.18s ease,
     transform 0.15s ease,
     box-shadow 0.15s ease;
-  box-shadow: 0 1px 3px rgba(13, 27, 42, 0.25);
+  box-shadow: 0 2px 6px rgba(10, 61, 47, 0.3);
 
   &:hover {
-    background-color: #1A3A6B;
+    background-color: #0d4a39;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(13, 27, 42, 0.35);
+    box-shadow: 0 4px 12px rgba(10, 61, 47, 0.4);
   }
 
   &:active {
@@ -239,93 +253,8 @@
   }
 
   &:focus-visible {
-    outline: 2px solid #0D1B2A;
-    outline-offset: 3px;
-  }
-}
-
-// ─── Mobile Menu Button ──────────────────────────────────────────────────────
-.mobile-menu-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 9999px;
-  background: transparent;
-  border: none;
-  color: #374151;
-  cursor: pointer;
-  transition: background-color 0.15s ease;
-
-  &:hover {
-    background-color: #f3f4f6;
-    color: #0D1B2A;
-  }
-
-  &:focus-visible {
-    outline: 2px solid #0D1B2A;
+    outline: 2px solid #0A3D2F;
     outline-offset: 2px;
-  }
-}
-
-// ─── Mobile Drawer ───────────────────────────────────────────────────────────
-.mobile-drawer {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  right: 0;
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 12px;
-  box-shadow:
-    0 4px 6px rgba(0, 0, 0, 0.05),
-    0 16px 48px rgba(0, 0, 0, 0.14),
-    0 0 0 1px rgba(0, 0, 0, 0.05);
-  animation: drawerIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow: hidden;
-}
-
-.mobile-link {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 10px 14px;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #374151;
-  text-decoration: none;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
-
-  &:hover {
-    background-color: #f3f4f6;
-    color: #0D1B2A;
-  }
-}
-
-.mobile-link-active {
-  background-color: #0D1B2A !important;
-  color: #ffffff !important;
-}
-
-.mobile-child-link {
-  display: flex;
-  align-items: center;
-  padding: 8px 12px;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #6b7280;   // gray-500
-  text-decoration: none;
-  transition: background-color 0.15s ease, color 0.15s ease;
-
-  &:hover {
-    background-color: #f3f4f6;
-    color: #0D1B2A;
   }
 }
 
@@ -341,13 +270,74 @@
   }
 }
 
-@keyframes drawerIn {
+// ─── Mobile Menu Drawer ──────────────────────────────────────────────────────
+.mobile-backdrop {
+  z-index: 45;
+}
+
+.mobile-drawer {
+  animation: mobileIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 50;
+}
+
+@keyframes mobileIn {
   from {
     opacity: 0;
-    transform: translateY(-10px) scale(0.98);
+    transform: translateY(-8px) scale(0.98);
   }
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
 }
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #374151;
+  text-decoration: none;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #F3F4F6;
+    color: #0A3D2F;
+  }
+}
+
+.mobile-nav-link-active {
+  background-color: #0A3D2F !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(10, 61, 47, 0.2);
+}
+
+// ─── iPad & Tablet Responsive Rules (768px - 1024px) ─────────────────────────
+@media (min-width: 768px) and (max-width: 1024px) {
+  .navbar-pill {
+    padding: 5px 6px 5px 10px;
+    max-width: 96%;
+  }
+
+  .logo-tagline {
+    display: none;
+  }
+
+  .nav-links-container {
+    margin: 0 6px;
+    padding: 2px 3px;
+  }
+
+  .nav-link {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+
+  .contact-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+

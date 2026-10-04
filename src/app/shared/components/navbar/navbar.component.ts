@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 interface NavChild {
   label: string;
   route: string;
-  icon: string;
+  fragment?: string;
 }
 
 interface NavItem {
@@ -25,14 +25,8 @@ export class NavbarComponent {
   /** Shrinks the pill on scroll */
   isScrolled = signal(false);
 
-  /** Mobile drawer open/close */
-  isMobileOpen = signal(false);
-
   /** Desktop hover dropdown */
   isServicesHovered = signal(false);
-
-  /** Mobile accordion */
-  isMobileServicesOpen = signal(false);
 
   /** Debounce timer for hover leave */
   private hoverLeaveTimer: ReturnType<typeof setTimeout> | null = null;
@@ -41,12 +35,18 @@ export class NavbarComponent {
     { label: 'Home', route: '/' },
     {
       label: 'Services',
+      route: '/services',
       children: [
-        { label: 'AI & LLM Automation',      route: '/services/ai-llm',                icon: '🤖' },
-        { label: 'Software Development',      route: '/services/software-development',  icon: '💻' },
-        { label: 'Mobile App Development',    route: '/services/mobile-app',            icon: '📱' },
-        { label: 'CRM/ERP Solutions',         route: '/services/crm-erp',               icon: '📊' },
-        { label: 'Design & Creative',         route: '/services/design-creative',       icon: '🎨' },
+        { label: 'Web Development',           route: '/services', fragment: 'web-dev' },
+        { label: 'Mobile App Development',   route: '/services', fragment: 'mobile-app' },
+        { label: 'Cloud Services',             route: '/services', fragment: 'cloud-services' },
+        { label: 'AI & Generative AI',        route: '/services', fragment: 'ai-genai' },
+        { label: 'Conversational AI',         route: '/services', fragment: 'conversational-ai' },
+        { label: 'Software Development',      route: '/services', fragment: 'software-dev' },
+        { label: 'UI/UX & Product Design',    route: '/services', fragment: 'ui-ux-design' },
+        { label: 'Automation & Integration',  route: '/services', fragment: 'automation-integration' },
+        { label: 'Data & Analytics',          route: '/services', fragment: 'data-analytics' },
+        { label: 'Maintenance & IT Support',  route: '/services', fragment: 'maintenance-support' },
       ],
     },
     { label: 'Work',    route: '/work'    },
@@ -55,9 +55,43 @@ export class NavbarComponent {
     { label: 'Career',  route: '/career'  },
   ];
 
+  /** Mobile drawer open/closed state */
+  mobileMenuOpen = signal(false);
+
+  /** Mobile services accordion toggle */
+  mobileServicesOpen = signal(false);
+
   @HostListener('window:scroll')
   onScroll(): void {
     this.isScrolled.set(window.scrollY > 20);
+  }
+
+  @HostListener('window:resize')
+  onResize(): void {
+    if (typeof window !== 'undefined' && window.innerWidth >= 768 && this.mobileMenuOpen()) {
+      this.closeMobileMenu();
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    if (this.mobileMenuOpen()) {
+      this.closeMobileMenu();
+    }
+  }
+
+  toggleMobileMenu(): void {
+    this.mobileMenuOpen.update(open => !open);
+  }
+
+  closeMobileMenu(): void {
+    this.mobileMenuOpen.set(false);
+    this.mobileServicesOpen.set(false);
+  }
+
+  toggleMobileServices(event: Event): void {
+    event.stopPropagation();
+    this.mobileServicesOpen.update(open => !open);
   }
 
   // ─── Desktop hover ────────────────────────────────────────────────────────
@@ -74,23 +108,5 @@ export class NavbarComponent {
     this.hoverLeaveTimer = setTimeout(() => {
       this.isServicesHovered.set(false);
     }, 120);
-  }
-
-  // ─── Mobile ───────────────────────────────────────────────────────────────
-
-  toggleMobile(): void {
-    this.isMobileOpen.update((v) => !v);
-    if (!this.isMobileOpen()) {
-      this.isMobileServicesOpen.set(false);
-    }
-  }
-
-  toggleMobileServices(): void {
-    this.isMobileServicesOpen.update((v) => !v);
-  }
-
-  closeMobile(): void {
-    this.isMobileOpen.set(false);
-    this.isMobileServicesOpen.set(false);
   }
 }

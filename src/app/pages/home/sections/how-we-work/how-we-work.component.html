@@ -1,153 +1,279 @@
-<section id="how-we-work" class="how-we-work-section bg-[#F4F7F4] py-20 sm:py-28 relative overflow-hidden border-t border-gray-200/50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-      
-      <!-- ── Left Column: Title + Numbered Steps List ──────────────────────── -->
-      <div class="lg:col-span-5">
-        
-        <!-- Large Heading: "HOW" thin text + "WE WORK" bold -->
-        <div class="mb-10 sm:mb-12">
-          <span class="text-4xl sm:text-6xl font-light text-gray-400 block tracking-tight leading-none">
-            HOW
-          </span>
-          <span class="text-4xl sm:text-6xl font-black text-[#0D1B2A] block tracking-tight leading-none mt-1">
-            WE WORK
-          </span>
-          <p class="text-sm text-gray-500 mt-4 leading-relaxed max-w-sm">
-            A battle-tested methodology shaped around agility, transparency, and post-launch permanence.
-          </p>
+<section id="how-we-work" class="hww-section">
+  <div class="hww-container">
+    <div class="hww-grid">
+
+      <!-- ── LEFT: Title + Clickable Steps ── -->
+      <div class="hww-left">
+        <div class="hww-heading">
+          <span class="hww-thin">HOW</span>
+          <span class="hww-bold">WE WORK</span>
+          <p class="hww-sub">A battle-tested methodology shaped around agility, transparency, and post-launch permanence.</p>
         </div>
 
-        <!-- Numbered steps list -->
-        <div class="space-y-4">
+        <div class="hww-steps">
           @for (step of steps; track step.id) {
             <div
+              class="step-row"
+              [class.step-row--active]="activeStepId() === step.id"
               (click)="setStep(step.id)"
-              class="step-item p-4 sm:p-5 rounded-2xl transition-all duration-300 cursor-pointer border"
-              [class.bg-white]="activeStepId() === step.id"
-              [class.border-gray-200]="activeStepId() === step.id"
-              [class.shadow-md]="activeStepId() === step.id"
-              [class.bg-transparent]="activeStepId() !== step.id"
-              [class.border-transparent]="activeStepId() !== step.id"
-              [class.hover:bg-white/60]="activeStepId() !== step.id"
             >
-              <div class="flex items-center gap-4">
-                <!-- Circle with green filled for active step -->
-                <div
-                  class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 flex-shrink-0"
-                  [class.bg-[#27AE60]]="activeStepId() === step.id"
-                  [class.text-white]="activeStepId() === step.id"
-                  [class.shadow-md]="activeStepId() === step.id"
-                  [class.shadow-[#27AE60]/30]="activeStepId() === step.id"
-                  [class.bg-gray-200]="activeStepId() !== step.id"
-                  [class.text-gray-600]="activeStepId() !== step.id"
-                >
-                  {{ step.id }}
-                </div>
-
-                <div class="flex-1">
-                  <h4
-                    class="text-lg font-bold transition-colors"
-                    [class.text-[#0D1B2A]]="activeStepId() === step.id"
-                    [class.text-gray-600]="activeStepId() !== step.id"
-                  >
-                    {{ step.label }}
-                  </h4>
-
-                  <!-- Sub-bullets if present (for step 3 Build) -->
-                  @if (step.subBullets && step.subBullets.length > 0) {
-                    <div class="flex flex-wrap gap-2 mt-2">
-                      @for (bullet of step.subBullets; track bullet) {
-                        <span class="inline-flex items-center gap-1 text-[11px] px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-700 font-medium">
-                          <span class="w-1.5 h-1.5 rounded-full bg-[#27AE60]"></span>
-                          {{ bullet }}
-                        </span>
-                      }
-                    </div>
-                  }
-                </div>
-
-                <!-- Active chevron indicator -->
-                @if (activeStepId() === step.id) {
-                  <svg class="w-5 h-5 text-[#27AE60] flex-shrink-0 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                  </svg>
+              <div class="step-circle" [class.step-circle--active]="activeStepId() === step.id">
+                {{ step.id }}
+              </div>
+              <div class="step-text">
+                <h4 class="step-label" [class.step-label--active]="activeStepId() === step.id">
+                  {{ step.label }}
+                </h4>
+                @if (step.subBullets && step.subBullets.length > 0) {
+                  <div class="step-bullets">
+                    @for (b of step.subBullets; track b) {
+                      <span class="step-bullet"><span class="bullet-dot"></span>{{ b }}</span>
+                    }
+                  </div>
                 }
               </div>
+              @if (activeStepId() === step.id) {
+                <svg class="step-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+                </svg>
+              }
             </div>
           }
         </div>
-
       </div>
 
-      <!-- ── Right Column: Dynamic Step Details + Halftone Photo Placeholder ── -->
-      <div class="lg:col-span-7">
-        <div class="detail-card bg-white rounded-3xl p-8 sm:p-12 shadow-xl border border-gray-100 relative overflow-hidden transition-all duration-300">
-          
-          <!-- Ambient gradient glow -->
-          <div class="absolute -top-24 -right-24 w-72 h-72 bg-[#27AE60]/10 rounded-full blur-3xl pointer-events-none"></div>
+      <!-- ── RIGHT: Detail Card with per-step illustration ── -->
+      <div class="hww-right">
+        <div class="detail-card">
+          <!-- Ambient glow -->
+          <div class="dc-glow" aria-hidden="true"></div>
 
-          <!-- Step Badge -->
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#27AE60]/10 text-[#27AE60] text-xs font-bold uppercase tracking-wider mb-6">
-            {{ currentStep.badge }}
+          <!-- Step badge -->
+          <div class="dc-badge">{{ currentStep.badge }}</div>
+
+          <!-- Heading row -->
+          <div class="dc-heading-row">
+            <div class="dc-icon" [class.dc-icon--green]="currentStep.showWhatsAppIcon">
+              @if (currentStep.showWhatsAppIcon) {
+                <!-- Chat icon -->
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.976.58 2.028.928 3.149.929 3.182 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.768-5.771z"/>
+                </svg>
+              } @else {
+                <span class="dc-icon-num">0{{ currentStep.id }}</span>
+              }
+            </div>
+            <h3 class="dc-title">{{ currentStep.heading }}</h3>
           </div>
 
-          <!-- Header with WhatsApp icon when active -->
-          <div class="flex items-center gap-4 mb-4">
-            @if (currentStep.showWhatsAppIcon) {
-              <!-- WhatsApp Icon in emerald pill -->
-              <div class="w-12 h-12 rounded-2xl bg-[#25D366] flex items-center justify-center text-white shadow-lg shadow-[#25D366]/25 flex-shrink-0">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.976.58 2.028.928 3.149.929 3.182 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.768-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.072.376-.043.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.203c.043.072.043.419-.101.824z"/>
-                </svg>
+          <!-- Description -->
+          <p class="dc-desc">{{ currentStep.description }}</p>
+
+          <!-- ── Per-step SVG Illustration ── -->
+          <div class="dc-illo">
+
+            @if (currentStep.id === 1) {
+              <!-- Step 1: Discover — Two people in conversation with speech bubbles -->
+              <div class="illo-header">
+                <span class="illo-tag">COLLABORATIVE WORKBENCH</span>
+                <span class="illo-tag-right">STEP_01_ACTIVE</span>
               </div>
-            } @else {
-              <div class="w-12 h-12 rounded-2xl bg-[#0D1B2A] flex items-center justify-center text-white shadow-lg flex-shrink-0">
-                <span class="text-sm font-black font-mono text-[#27AE60]">0{{ currentStep.id }}</span>
+              <div class="illo-body">
+                <svg viewBox="0 0 360 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="illo-svg">
+                  <!-- Left person: client -->
+                  <circle cx="60" cy="70" r="28" fill="rgba(16,185,129,0.12)" stroke="#10B981" stroke-width="1.5"/>
+                  <circle cx="60" cy="62" r="11" fill="#10B981" opacity="0.7"/>
+                  <path d="M42 85 Q60 78 78 85" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" opacity="0.7" fill="none"/>
+                  <text x="60" y="112" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9" font-family="Inter,sans-serif" font-weight="600">CLIENT</text>
+                  <!-- Right person: engineer -->
+                  <circle cx="300" cy="70" r="28" fill="rgba(16,185,129,0.12)" stroke="#10B981" stroke-width="1.5"/>
+                  <circle cx="300" cy="62" r="11" fill="#ffffff" opacity="0.9"/>
+                  <path d="M282 85 Q300 78 318 85" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.7" fill="none"/>
+                  <text x="300" y="112" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="9" font-family="Inter,sans-serif" font-weight="600">ENGINEER</text>
+                  <!-- Chat bubble left -->
+                  <rect x="90" y="28" width="80" height="36" rx="10" fill="rgba(16,185,129,0.15)" stroke="#10B981" stroke-width="1"/>
+                  <path d="M90 52 L80 60 L96 52" fill="rgba(16,185,129,0.15)" stroke="#10B981" stroke-width="1"/>
+                  <rect x="98" y="38" width="60" height="5" rx="2.5" fill="#10B981" opacity="0.6"/>
+                  <rect x="98" y="48" width="44" height="4" rx="2" fill="#10B981" opacity="0.35"/>
+                  <!-- Chat bubble right -->
+                  <rect x="192" y="30" width="76" height="32" rx="10" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                  <path d="M268 48 L280 56 L266 48" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                  <rect x="200" y="40" width="56" height="4" rx="2" fill="rgba(255,255,255,0.4)" opacity="0.8"/>
+                  <rect x="200" y="49" width="40" height="3.5" rx="1.75" fill="rgba(255,255,255,0.25)"/>
+                  <!-- Centre: "Deep Listen" badge -->
+                  <rect x="142" y="72" width="76" height="26" rx="13" fill="#10B981"/>
+                  <text x="180" y="88" text-anchor="middle" fill="#0A3D2F" font-size="9" font-family="Inter,sans-serif" font-weight="800">No Pitch. Just Listen.</text>
+                  <!-- Animated dot travelling between -->
+                  <circle r="5" fill="#10B981" opacity="0.9">
+                    <animateMotion dur="2.5s" repeatCount="indefinite" path="M88 70 Q180 40 272 70"/>
+                  </circle>
+                </svg>
               </div>
             }
 
-            <h3 class="text-2xl sm:text-3xl font-extrabold text-[#0D1B2A] tracking-tight">
-              {{ currentStep.heading }}
-            </h3>
-          </div>
-
-          <!-- Description text -->
-          <p class="text-gray-600 text-base sm:text-lg leading-relaxed mb-8">
-            {{ currentStep.description }}
-          </p>
-
-          <!-- Halftone style photo placeholder / graphic container -->
-          <div class="halftone-photo-box relative rounded-2xl overflow-hidden bg-gradient-to-br from-[#0D1B2A] to-[#1A3A6B] h-60 sm:h-72 p-6 flex flex-col justify-between text-white border border-gray-200">
-            <!-- Halftone dot layer -->
-            <div class="halftone-dot-grid absolute inset-0 opacity-20 pointer-events-none"></div>
-
-            <!-- Header of visual box -->
-            <div class="relative z-10 flex items-center justify-between">
-              <span class="text-xs font-mono uppercase tracking-widest text-[#27AE60] font-bold">
-                COLLABORATIVE WORKBENCH
-              </span>
-              <span class="text-xs text-white/50 font-mono">STEP_0{{ currentStep.id }}_ACTIVE</span>
-            </div>
-
-            <!-- Stylized workbench graphic -->
-            <div class="relative z-10 flex flex-col items-center justify-center my-auto py-2">
-              <div class="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center mb-3">
-                <svg class="w-8 h-8 text-[#27AE60]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            @if (currentStep.id === 2) {
+              <!-- Step 2: Scope & Quote — Blueprint / specification document -->
+              <div class="illo-header">
+                <span class="illo-tag">SCOPE BLUEPRINT</span>
+                <span class="illo-tag-right">STEP_02_ACTIVE</span>
+              </div>
+              <div class="illo-body">
+                <svg viewBox="0 0 360 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="illo-svg">
+                  <!-- Document background -->
+                  <rect x="50" y="15" width="260" height="130" rx="10" fill="rgba(255,255,255,0.05)" stroke="rgba(16,185,129,0.3)" stroke-width="1.5"/>
+                  <!-- Doc header -->
+                  <rect x="50" y="15" width="260" height="28" rx="10" fill="rgba(16,185,129,0.12)"/>
+                  <circle cx="68" cy="29" r="6" fill="#10B981" opacity="0.8"/>
+                  <rect x="82" y="25" width="80" height="5" rx="2.5" fill="#10B981" opacity="0.7"/>
+                  <rect x="272" y="22" width="28" height="14" rx="7" fill="#10B981"/>
+                  <text x="286" y="31" text-anchor="middle" fill="#0A3D2F" font-size="7.5" font-weight="800">FIXED</text>
+                  <!-- Section rows -->
+                  <g opacity="0.85">
+                    <!-- Row 1 -->
+                    <rect x="66" y="52" width="8" height="8" rx="2" fill="#10B981"/>
+                    <rect x="82" y="54" width="100" height="5" rx="2.5" fill="rgba(255,255,255,0.6)"/>
+                    <rect x="270" y="53" width="30" height="7" rx="3.5" fill="rgba(16,185,129,0.2)" stroke="rgba(16,185,129,0.4)" stroke-width="0.8"/>
+                    <!-- Row 2 -->
+                    <rect x="66" y="70" width="8" height="8" rx="2" fill="#10B981" opacity="0.6"/>
+                    <rect x="82" y="72" width="130" height="5" rx="2.5" fill="rgba(255,255,255,0.4)"/>
+                    <rect x="270" y="71" width="30" height="7" rx="3.5" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.3)" stroke-width="0.8"/>
+                    <!-- Row 3 -->
+                    <rect x="66" y="88" width="8" height="8" rx="2" fill="#10B981" opacity="0.4"/>
+                    <rect x="82" y="90" width="90" height="5" rx="2.5" fill="rgba(255,255,255,0.3)"/>
+                    <rect x="270" y="89" width="30" height="7" rx="3.5" fill="rgba(16,185,129,0.1)" stroke="rgba(16,185,129,0.25)" stroke-width="0.8"/>
+                    <!-- Divider -->
+                    <line x1="66" y1="106" x2="294" y2="106" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                    <!-- Total row -->
+                    <rect x="66" y="115" width="60" height="6" rx="3" fill="rgba(255,255,255,0.5)"/>
+                    <rect x="240" y="113" width="50" height="10" rx="5" fill="#10B981"/>
+                    <text x="265" y="121" text-anchor="middle" fill="#0A3D2F" font-size="8" font-weight="800">LOCKED IN</text>
+                  </g>
                 </svg>
               </div>
-              <p class="text-white font-semibold text-sm">Direct Collaboration & Fast Iteration</p>
-              <p class="text-white/60 text-xs mt-1">Daily transparency, live staging builds, zero red tape</p>
-            </div>
+            }
 
-            <!-- Bottom status -->
-            <div class="relative z-10 flex items-center justify-between pt-3 border-t border-white/10 text-xs text-white/60">
-              <span class="flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-[#27AE60] animate-ping"></span>
-                Active Sprint
-              </span>
+            @if (currentStep.id === 3) {
+              <!-- Step 3: Build — Sprint board with animated progress -->
+              <div class="illo-header">
+                <span class="illo-tag">ENGINEERING SPRINT</span>
+                <span class="illo-tag-right">STEP_03_ACTIVE</span>
+              </div>
+              <div class="illo-body">
+                <svg viewBox="0 0 360 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="illo-svg">
+                  <!-- Sprint board columns -->
+                  <!-- TODO column -->
+                  <rect x="20" y="20" width="90" height="130" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                  <text x="65" y="36" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="8" font-weight="700" font-family="monospace">TODO</text>
+                  <rect x="30" y="44" width="70" height="22" rx="5" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.8"/>
+                  <rect x="36" y="50" width="45" height="4" rx="2" fill="rgba(255,255,255,0.3)"/>
+                  <rect x="36" y="58" width="30" height="3" rx="1.5" fill="rgba(255,255,255,0.15)"/>
+                  <rect x="30" y="72" width="70" height="22" rx="5" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.8"/>
+                  <rect x="36" y="78" width="40" height="4" rx="2" fill="rgba(255,255,255,0.25)"/>
+                  <rect x="36" y="86" width="55" height="3" rx="1.5" fill="rgba(255,255,255,0.12)"/>
+
+                  <!-- IN PROGRESS column -->
+                  <rect x="135" y="20" width="90" height="130" rx="8" fill="rgba(16,185,129,0.06)" stroke="rgba(16,185,129,0.25)" stroke-width="1"/>
+                  <text x="180" y="36" text-anchor="middle" fill="#10B981" font-size="8" font-weight="700" font-family="monospace">IN PROGRESS</text>
+                  <rect x="145" y="44" width="70" height="22" rx="5" fill="rgba(16,185,129,0.12)" stroke="#10B981" stroke-width="0.8"/>
+                  <rect x="151" y="50" width="50" height="4" rx="2" fill="#10B981" opacity="0.8"/>
+                  <rect x="151" y="58" width="36" height="3" rx="1.5" fill="#10B981" opacity="0.4"/>
+                  <!-- Progress bar inside card -->
+                  <rect x="151" y="63" width="52" height="2" rx="1" fill="rgba(255,255,255,0.1)"/>
+                  <rect x="151" y="63" width="36" height="2" rx="1" fill="#10B981"/>
+                  <rect x="145" y="72" width="70" height="22" rx="5" fill="rgba(16,185,129,0.08)" stroke="rgba(16,185,129,0.2)" stroke-width="0.8"/>
+                  <rect x="151" y="78" width="42" height="4" rx="2" fill="#10B981" opacity="0.6"/>
+                  <rect x="151" y="86" width="30" height="3" rx="1.5" fill="#10B981" opacity="0.3"/>
+
+                  <!-- DONE column -->
+                  <rect x="250" y="20" width="90" height="130" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                  <text x="295" y="36" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="8" font-weight="700" font-family="monospace">DONE ✓</text>
+                  <rect x="260" y="44" width="70" height="22" rx="5" fill="rgba(16,185,129,0.08)" stroke="rgba(16,185,129,0.15)" stroke-width="0.8"/>
+                  <rect x="266" y="50" width="45" height="4" rx="2" fill="rgba(16,185,129,0.5)"/>
+                  <rect x="266" y="58" width="32" height="3" rx="1.5" fill="rgba(16,185,129,0.3)"/>
+                  <rect x="260" y="72" width="70" height="22" rx="5" fill="rgba(16,185,129,0.08)" stroke="rgba(16,185,129,0.15)" stroke-width="0.8"/>
+                  <rect x="266" y="78" width="38" height="4" rx="2" fill="rgba(16,185,129,0.4)"/>
+                  <rect x="266" y="86" width="50" height="3" rx="1.5" fill="rgba(16,185,129,0.25)"/>
+                  <rect x="260" y="100" width="70" height="22" rx="5" fill="rgba(16,185,129,0.08)" stroke="rgba(16,185,129,0.15)" stroke-width="0.8"/>
+                  <rect x="266" y="106" width="30" height="4" rx="2" fill="rgba(16,185,129,0.4)"/>
+                  <rect x="266" y="114" width="42" height="3" rx="1.5" fill="rgba(16,185,129,0.25)"/>
+
+                  <!-- Moving card animation -->
+                  <g opacity="0.9">
+                    <animateTransform attributeName="transform" type="translate" values="0,0;115,0;0,0" dur="3s" repeatCount="indefinite" additive="sum"/>
+                    <rect x="30" y="100" width="70" height="22" rx="5" fill="#10B981" opacity="0.9"/>
+                    <rect x="36" y="106" width="42" height="4" rx="2" fill="#0A3D2F"/>
+                    <rect x="36" y="114" width="30" height="3" rx="1.5" fill="#0A3D2F" opacity="0.6"/>
+                  </g>
+                </svg>
+              </div>
+            }
+
+            @if (currentStep.id === 4) {
+              <!-- Step 4: Launch — Deployment pipeline / rocket -->
+              <div class="illo-header">
+                <span class="illo-tag">PRODUCTION PIPELINE</span>
+                <span class="illo-tag-right">STEP_04_ACTIVE</span>
+              </div>
+              <div class="illo-body">
+                <svg viewBox="0 0 360 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="illo-svg">
+                  <!-- Pipeline stages -->
+                  <!-- Stage 1: Build -->
+                  <rect x="20" y="60" width="60" height="40" rx="8" fill="rgba(16,185,129,0.2)" stroke="#10B981" stroke-width="1.5"/>
+                  <text x="50" y="77" text-anchor="middle" fill="#10B981" font-size="8" font-weight="700" font-family="monospace">BUILD</text>
+                  <text x="50" y="89" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="7">✓ passed</text>
+                  <!-- Arrow -->
+                  <path d="M80 80 L110 80" stroke="#10B981" stroke-width="1.5" marker-end="url(#arr2)"/>
+                  <defs>
+                    <marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L6,3 z" fill="#10B981"/>
+                    </marker>
+                  </defs>
+                  <!-- Stage 2: Test -->
+                  <rect x="110" y="60" width="60" height="40" rx="8" fill="rgba(16,185,129,0.15)" stroke="#10B981" stroke-width="1.2"/>
+                  <text x="140" y="77" text-anchor="middle" fill="#10B981" font-size="8" font-weight="700" font-family="monospace">TEST</text>
+                  <text x="140" y="89" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="7">✓ 100%</text>
+                  <!-- Arrow -->
+                  <path d="M170 80 L200 80" stroke="#10B981" stroke-width="1.5" marker-end="url(#arr3)"/>
+                  <defs>
+                    <marker id="arr3" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L6,3 z" fill="#10B981"/>
+                    </marker>
+                  </defs>
+                  <!-- Stage 3: Deploy -->
+                  <rect x="200" y="60" width="60" height="40" rx="8" fill="#10B981"/>
+                  <text x="230" y="77" text-anchor="middle" fill="#0A3D2F" font-size="8" font-weight="800" font-family="monospace">DEPLOY</text>
+                  <text x="230" y="89" text-anchor="middle" fill="#0A3D2F" font-size="7" font-weight="700">LIVE 🚀</text>
+                  <!-- Arrow -->
+                  <path d="M260 80 L290 80" stroke="#10B981" stroke-width="1.5" marker-end="url(#arr4)"/>
+                  <defs>
+                    <marker id="arr4" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L6,3 z" fill="#10B981"/>
+                    </marker>
+                  </defs>
+                  <!-- Stage 4: Monitor -->
+                  <rect x="290" y="60" width="60" height="40" rx="8" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.2)" stroke-width="1.2"/>
+                  <text x="320" y="77" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="7" font-weight="700" font-family="monospace">MONITOR</text>
+                  <circle cx="320" cy="88" r="4" fill="#10B981" opacity="0.9">
+                    <animate attributeName="opacity" values="0.9;0.3;0.9" dur="1.5s" repeatCount="indefinite"/>
+                  </circle>
+
+                  <!-- Uptime stats below -->
+                  <rect x="60" y="115" width="240" height="28" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                  <text x="90" y="131" text-anchor="middle" fill="#10B981" font-size="8" font-weight="700">99.99%</text>
+                  <text x="90" y="138" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="6.5">UPTIME</text>
+                  <line x1="120" y1="118" x2="120" y2="140" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                  <text x="180" y="131" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="8" font-weight="600">Zero-downtime CI/CD</text>
+                  <text x="180" y="138" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="6.5">Automated rollback enabled</text>
+                  <line x1="240" y1="118" x2="240" y2="140" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                  <text x="280" y="131" text-anchor="middle" fill="#10B981" font-size="8" font-weight="700">&lt;15m SLA</text>
+                  <text x="280" y="138" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="6.5">INCIDENT RESPONSE</text>
+                </svg>
+              </div>
+            }
+
+            <!-- Bottom status bar -->
+            <div class="illo-footer">
+              <span class="illo-pulse"><span class="pulse-dot-green"></span>Active Sprint</span>
               <span>VTScraft Dedicated Squad</span>
             </div>
           </div>
@@ -156,6 +282,5 @@
       </div>
 
     </div>
-
   </div>
 </section>

@@ -18,21 +18,22 @@ export class FooterComponent {
     { label: 'Work', route: '/work' },
     { label: 'Scale', route: '/scale' },
     { label: 'Career', route: '/career' },
-    { label: 'Blog', route: '/blog' },
+    { label: 'Services', route: '/services' },
   ];
 
   servicesLinks = [
-    { label: 'AI & LLM Automation', route: '/services/ai-llm' },
-    { label: 'Software / Website Dev', route: '/services/software-development' },
-    { label: 'Mobile App Dev.', route: '/services/mobile-app' },
-    { label: 'CRM/ERP Solutions', route: '/services/crm-erp' },
-    { label: 'Design & Creative', route: '/services/design-creative' },
+    { label: 'Web Development', route: '/services', fragment: 'web-dev' },
+    { label: 'Mobile App Development', route: '/services', fragment: 'mobile-app' },
+    { label: 'Cloud Services', route: '/services', fragment: 'cloud-services' },
+    { label: 'AI & Generative AI', route: '/services', fragment: 'ai-genai' },
+    { label: 'Software Development', route: '/services', fragment: 'software-dev' },
+    { label: 'Automation & Integration', route: '/services', fragment: 'automation-integration' },
   ];
 
   contactLinks = [
-    { label: 'Book Call', route: '/contact' },
+    { label: 'Book Discovery Call', route: '/contact' },
     { label: 'Project Inquiry', route: '/contact' },
     { label: 'contact.vtscraft@gmail.com', href: 'mailto:contact.vtscraft@gmail.com', isExternal: true },
-    { label: '+91 XXXXX XXXXX', href: 'tel:+910000000000', isExternal: true },
+    { label: '+91 80757 25045', href: 'tel:+918075725045', isExternal: true },
   ];
 }
