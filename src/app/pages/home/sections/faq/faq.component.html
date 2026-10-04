@@ -1,126 +1,186 @@
-<section id="faq" class="faq-section relative overflow-hidden">
-  
-  <!-- ── Top Banner Dark (#0D1B2A) ────────────────────────────────────────── -->
-  <div class="top-banner bg-[#0D1B2A] py-16 sm:py-20 px-4 text-center border-b border-white/10 relative">
-    <div class="max-w-3xl mx-auto">
-      <span class="inline-block text-xs font-bold uppercase tracking-[0.25em] text-[#27AE60] mb-3">
-        TRANSPARENCY FIRST
-      </span>
-      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
-        Questions you're probably already asking
-      </h2>
-      <p class="text-base sm:text-lg text-white/70 mt-4 leading-relaxed font-normal">
-        No generic answers, just what you'd actually want to know.
-      </p>
+<section id="faq" class="faq-section">
+
+  <!-- ── Dark Top Banner with decorative illustration ── -->
+  <div class="faq-banner">
+    <!-- Dot grid bg -->
+    <div class="faq-dots" aria-hidden="true"></div>
+    <!-- Decorative "Q&A" floating pattern -->
+    <div class="faq-deco" aria-hidden="true">
+      <svg viewBox="0 0 800 220" fill="none" xmlns="http://www.w3.org/2000/svg" class="faq-deco-svg">
+        <!-- Large stylised question marks -->
+        <text x="60"  y="160" font-size="180" font-weight="900" fill="rgba(16,185,129,0.04)" font-family="Inter,sans-serif">?</text>
+        <text x="240" y="120" font-size="90"  font-weight="900" fill="rgba(16,185,129,0.05)" font-family="Inter,sans-serif">?</text>
+        <text x="560" y="170" font-size="140" font-weight="900" fill="rgba(16,185,129,0.04)" font-family="Inter,sans-serif">?</text>
+        <text x="680" y="100" font-size="70"  font-weight="900" fill="rgba(16,185,129,0.06)" font-family="Inter,sans-serif">?</text>
+        <!-- Floating thought-bubble circles -->
+        <circle cx="360" cy="40"  r="3"  fill="#10B981" opacity="0.15"/>
+        <circle cx="400" cy="28"  r="5"  fill="#10B981" opacity="0.12"/>
+        <circle cx="440" cy="18"  r="8"  fill="#10B981" opacity="0.08"/>
+        <circle cx="340" cy="190" r="4"  fill="#10B981" opacity="0.1"/>
+        <circle cx="500" cy="200" r="6"  fill="#10B981" opacity="0.08"/>
+        <!-- Subtle horizontal scan lines -->
+        <line x1="0" y1="50"  x2="800" y2="50"  stroke="rgba(16,185,129,0.04)" stroke-width="1"/>
+        <line x1="0" y1="100" x2="800" y2="100" stroke="rgba(16,185,129,0.04)" stroke-width="1"/>
+        <line x1="0" y1="150" x2="800" y2="150" stroke="rgba(16,185,129,0.04)" stroke-width="1"/>
+        <line x1="0" y1="200" x2="800" y2="200" stroke="rgba(16,185,129,0.04)" stroke-width="1"/>
+      </svg>
+    </div>
+
+    <div class="faq-banner-content">
+      <span class="faq-overline">TRANSPARENCY FIRST</span>
+      <h2 class="faq-banner-title">Questions you're probably<br/>already asking</h2>
+      <p class="faq-banner-sub">No generic answers, just what you'd actually want to know.</p>
     </div>
   </div>
 
-  <!-- ── Below (Light bg #F4F7F4): 2 Columns ─────────────────────────────── -->
-  <div class="faq-content-area bg-[#F4F7F4] py-16 sm:py-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-        
-        <!-- Left Column: Numbered Question List (7 questions) -->
-        <div class="lg:col-span-6 space-y-3">
+  <!-- ── Content area ── -->
+  <div class="faq-content">
+    <div class="faq-container">
+      <div class="faq-grid">
+
+        <!-- Left: Question list -->
+        <div class="faq-list">
           @for (faq of faqs; track faq.id) {
             <button
               type="button"
+              class="faq-btn"
+              [class.faq-btn--active]="activeId() === faq.id"
               (click)="setActive(faq.id)"
-              class="w-full text-left p-4 sm:p-5 rounded-2xl sm:rounded-full transition-all duration-300 flex items-center justify-between gap-4 cursor-pointer"
-              [class.active-pill]="activeId() === faq.id"
-              [class.inactive-pill]="activeId() !== faq.id"
             >
-              <div class="flex items-center gap-3.5 sm:gap-4 overflow-hidden">
-                <span
-                  class="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs font-mono font-bold flex-shrink-0 transition-colors"
-                  [class.bg-[#27AE60]]="activeId() === faq.id"
-                  [class.text-white]="activeId() === faq.id"
-                  [class.bg-gray-200]="activeId() !== faq.id"
-                  [class.text-gray-600]="activeId() !== faq.id"
-                >
+              <div class="faq-btn-inner">
+                <span class="faq-num" [class.faq-num--active]="activeId() === faq.id">
                   0{{ faq.id }}
                 </span>
-                <span
-                  class="text-sm sm:text-base font-bold truncate transition-colors"
-                  [class.text-[#0D1B2A]]="activeId() === faq.id"
-                  [class.text-gray-700]="activeId() !== faq.id"
-                >
+                <span class="faq-q" [class.faq-q--active]="activeId() === faq.id">
                   {{ faq.question }}
                 </span>
               </div>
-
-              <!-- Chevron indicator -->
-              <svg
-                class="w-5 h-5 flex-shrink-0 transition-transform duration-200"
-                [class.text-[#27AE60]]="activeId() === faq.id"
-                [class.translate-x-1]="activeId() === faq.id"
-                [class.text-gray-400]="activeId() !== faq.id"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2.5"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              <svg class="faq-chevron" [class.faq-chevron--active]="activeId() === faq.id"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
               </svg>
             </button>
           }
         </div>
 
-        <!-- Right Column: "The Answers to the Questions" + Active Answer -->
-        <div class="lg:col-span-6">
-          <div class="answer-card bg-white rounded-3xl p-8 sm:p-12 shadow-xl border border-gray-100 relative overflow-hidden transition-all duration-300">
-            
-            <!-- Top badge -->
-            <div class="flex items-center justify-between pb-6 border-b border-gray-100 mb-6">
-              <span class="text-xs font-bold uppercase tracking-widest text-[#27AE60] bg-[#27AE60]/10 px-3 py-1 rounded-full">
-                FAQ #0{{ currentFaq.id }}
-              </span>
-              <span class="text-xs text-gray-400 font-mono">VTScraft Insights</span>
+        <!-- Right: Answer card -->
+        <div class="faq-answer-wrap">
+          <div class="answer-card">
+            <!-- Card glow -->
+            <div class="ac-glow" aria-hidden="true"></div>
+
+            <!-- Top row -->
+            <div class="ac-toprow">
+              <span class="ac-badge">FAQ #0{{ currentFaq.id }}</span>
+              <span class="ac-mono">VTScraft Insights</span>
             </div>
 
-            <!-- Heading: The Answers to the Questions -->
-            <h3 class="text-2xl sm:text-3xl font-extrabold text-[#0D1B2A] tracking-tight mb-4">
-              The Answers to the Questions
-            </h3>
-
-            <!-- Active Question Label -->
-            <h4 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b border-gray-100">
-              {{ currentFaq.question }}
-            </h4>
-
-            <!-- Active Answer Paragraph -->
-            <p class="text-gray-600 text-base sm:text-lg leading-relaxed mb-6">
-              {{ currentFaq.answer }}
-            </p>
-
-            <!-- Key Highlight Callout Box -->
-            <div class="bg-[#27AE60]/10 border-l-4 border-[#27AE60] p-4 rounded-r-2xl mb-8">
-              <span class="text-xs font-bold uppercase tracking-wider text-[#27AE60] block mb-1">Takeaway</span>
-              <p class="text-sm font-semibold text-[#0D1B2A]">
-                {{ currentFaq.keyHighlight }}
-              </p>
+            <!-- Decorative inline SVG pattern unique to each FAQ -->
+            <div class="ac-illo">
+              <svg viewBox="0 0 340 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="ac-illo-svg">
+                <!-- Unique illustration per FAQ ID -->
+                @if (currentFaq.id === 1) {
+                  <!-- Cost/pricing: stacked coins / currency bars -->
+                  <rect x="20"  y="45" width="16" height="30" rx="4" fill="#0A3D2F" stroke="#10B981" stroke-width="1"/>
+                  <rect x="44"  y="30" width="16" height="45" rx="4" fill="#0A3D2F" stroke="#10B981" stroke-width="1.2"/>
+                  <rect x="68"  y="20" width="16" height="55" rx="4" fill="#10B981" opacity="0.9"/>
+                  <rect x="92"  y="35" width="16" height="40" rx="4" fill="#0A3D2F" stroke="#10B981" stroke-width="1"/>
+                  <rect x="116" y="25" width="16" height="50" rx="4" fill="#0A3D2F" stroke="#10B981" stroke-width="1.2"/>
+                  <line x1="20" y1="75" x2="300" y2="75" stroke="rgba(16,185,129,0.2)" stroke-width="1"/>
+                  <text x="175" y="38" font-size="10" fill="rgba(10,61,47,0.8)" font-weight="800" font-family="Inter,sans-serif">TRANSPARENT PRICING</text>
+                  <rect x="160" y="20" width="140" height="24" rx="12" fill="#10B981" opacity="0.12" stroke="#10B981" stroke-width="0.8"/>
+                }
+                @if (currentFaq.id === 2) {
+                  <!-- Scale: growing bar chart -->
+                  <rect x="30" y="60" width="14" height="15" rx="3" fill="rgba(16,185,129,0.3)" stroke="#10B981" stroke-width="0.8"/>
+                  <rect x="52" y="48" width="14" height="27" rx="3" fill="rgba(16,185,129,0.5)" stroke="#10B981" stroke-width="0.8"/>
+                  <rect x="74" y="35" width="14" height="40" rx="3" fill="rgba(16,185,129,0.7)" stroke="#10B981" stroke-width="0.8"/>
+                  <rect x="96" y="20" width="14" height="55" rx="3" fill="#10B981"/>
+                  <path d="M30 65 Q96 20 280 10" stroke="#10B981" stroke-width="2" stroke-dasharray="5 4" fill="none"/>
+                  <circle cx="280" cy="10" r="5" fill="#10B981"/>
+                  <text x="200" y="55" font-size="10" fill="#0A3D2F" font-weight="800" font-family="Inter,sans-serif">ENTERPRISE-GRADE SCALE</text>
+                  <rect x="180" y="42" width="130" height="20" rx="10" fill="#10B981" opacity="0.15" stroke="#10B981" stroke-width="0.8"/>
+                }
+                @if (currentFaq.id === 3) {
+                  <!-- Code ownership: git fork diagram -->
+                  <circle cx="80" cy="40" r="14" fill="#0A3D2F" stroke="#10B981" stroke-width="1.5"/>
+                  <text x="80" y="44" text-anchor="middle" font-size="9" fill="#10B981" font-weight="800" font-family="monospace">GIT</text>
+                  <line x1="94" y1="40" x2="130" y2="40" stroke="#10B981" stroke-width="1.5" stroke-dasharray="4 3"/>
+                  <circle cx="145" cy="40" r="12" fill="#10B981"/>
+                  <text x="145" y="44" text-anchor="middle" font-size="8" fill="#0A3D2F" font-weight="800">YOU</text>
+                  <text x="200" y="35" font-size="10" fill="#0A3D2F" font-weight="800" font-family="Inter,sans-serif">100% IP Ownership</text>
+                  <text x="200" y="50" font-size="8" fill="rgba(10,61,47,0.6)" font-family="Inter,sans-serif">From day 1. No lock-in.</text>
+                }
+                @if (currentFaq.id === 4) {
+                  <!-- AI: circuit / neural motif -->
+                  <circle cx="50" cy="40" r="10" fill="#0A3D2F" stroke="#10B981" stroke-width="1.2"/>
+                  <circle cx="90" cy="25" r="8"  fill="#0A3D2F" stroke="#10B981" stroke-width="1"/>
+                  <circle cx="90" cy="55" r="8"  fill="#0A3D2F" stroke="#10B981" stroke-width="1"/>
+                  <circle cx="130" cy="40" r="12" fill="#10B981"/>
+                  <line x1="60" y1="40" x2="82" y2="27" stroke="#10B981" stroke-width="1" opacity="0.6"/>
+                  <line x1="60" y1="40" x2="82" y2="53" stroke="#10B981" stroke-width="1" opacity="0.6"/>
+                  <line x1="98" y1="27" x2="118" y2="38" stroke="#10B981" stroke-width="1" opacity="0.8"/>
+                  <line x1="98" y1="53" x2="118" y2="42" stroke="#10B981" stroke-width="1" opacity="0.8"/>
+                  <text x="130" y="44" text-anchor="middle" font-size="7" fill="#0A3D2F" font-weight="800">AI</text>
+                  <text x="210" y="38" font-size="10" fill="#0A3D2F" font-weight="800" font-family="Inter,sans-serif">AI Where It Earns Its Place</text>
+                  <text x="210" y="53" font-size="8" fill="rgba(10,61,47,0.6)" font-family="Inter,sans-serif">Not as a buzzword.</text>
+                }
+                @if (currentFaq.id === 5) {
+                  <!-- Post launch: support ring -->
+                  <path d="M60 40 A30 30 0 1 1 60.001 40" fill="none" stroke="rgba(16,185,129,0.15)" stroke-width="8" stroke-linecap="round"/>
+                  <path d="M60 40 A30 30 0 0 1 85 15" fill="none" stroke="#10B981" stroke-width="8" stroke-linecap="round"/>
+                  <text x="60" y="44" text-anchor="middle" font-size="9" fill="#0A3D2F" font-weight="900" font-family="Inter,sans-serif">SLA</text>
+                  <text x="180" y="35" font-size="10" fill="#0A3D2F" font-weight="800" font-family="Inter,sans-serif">We Stay After Launch</text>
+                  <text x="180" y="50" font-size="8" fill="rgba(10,61,47,0.6)" font-family="Inter,sans-serif">Embedded, not gone.</text>
+                }
+                @if (currentFaq.id === 6) {
+                  <!-- Security: shield -->
+                  <path d="M60 10 L90 20 L90 50 Q90 65 60 72 Q30 65 30 50 L30 20 Z" fill="#0A3D2F" stroke="#10B981" stroke-width="1.5"/>
+                  <path d="M48 42 L57 51 L74 33" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                  <text x="175" y="35" font-size="10" fill="#0A3D2F" font-weight="800" font-family="Inter,sans-serif">Enterprise-Grade Security</text>
+                  <text x="175" y="50" font-size="8" fill="rgba(10,61,47,0.6)" font-family="Inter,sans-serif">GDPR · ISO 27001 practices</text>
+                }
+                @if (currentFaq.id === 7) {
+                  <!-- Timeline: horizontal Gantt -->
+                  <rect x="20" y="28" width="80" height="12" rx="6" fill="#10B981" opacity="0.9"/>
+                  <text x="25" y="38" font-size="7" fill="#0A3D2F" font-weight="700">Discovery</text>
+                  <rect x="108" y="28" width="60" height="12" rx="6" fill="rgba(16,185,129,0.6)"/>
+                  <text x="113" y="38" font-size="7" fill="#0A3D2F" font-weight="700">Scope</text>
+                  <rect x="176" y="28" width="90" height="12" rx="6" fill="rgba(16,185,129,0.5)"/>
+                  <text x="181" y="38" font-size="7" fill="#0A3D2F" font-weight="700">Build Sprints</text>
+                  <rect x="274" y="28" width="50" height="12" rx="6" fill="rgba(16,185,129,0.35)"/>
+                  <text x="279" y="38" font-size="7" fill="#0A3D2F" font-weight="700">Launch</text>
+                  <line x1="20" y1="52" x2="324" y2="52" stroke="rgba(10,61,47,0.15)" stroke-width="1"/>
+                  <text x="20" y="62" font-size="7.5" fill="rgba(10,61,47,0.5)" font-family="monospace">Week 1</text>
+                  <text x="108" y="62" font-size="7.5" fill="rgba(10,61,47,0.5)" font-family="monospace">W2-3</text>
+                  <text x="176" y="62" font-size="7.5" fill="rgba(10,61,47,0.5)" font-family="monospace">W4-12+</text>
+                  <text x="274" y="62" font-size="7.5" fill="rgba(10,61,47,0.5)" font-family="monospace">W13</text>
+                }
+              </svg>
             </div>
 
-            <!-- Still have questions footer CTA -->
-            <div class="pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <h3 class="ac-heading">The Answers to the Questions</h3>
+            <h4 class="ac-question">{{ currentFaq.question }}</h4>
+            <p class="ac-answer">{{ currentFaq.answer }}</p>
+
+            <!-- Takeaway callout -->
+            <div class="ac-takeaway">
+              <span class="ac-takeaway-label">TAKEAWAY</span>
+              <p class="ac-takeaway-text">{{ currentFaq.keyHighlight }}</p>
+            </div>
+
+            <!-- Footer CTA -->
+            <div class="ac-footer">
               <div>
-                <p class="text-xs text-gray-500 font-medium">Have a question not listed here?</p>
-                <p class="text-sm font-bold text-[#0D1B2A]">We're happy to answer anything directly.</p>
+                <p class="ac-footer-hint">Have a question not listed here?</p>
+                <p class="ac-footer-bold">We're happy to answer anything directly.</p>
               </div>
-              <a
-                routerLink="/contact"
-                class="px-5 py-2.5 rounded-full bg-[#0D1B2A] hover:bg-[#27AE60] text-white text-xs font-bold transition-colors cursor-pointer"
-              >
-                Ask Us Directly →
-              </a>
+              <a routerLink="/contact" class="ac-cta">Ask Us Directly →</a>
             </div>
-
           </div>
         </div>
 
       </div>
-
     </div>
   </div>
 

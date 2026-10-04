@@ -1,13 +1,24 @@
-<section id="work-showcase" class="work-showcase-section bg-[#F4F7F4] py-20 sm:py-24 relative overflow-hidden">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section id="work-showcase" class="work-showcase-section py-20 sm:py-28 relative overflow-hidden">
+  
+  <!-- Subtle technical grid background -->
+  <div class="ws-bg-pattern" aria-hidden="true"></div>
+
+  <!-- Ambient lighting glows -->
+  <div class="ws-ambient-glow ws-ambient-glow--top-right" aria-hidden="true"></div>
+  <div class="ws-ambient-glow ws-ambient-glow--bottom-left" aria-hidden="true"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     
     <!-- Header Row: Left green pill CTA, Right heading with REAL PROBLEMS in green -->
     <div class="flex flex-col-reverse md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
+      
       <!-- Left: View All Works -> green pill button -->
       <div class="flex-shrink-0">
         <a
           routerLink="/work"
-          class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#27AE60] hover:bg-[#219653] text-white font-semibold text-sm transition-all duration-300 shadow-md shadow-[#27AE60]/20 hover:shadow-lg hover:-translate-y-0.5"
+          fragment="project-grid"
+          class="ws-cta-pill"
+          aria-label="View all builds on the work page"
         >
           <span>View All Works</span>
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -18,112 +29,135 @@
 
       <!-- Right heading -->
       <div class="text-left md:text-right max-w-2xl">
-        <span class="text-xs sm:text-sm font-bold tracking-[0.2em] text-gray-500 uppercase block mb-1">
+        <span class="text-xs sm:text-sm font-extrabold tracking-[0.22em] text-gray-500 uppercase block mb-1">
           TAILORED SOLUTIONS, BUILT FOR
         </span>
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0D1B2A] tracking-tight">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0D1B2A] tracking-tight">
           <span class="text-[#27AE60]">REAL PROBLEMS</span>
         </h2>
       </div>
     </div>
 
-    <!-- Carousel Cards Container -->
-    <div class="relative">
-      
-      <!-- Cards grid (desktop shows all 3, tablet/mobile carousel interactive) -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+    <!-- Carousel Viewport -->
+    <div class="ws-carousel-viewport">
+      <div
+        class="ws-carousel-track"
+        [style.transform]="'translateX(-' + (activeIndex() * (100 / visibleCardsCount)) + '%)'"
+      >
         @for (card of projects; track card.title; let idx = $index) {
-          <div
-            class="project-card relative rounded-3xl overflow-hidden shadow-xl border border-gray-900/10 group transition-all duration-500 flex flex-col justify-end min-h-[420px] sm:min-h-[460px] p-6 sm:p-8 cursor-pointer"
-            [class.ring-2]="activeIndex() === idx"
-            [class.ring-[#27AE60]]="activeIndex() === idx"
-            (click)="goTo(idx)"
-          >
-            <!-- Real Project Image Background -->
-            <img
-              [src]="card.image"
-              [alt]="card.title"
-              class="absolute inset-0 w-full h-full object-cover object-top opacity-50 group-hover:scale-105 group-hover:opacity-65 transition-all duration-700 z-0"
-            />
-            
-            <!-- Dark gradient overlay for text readability -->
-            <div class="absolute inset-0 bg-gradient-to-t from-[#0D1B2A] via-[#0D1B2A]/80 to-transparent z-0"></div>
+          <div class="ws-card-slide">
+            <div
+              class="project-card group"
+              [class.project-card--active]="activeIndex() === idx"
+              (click)="navigateToBuild(card, $event)"
+              role="button"
+              tabindex="0"
+              [attr.aria-label]="'Explore build: ' + card.title"
+            >
+              <!-- Real Project Background Image -->
+              <img
+                [src]="card.image"
+                [alt]="card.title"
+                loading="lazy"
+                class="project-card-image"
+              />
+              
+              <!-- Multi-stage gradient overlay -->
+              <div class="project-card-gradient"></div>
 
-            <!-- Ambient Glow -->
-            <div class="absolute -top-20 -right-20 w-48 h-48 bg-[#27AE60]/15 rounded-full blur-2xl group-hover:bg-[#27AE60]/30 transition-all duration-500"></div>
+              <!-- Ambient Glow on card hover -->
+              <div class="project-card-glow"></div>
 
-            <!-- Content Area (Bottom Left) -->
-            <div class="relative z-10">
-              <!-- Tag in small caps -->
-              <span class="inline-block text-xs font-black tracking-[0.2em] text-[#27AE60] uppercase mb-2">
-                {{ card.tag }}
-              </span>
-
-              <!-- Title in white bold -->
-              <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-3 tracking-tight group-hover:text-[#27AE60] transition-colors duration-300">
-                {{ card.title }}
-              </h3>
-
-              <p class="text-xs sm:text-sm text-gray-300/80 leading-relaxed mb-4 line-clamp-2">
-                {{ card.description }}
-              </p>
-
-              <!-- Footer info: Metric badge + Arrow -->
-              <div class="flex items-center justify-between pt-4 border-t border-white/10">
-                <span class="text-xs font-mono text-[#27AE60] font-semibold bg-[#27AE60]/10 px-2.5 py-1 rounded-md border border-[#27AE60]/20">
-                  {{ card.metrics }}
+              <!-- Top Header inside card -->
+              <div class="project-card-header">
+                <span class="project-badge-tag">
+                  <span class="w-1.5 h-1.5 rounded-full bg-[#27AE60] animate-pulse"></span>
+                  {{ card.tag }}
                 </span>
-                <span class="w-8 h-8 rounded-full bg-white/10 group-hover:bg-[#27AE60] group-hover:text-[#0D1B2A] text-white flex items-center justify-center transition-all duration-300">
-                  <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-                  </svg>
+                <span class="project-badge-index">
+                  0{{ idx + 1 }} / 0{{ projects.length }}
                 </span>
               </div>
-            </div>
 
+              <!-- Content Area (Bottom) -->
+              <div class="project-card-content">
+                <span class="project-card-category">{{ card.category }}</span>
+                <h3 class="project-card-title">
+                  {{ card.title }}
+                </h3>
+
+                <p class="project-card-desc">
+                  {{ card.description }}
+                </p>
+
+                <!-- Footer info: Metric badge + Arrow action button -->
+                <div class="project-card-footer">
+                  <span class="project-metric-badge">
+                    <svg class="w-3.5 h-3.5 text-[#27AE60]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                    <span>{{ card.metrics }}</span>
+                  </span>
+
+                  <!-- Arrow Action Button -> Navigates to Build Section -->
+                  <a
+                    [routerLink]="['/work']"
+                    [fragment]="card.targetId || 'project-grid'"
+                    (click)="navigateToBuild(card, $event)"
+                    class="project-arrow-btn"
+                    [class.project-arrow-btn--highlight]="activeIndex() === idx"
+                    [attr.aria-label]="'Open build section for ' + card.title"
+                  >
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+            </div>
           </div>
         }
       </div>
+    </div>
 
-      <!-- Carousel Navigation Controls (Arrows + Dots) -->
-      <div class="flex items-center justify-between mt-10">
-        <!-- Dots indicator -->
-        <div class="flex items-center gap-2">
-          @for (card of projects; track card.title; let idx = $index) {
+    <!-- Carousel Controls Bar (Dots Indicator + Prev/Next Arrows) -->
+    <div class="ws-controls-bar">
+      <!-- Dots indicator -->
+      <div class="ws-dots-container">
+        @for (card of projects; track card.title; let idx = $index) {
+          @if (idx <= maxIndex) {
             <button
               (click)="goTo(idx)"
-              class="w-3 h-3 rounded-full transition-all duration-300"
-              [class.bg-[#27AE60]]="activeIndex() === idx"
-              [class.w-8]="activeIndex() === idx"
-              [class.bg-gray-300]="activeIndex() !== idx"
-              [attr.aria-label]="'Go to slide ' + (idx + 1)"
+              class="ws-dot-btn"
+              [class.ws-dot-btn--active]="activeIndex() === idx"
+              [attr.aria-label]="'Slide to project ' + (idx + 1)"
             ></button>
           }
-        </div>
-
-        <!-- Prev / Next arrows -->
-        <div class="flex items-center gap-3">
-          <button
-            (click)="prevProject()"
-            class="w-11 h-11 rounded-full bg-white border border-gray-200 text-[#0D1B2A] hover:bg-[#0D1B2A] hover:text-white flex items-center justify-center transition-all duration-200 shadow-sm cursor-pointer"
-            aria-label="Previous project"
-          >
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-            </svg>
-          </button>
-          <button
-            (click)="nextProject()"
-            class="w-11 h-11 rounded-full bg-white border border-gray-200 text-[#0D1B2A] hover:bg-[#0D1B2A] hover:text-white flex items-center justify-center transition-all duration-200 shadow-sm cursor-pointer"
-            aria-label="Next project"
-          >
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-            </svg>
-          </button>
-        </div>
+        }
       </div>
 
+      <!-- Prev / Next arrows -->
+      <div class="ws-nav-arrows">
+        <button
+          (click)="prevProject()"
+          class="ws-nav-arrow-btn"
+          aria-label="Previous projects"
+        >
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg>
+        </button>
+        <button
+          (click)="nextProject()"
+          class="ws-nav-arrow-btn"
+          aria-label="Next projects"
+        >
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+          </svg>
+        </button>
+      </div>
     </div>
 
   </div>

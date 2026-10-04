@@ -48,7 +48,7 @@
               <span class="w-9 h-9 rounded-full bg-[#27AE60]/10 text-[#27AE60] flex items-center justify-center">
                 📍
               </span>
-              <span>Headquartered in New Delhi, India</span>
+              <span>Headquartered in Whitefield, Bangalore, India</span>
             </div>
           </div>
 
@@ -83,41 +83,56 @@
             </div>
 
             @if (calendarBooked()) {
-              <div class="text-center py-10 space-y-4">
+              <div class="text-center py-8 space-y-4 animate-fade-in">
                 <div class="w-14 h-14 rounded-full bg-[#27AE60]/20 text-[#27AE60] flex items-center justify-center mx-auto text-2xl font-bold">
                   ✓
                 </div>
-                <h4 class="text-xl font-bold text-[#0D1B2A]">Call Scheduled!</h4>
-                <p class="text-sm text-gray-600">
-                  Confirmed for <strong>Oct {{ selectedDate() }}, 2026 at {{ selectedTime() }}</strong>.<br />
-                  A calendar invite and Google Meet link have been prepared.
+                <h4 class="text-xl font-bold text-[#0D1B2A]">Discovery Call Scheduled!</h4>
+                <p class="text-sm text-gray-600 leading-relaxed">
+                  Confirmed for <strong>{{ selectedSlot().fullDateStr }} at {{ selectedTime() }} IST</strong>.<br />
+                  A meeting link has been prepared for you.
                 </p>
-                <button
-                  type="button"
-                  (click)="calendarBooked.set(false)"
-                  class="text-xs text-[#27AE60] font-bold hover:underline"
-                >
-                  Schedule another time
-                </button>
+
+                <div class="pt-2 flex flex-col gap-2.5 max-w-xs mx-auto">
+                  <a
+                    [href]="getGoogleCalendarUrl()"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-full py-3 px-4 rounded-full bg-[#0D1B2A] hover:bg-[#27AE60] text-white font-bold text-xs inline-flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer"
+                  >
+                    <span>📅 Add to Google Calendar</span>
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+
+                  <button
+                    type="button"
+                    (click)="resetBooking()"
+                    class="text-xs text-gray-500 hover:text-[#27AE60] font-semibold py-1 cursor-pointer"
+                  >
+                    Schedule another time
+                  </button>
+                </div>
               </div>
             } @else {
-              <!-- Date picker strip -->
+              <!-- Date picker strip (Dynamic Next 8 Business Days) -->
               <div class="mb-6">
-                <span class="block text-xs font-bold text-gray-700 uppercase mb-3">Select Date (October 2026)</span>
-                <div class="grid grid-cols-4 sm:grid-cols-8 gap-2">
-                  @for (d of availableDates; track d) {
+                <span class="block text-xs font-bold text-gray-700 uppercase mb-3">Select Business Day (Next 2 Weeks)</span>
+                <div class="grid grid-cols-4 sm:grid-cols-4 gap-2">
+                  @for (slot of availableDates; track slot.isoDateStr) {
                     <button
                       type="button"
-                      (click)="selectDate(d)"
-                      class="py-2.5 rounded-xl text-center text-xs font-bold transition-all cursor-pointer"
-                      [class.bg-[#0D1B2A]]="selectedDate() === d"
-                      [class.text-white]="selectedDate() === d"
-                      [class.bg-gray-100]="selectedDate() !== d"
-                      [class.text-gray-700]="selectedDate() !== d"
-                      [class.hover:bg-gray-200]="selectedDate() !== d"
+                      (click)="selectSlot(slot)"
+                      class="py-2.5 px-1 rounded-xl text-center text-xs font-bold transition-all cursor-pointer"
+                      [class.bg-[#0D1B2A]]="selectedSlot().isoDateStr === slot.isoDateStr"
+                      [class.text-white]="selectedSlot().isoDateStr === slot.isoDateStr"
+                      [class.bg-gray-100]="selectedSlot().isoDateStr !== slot.isoDateStr"
+                      [class.text-gray-700]="selectedSlot().isoDateStr !== slot.isoDateStr"
+                      [class.hover:bg-gray-200]="selectedSlot().isoDateStr !== slot.isoDateStr"
                     >
-                      <span class="block text-[10px] text-gray-400 font-normal">Oct</span>
-                      {{ d }}
+                      <span class="block text-[10px] text-gray-400 font-normal uppercase">{{ slot.dayLabel }}</span>
+                      {{ slot.monthLabel }} {{ slot.dateNum }}
                     </button>
                   }
                 </div>
@@ -146,10 +161,10 @@
 
               <button
                 type="button"
-                (click)="confirmCalendarBooking()"
+                (click)="openBookingModal()"
                 class="w-full py-3.5 rounded-full bg-[#27AE60] hover:bg-[#219653] text-white font-bold text-sm shadow-md transition-all cursor-pointer"
               >
-                Confirm {{ selectedTime() }} on Oct {{ selectedDate() }}
+                Confirm {{ selectedTime() }} on {{ selectedSlot().dayLabel }}, {{ selectedSlot().monthLabel }} {{ selectedSlot().dateNum }}
               </button>
             }
 
@@ -301,9 +316,18 @@
 
                 <button
                   type="submit"
-                  class="px-8 py-4 rounded-full bg-[#27AE60] hover:bg-[#219653] text-white font-bold text-sm sm:text-base shadow-lg transition-all cursor-pointer"
+                  [disabled]="isSubmitting()"
+                  class="px-8 py-4 rounded-full bg-[#27AE60] hover:bg-[#219653] disabled:opacity-60 text-white font-bold text-sm sm:text-base shadow-lg transition-all cursor-pointer inline-flex items-center gap-2"
                 >
-                  Submit Inquiry →
+                  @if (isSubmitting()) {
+                    <svg class="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24" fill="none">
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                    </svg>
+                    <span>Sending Inquiry...</span>
+                  } @else {
+                    <span>Submit Inquiry →</span>
+                  }
                 </button>
               </form>
             }
@@ -316,74 +340,214 @@
   </section>
 
   <!-- ── 4. WHAT HAPPENS AFTER YOU HIT SEND? ────────────────────────────── -->
-  <section class="steps-after-send py-20 bg-white border-b border-gray-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section class="steps-after-send py-24 sm:py-28 bg-[#F8FAF9] border-b border-gray-200/80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="text-center max-w-2xl mx-auto mb-14">
-        <h2 class="text-3xl font-extrabold text-[#0D1B2A]">
-          What happens after you hit send?
+      <!-- Section Title -->
+      <div class="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-[#0D1B2A] tracking-tight leading-tight">
+          What happens after you<br>
+          <span class="text-[#0B4D3C]">hit send?</span>
         </h2>
-        <p class="text-gray-600 text-sm mt-2">Zero sales fluff. Just rapid engineering alignment.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="p-8 rounded-3xl bg-[#F4F7F4] border border-gray-200/60">
-          <div class="w-10 h-10 rounded-full bg-[#27AE60] text-white flex items-center justify-center font-bold text-sm mb-4">
-            01
+      <!-- 3 Step Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto items-stretch">
+        
+        <!-- Card 01 -->
+        <div class="bg-white rounded-[28px] border border-gray-200/90 shadow-[0_10px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+          <div class="p-7 sm:p-8 flex-1">
+            <span class="text-sm font-extrabold text-[#0B4D3C] tracking-wide block mb-3">01</span>
+            <h3 class="text-lg sm:text-xl font-bold text-[#0D1B2A] leading-snug mb-2">
+              We read it, Within 24 Hours
+            </h3>
+            <p class="text-xs sm:text-sm text-gray-500 leading-relaxed">
+              A real person, not an autoresponder
+            </p>
           </div>
-          <h3 class="text-lg font-bold text-[#0D1B2A] mb-2">Technical Review</h3>
-          <p class="text-sm text-gray-600 leading-relaxed">
-            Our principal architects review your requirements and stack within 24 business hours to evaluate viability.
-          </p>
+          <div class="bg-[#ECEEEB]/70 px-6 py-8 flex items-center justify-center border-t border-gray-100 min-h-[220px]">
+            <img
+              src="/images/steps/step1-email.png"
+              alt="We read it, Within 24 Hours"
+              class="w-36 h-36 object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
         </div>
 
-        <div class="p-8 rounded-3xl bg-[#F4F7F4] border border-gray-200/60">
-          <div class="w-10 h-10 rounded-full bg-[#0D1B2A] text-white flex items-center justify-center font-bold text-sm mb-4">
-            02
+        <!-- Card 02 -->
+        <div class="bg-white rounded-[28px] border border-gray-200/90 shadow-[0_10px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+          <div class="p-7 sm:p-8 flex-1">
+            <span class="text-sm font-extrabold text-[#0B4D3C] tracking-wide block mb-3">02</span>
+            <h3 class="text-lg sm:text-xl font-bold text-[#0D1B2A] leading-snug mb-2">
+              If it's a fit, we schedule a call
+            </h3>
+            <p class="text-xs sm:text-sm text-gray-500 leading-relaxed">
+              Same discovery format as the call path, no separate "sales call"
+            </p>
           </div>
-          <h3 class="text-lg font-bold text-[#0D1B2A] mb-2">Discovery Session</h3>
-          <p class="text-sm text-gray-600 leading-relaxed">
-            A 30-minute deep architectural dive directly with senior engineers. No slide decks or sales tactics.
-          </p>
+          <div class="bg-[#ECEEEB]/70 px-6 py-8 flex items-center justify-center border-t border-gray-100 min-h-[220px]">
+            <img
+              src="/images/steps/step2-calendar.png"
+              alt="If it's a fit, we schedule a call"
+              class="w-36 h-36 object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
         </div>
 
-        <div class="p-8 rounded-3xl bg-[#F4F7F4] border border-gray-200/60">
-          <div class="w-10 h-10 rounded-full bg-[#27AE60] text-white flex items-center justify-center font-bold text-sm mb-4">
-            03
+        <!-- Card 03 -->
+        <div class="bg-white rounded-[28px] border border-gray-200/90 shadow-[0_10px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_45px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+          <div class="p-7 sm:p-8 flex-1">
+            <span class="text-sm font-extrabold text-[#0B4D3C] tracking-wide block mb-3">03</span>
+            <h3 class="text-lg sm:text-xl font-bold text-[#0D1B2A] leading-snug mb-2">
+              If it's not a fit, we'll tell you
+            </h3>
+            <p class="text-xs sm:text-sm text-gray-500 leading-relaxed">
+              And point you somewhere useful if we can.
+            </p>
           </div>
-          <h3 class="text-lg font-bold text-[#0D1B2A] mb-2">Fixed-Scope Blueprint</h3>
-          <p class="text-sm text-gray-600 leading-relaxed">
-            You receive a milestone-by-milestone quote with delivery windows, sprint breakdowns, and guaranteed pricing.
-          </p>
+          <div class="bg-[#ECEEEB]/70 px-6 py-8 flex items-center justify-center border-t border-gray-100 min-h-[220px]">
+            <img
+              src="/images/steps/step3-compass.png"
+              alt="If it's not a fit, we'll tell you"
+              class="w-36 h-36 object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
         </div>
+
       </div>
 
     </div>
   </section>
 
-  <!-- ── 5. GOOGLE MAPS EMBED (New Delhi Location) ──────────────────────── -->
+  <!-- ── 5. GOOGLE MAPS EMBED (Whitefield, Bangalore Location) ─────────── -->
   <section class="maps-section py-16 bg-[#F4F7F4]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="rounded-3xl overflow-hidden shadow-lg border border-gray-200 bg-white">
         <div class="p-6 border-b border-gray-100 flex items-center justify-between">
           <div>
             <span class="text-xs font-bold text-[#27AE60] uppercase">GLOBAL HEADQUARTERS</span>
-            <h3 class="text-xl font-bold text-[#0D1B2A]">New Delhi, India</h3>
+            <h3 class="text-xl font-bold text-[#0D1B2A]">Whitefield, Bangalore, India</h3>
           </div>
           <span class="text-xs text-gray-500 font-mono">VTScraft Engineering Campus</span>
         </div>
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224345.83923192776!2d77.0688975472578!3d28.52758200617607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x37205b715389640!2sDelhi!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62208.97497227443!2d77.71262446972656!3d12.9698196!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae11f35d90a69d%3A0x95973f08e5611dd6!2sWhitefield%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin"
           width="100%"
           height="380"
           style="border:0;"
           allowfullscreen=""
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
-          title="VTScraft Location"
+          title="VTScraft Whitefield Bangalore Location"
         ></iframe>
       </div>
     </div>
   </section>
+
+  <!-- ── 6. DISCOVERY CALL DETAILS MODAL ─────────────────────────────── -->
+  @if (isBookingModalOpen()) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+      <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+        <button
+          type="button"
+          (click)="closeBookingModal()"
+          class="absolute top-6 right-6 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 transition-colors cursor-pointer"
+        >
+          ✕
+        </button>
+
+        <span class="text-xs font-bold uppercase tracking-wider text-[#27AE60] block mb-1">RESERVE TIME SLOT</span>
+        <h3 class="text-2xl font-black text-[#0D1B2A] mb-1">Book Discovery Session</h3>
+        <p class="text-xs text-gray-500 mb-6">
+          🗓️ <strong>{{ selectedSlot().fullDateStr }}</strong> at <strong>{{ selectedTime() }} IST</strong> (30 Mins)
+        </p>
+
+        <form (ngSubmit)="submitCallBooking()" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Your Full Name *</label>
+            <input
+              type="text"
+              [(ngModel)]="bookingForm.name"
+              name="bName"
+              required
+              placeholder="e.g. Sarah Jenkins"
+              class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#27AE60] focus:outline-none text-sm text-gray-900"
+            />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Work Email *</label>
+              <input
+                type="email"
+                [(ngModel)]="bookingForm.email"
+                name="bEmail"
+                required
+                placeholder="sarah@company.com"
+                class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#27AE60] focus:outline-none text-sm text-gray-900"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Phone / WhatsApp</label>
+              <input
+                type="tel"
+                [(ngModel)]="bookingForm.phone"
+                name="bPhone"
+                placeholder="+91 98765 43210"
+                class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#27AE60] focus:outline-none text-sm text-gray-900"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Company / Organization</label>
+            <input
+              type="text"
+              [(ngModel)]="bookingForm.company"
+              name="bCompany"
+              placeholder="e.g. Acme Health Corp"
+              class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#27AE60] focus:outline-none text-sm text-gray-900"
+            />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Discussion Agenda / Questions</label>
+            <textarea
+              [(ngModel)]="bookingForm.agenda"
+              name="bAgenda"
+              rows="3"
+              placeholder="Tell our engineering team what technical challenge or project you'd like to explore..."
+              class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#27AE60] focus:outline-none text-sm text-gray-900"
+            ></textarea>
+          </div>
+
+          <div class="pt-3 flex justify-end gap-3 border-t border-gray-100">
+            <button
+              type="button"
+              (click)="closeBookingModal()"
+              class="px-5 py-2.5 rounded-full border border-gray-200 text-sm font-semibold text-gray-600 hover:bg-gray-100 cursor-pointer"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              [disabled]="isBookingSubmitting()"
+              class="px-7 py-2.5 rounded-full bg-[#27AE60] hover:bg-[#219653] disabled:opacity-60 text-white text-sm font-bold shadow-md cursor-pointer inline-flex items-center gap-2"
+            >
+              @if (isBookingSubmitting()) {
+                <svg class="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24" fill="none">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                </svg>
+                <span>Reserving Slot...</span>
+              } @else {
+                <span>Confirm & Book Call</span>
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
 
 </div>

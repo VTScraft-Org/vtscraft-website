@@ -1,6 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, ActivatedRoute } from '@angular/router';
 
 interface Project {
   id: string;
@@ -18,7 +18,8 @@ interface Project {
   templateUrl: './work.component.html',
   styleUrls: ['./work.component.scss']
 })
-export class WorkComponent {
+export class WorkComponent implements OnInit {
+  private route = inject(ActivatedRoute);
   categories = [
     'All',
     'AI Automation',
@@ -92,5 +93,35 @@ export class WorkComponent {
 
   setCategory(cat: string) {
     this.activeCategory.set(cat);
+  }
+
+  ngOnInit() {
+    this.route.fragment.subscribe(fragment => {
+      if (fragment) {
+        setTimeout(() => {
+          this.scrollToTarget(fragment);
+        }, 150);
+      }
+    });
+  }
+
+  scrollToTarget(targetId: string) {
+    const element = document.getElementById(targetId);
+    if (element) {
+      const navOffset = 90;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  }
+
+  scrollToBuilds(event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.scrollToTarget('project-grid');
   }
 }

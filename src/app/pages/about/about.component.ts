@@ -39,24 +39,29 @@ export class AboutComponent {
 
   values = [
     {
-      number: '01',
-      title: '100% Ownership Day One',
-      desc: 'No lock-in, no hostage code. You own the Git repositories, infrastructure definitions, and intellectual property from the first commit.'
+      title: 'Family First, Agency Second',
+      desc: 'We work as people before we work as colleagues. Space, trust, and honesty come before the actual output.',
+      image: 'assets/images/values/family.jpg'
     },
     {
-      number: '02',
-      title: 'Radical Engineering Transparency',
-      desc: 'No project managers playing broken telephone. You communicate directly with the senior engineers writing your code with daily async logs.'
+      title: 'Zero Shortcuts',
+      desc: 'Every decision gets made properly, not quickly. Precision isn\'t optional, it is the baseline foundation at VTScraft.',
+      image: 'assets/images/values/shortcuts.jpg'
     },
     {
-      number: '03',
-      title: 'Purposeful AI, Zero Gimmickry',
-      desc: 'We only integrate machine learning and autonomous agents where they eliminate real operational bottlenecks and demonstrate concrete ROI.'
+      title: 'Direct Always',
+      desc: 'No hierarchy blocking the conversation. Internally or with clients, you talk to the person, not just a layer.',
+      image: 'assets/images/values/direct.jpg'
     },
     {
-      number: '04',
-      title: 'Built for Operational Endurance',
-      desc: 'We write clean, strictly-typed code tested under production load, backed by post-launch warranty and SLAs so you never feel abandoned.'
+      title: 'Space to Grow',
+      desc: 'Room to breathe when you need it. A commitment to upskilling when you\'re ready for more.',
+      image: 'assets/images/values/grow.jpg'
+    },
+    {
+      title: 'Built to Last',
+      desc: 'Everything we make, internally and externally, is built to survive, not to impress in the moment.',
+      image: 'assets/images/values/built.jpg'
     }
   ];
 }

@@ -1,11 +1,60 @@
 .stats-section {
   position: relative;
-  background-color: #F4F7F4;
+  background-color: #F8FAF9;
+  user-select: none;
+  overflow: hidden;
 }
 
-.stat-card {
-  box-shadow: 0 4px 20px -2px rgba(13, 27, 42, 0.05);
+// Translucent Frosted Glass Stat Cards - Reduced background opacity to let halftone globe & team art shine through
+.stat-card-translucent {
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(1.5px);
+  -webkit-backdrop-filter: blur(1.5px);
+  border: 1.2px solid rgba(255, 255, 255, 0.72);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.025);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
   &:hover {
-    box-shadow: 0 16px 32px -4px rgba(13, 27, 42, 0.09);
+    background: rgba(255, 255, 255, 0.36);
+    border-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.045);
+    transform: translateY(-2px);
+  }
+}
+
+// Client Logo Items
+.client-logo-item {
+  opacity: 0.85;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+  }
+}
+
+// Infinite seamless running marquee
+.marquee-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeRunning 30s linear infinite;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes marqueeRunning {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
   }
 }

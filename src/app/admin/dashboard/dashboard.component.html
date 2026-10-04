@@ -66,6 +66,52 @@
           </div>
           <span class="text-xs px-2 py-0.5 rounded-full bg-[#27AE60]/20 text-[#27AE60] font-mono">{{ allApplications.length }}</span>
         </button>
+
+        <button
+          type="button"
+          (click)="setActiveTab('inquiries')"
+          class="w-full text-left px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between transition-colors cursor-pointer"
+          [class.bg-[#27AE60]]="activeTab() === 'inquiries'"
+          [class.text-white]="activeTab() === 'inquiries'"
+          [class.text-gray-300]="activeTab() !== 'inquiries'"
+          [class.hover:bg-white/10]="activeTab() !== 'inquiries'"
+        >
+          <div class="flex items-center gap-3">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            <span>Client Leads</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            @if (newLeadsCount > 0) {
+              <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-amber-500 text-white font-bold animate-pulse">New</span>
+            }
+            <span class="text-xs px-2 py-0.5 rounded-full bg-white/20 font-mono">{{ allInquiries.length }}</span>
+          </div>
+        </button>
+
+        <button
+          type="button"
+          (click)="setActiveTab('bookings')"
+          class="w-full text-left px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between transition-colors cursor-pointer"
+          [class.bg-[#27AE60]]="activeTab() === 'bookings'"
+          [class.text-white]="activeTab() === 'bookings'"
+          [class.text-gray-300]="activeTab() !== 'bookings'"
+          [class.hover:bg-white/10]="activeTab() !== 'bookings'"
+        >
+          <div class="flex items-center gap-3">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <span>Scheduled Calls</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            @if (upcomingBookingsCount > 0) {
+              <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500 text-white font-bold">Upcoming</span>
+            }
+            <span class="text-xs px-2 py-0.5 rounded-full bg-white/20 font-mono">{{ allBookings.length }}</span>
+          </div>
+        </button>
       </nav>
     </div>
 
@@ -103,9 +149,11 @@
           <button (click)="setActiveTab('dashboard')" class="text-xs px-2.5 py-1 rounded" [class.bg-gray-200]="activeTab() === 'dashboard'">Dash</button>
           <button (click)="setActiveTab('jobs')" class="text-xs px-2.5 py-1 rounded" [class.bg-gray-200]="activeTab() === 'jobs'">Jobs</button>
           <button (click)="setActiveTab('applications')" class="text-xs px-2.5 py-1 rounded" [class.bg-gray-200]="activeTab() === 'applications'">Apps</button>
+          <button (click)="setActiveTab('inquiries')" class="text-xs px-2.5 py-1 rounded" [class.bg-gray-200]="activeTab() === 'inquiries'">Leads</button>
+          <button (click)="setActiveTab('bookings')" class="text-xs px-2.5 py-1 rounded" [class.bg-gray-200]="activeTab() === 'bookings'">Calls</button>
         </div>
         <h2 class="text-xl font-extrabold text-[#0D1B2A] capitalize">
-          {{ activeTab() === 'jobs' ? 'Job Postings' : activeTab() }}
+          {{ activeTab() === 'jobs' ? 'Job Postings' : activeTab() === 'inquiries' ? 'Client Leads & Inquiries' : activeTab() === 'bookings' ? 'Scheduled Discovery Calls' : activeTab() }}
         </h2>
       </div>
 
@@ -124,29 +172,35 @@
         <div class="space-y-8">
           
           <!-- Stat cards grid -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200">
               <span class="text-xs font-bold text-gray-500 uppercase">Total Postings</span>
-              <div class="text-3xl font-black text-[#0D1B2A] mt-2">{{ allJobs.length }}</div>
-              <span class="text-xs text-gray-400 mt-1 block">In localStorage</span>
+              <div class="text-2xl font-black text-[#0D1B2A] mt-1">{{ allJobs.length }}</div>
+              <span class="text-[11px] text-gray-400 mt-1 block">Roles created</span>
             </div>
 
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-              <span class="text-xs font-bold text-[#27AE60] uppercase">Active on /career</span>
-              <div class="text-3xl font-black text-[#27AE60] mt-2">{{ activeJobsCount }}</div>
-              <span class="text-xs text-gray-400 mt-1 block">Visible to public</span>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200">
+              <span class="text-xs font-bold text-[#27AE60] uppercase">Active Jobs</span>
+              <div class="text-2xl font-black text-[#27AE60] mt-1">{{ activeJobsCount }}</div>
+              <span class="text-[11px] text-gray-400 mt-1 block">On /career page</span>
             </div>
 
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-              <span class="text-xs font-bold text-blue-600 uppercase">Applications</span>
-              <div class="text-3xl font-black text-[#0D1B2A] mt-2">{{ allApplications.length }}</div>
-              <span class="text-xs text-gray-400 mt-1 block">Received candidates</span>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200">
+              <span class="text-xs font-bold text-blue-600 uppercase">Applicants</span>
+              <div class="text-2xl font-black text-[#0D1B2A] mt-1">{{ allApplications.length }}</div>
+              <span class="text-[11px] text-gray-400 mt-1 block">Candidates</span>
             </div>
 
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
-              <span class="text-xs font-bold text-purple-600 uppercase">System Status</span>
-              <div class="text-3xl font-black text-emerald-600 mt-2">Live</div>
-              <span class="text-xs text-gray-400 mt-1 block">Angular 22 + Tailwind</span>
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200">
+              <span class="text-xs font-bold text-amber-600 uppercase">Client Leads</span>
+              <div class="text-2xl font-black text-[#0D1B2A] mt-1">{{ allInquiries.length }}</div>
+              <span class="text-[11px] text-amber-600 font-semibold mt-1 block">{{ newLeadsCount }} New inquiries</span>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-200">
+              <span class="text-xs font-bold text-emerald-600 uppercase">Calls Booked</span>
+              <div class="text-2xl font-black text-[#0D1B2A] mt-1">{{ allBookings.length }}</div>
+              <span class="text-[11px] text-emerald-600 font-semibold mt-1 block">{{ upcomingBookingsCount }} Scheduled</span>
             </div>
           </div>
 
@@ -205,6 +259,177 @@
                             <option [value]="status" [selected]="app.status === status">{{ status }}</option>
                           }
                         </select>
+                      </td>
+                    </tr>
+                  } @empty {
+                    <tr>
+                      <td colspan="4" class="py-8 text-center text-xs text-gray-400">
+                        No applications received yet.
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Recent Client Leads Snippet -->
+          <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h3 class="text-lg font-bold text-[#0D1B2A]">Recent Inbound Client Inquiries</h3>
+                <p class="text-xs text-gray-500">Prospective clients reaching out via /contact form.</p>
+              </div>
+              <button (click)="setActiveTab('inquiries')" class="text-xs font-bold text-[#27AE60] hover:underline cursor-pointer">
+                View All Leads →
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm">
+                <thead>
+                  <tr class="border-b border-gray-100 text-xs font-bold text-gray-400 uppercase">
+                    <th class="pb-3">Client</th>
+                    <th class="pb-3">Interest & Budget</th>
+                    <th class="pb-3">Date</th>
+                    <th class="pb-3">Quick Contact</th>
+                    <th class="pb-3 text-right">Status</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                  @for (inq of allInquiries.slice(0, 3); track inq.id) {
+                    <tr>
+                      <td class="py-3">
+                        <span class="font-semibold text-[#0D1B2A] block">{{ inq.name }}</span>
+                        @if (inq.company) {
+                          <span class="text-xs text-gray-400 block">{{ inq.company }}</span>
+                        }
+                      </td>
+                      <td class="py-3">
+                        <span class="text-xs font-medium text-gray-700 block">{{ inq.serviceInterest }}</span>
+                        <span class="text-xs text-emerald-600 font-semibold">{{ inq.budgetRange }}</span>
+                      </td>
+                      <td class="py-3 text-gray-400 text-xs font-mono">{{ inq.date }}</td>
+                      <td class="py-3">
+                        <div class="flex items-center gap-2">
+                          @if (inq.phone) {
+                            <button
+                              type="button"
+                              (click)="openWhatsApp(inq.phone, inq.name)"
+                              class="px-2.5 py-1 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-semibold inline-flex items-center gap-1 cursor-pointer"
+                              title="Chat on WhatsApp"
+                            >
+                              <span>🟢 WhatsApp</span>
+                            </button>
+                          }
+                          <a
+                            [href]="getEmailLink(inq.email, inq.name, inq.serviceInterest)"
+                            class="px-2.5 py-1 rounded-full bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold inline-flex items-center gap-1"
+                            title="Send Email"
+                          >
+                            <span>✉️ Email</span>
+                          </a>
+                        </div>
+                      </td>
+                      <td class="py-3 text-right">
+                        <select (change)="updateInquiryStatus(inq.id, $event)" class="text-xs px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 font-bold border-none outline-none cursor-pointer hover:bg-amber-100 transition-colors">
+                          @for (status of inquiryStatuses; track status) {
+                            <option [value]="status" [selected]="inq.status === status">{{ status }}</option>
+                          }
+                        </select>
+                      </td>
+                    </tr>
+                  } @empty {
+                    <tr>
+                      <td colspan="5" class="py-8 text-center text-xs text-gray-400">
+                        No client inquiries received yet.
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Upcoming Scheduled Calls Snippet -->
+          <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-gray-200">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h3 class="text-lg font-bold text-[#0D1B2A]">Upcoming Discovery Sessions</h3>
+                <p class="text-xs text-gray-500">Clients who booked through the interactive calendar on /contact.</p>
+              </div>
+              <button (click)="setActiveTab('bookings')" class="text-xs font-bold text-[#27AE60] hover:underline cursor-pointer">
+                View All Calls →
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm">
+                <thead>
+                  <tr class="border-b border-gray-100 text-xs font-bold text-gray-400 uppercase">
+                    <th class="pb-3">Client</th>
+                    <th class="pb-3">Meeting Slot</th>
+                    <th class="pb-3">Calendar Sync</th>
+                    <th class="pb-3">Quick Contact</th>
+                    <th class="pb-3 text-right">Status</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                  @for (b of allBookings.slice(0, 3); track b.id) {
+                    <tr>
+                      <td class="py-3">
+                        <span class="font-semibold text-[#0D1B2A] block">{{ b.name }}</span>
+                        @if (b.company) {
+                          <span class="text-xs text-gray-400 block">{{ b.company }}</span>
+                        }
+                      </td>
+                      <td class="py-3">
+                        <span class="text-xs font-bold text-gray-800 block">{{ b.bookingDate }}</span>
+                        <span class="text-xs text-emerald-600 font-mono font-semibold">{{ b.bookingTime }} IST</span>
+                      </td>
+                      <td class="py-3">
+                        <a
+                          [href]="getGoogleCalendarUrl(b)"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="px-2.5 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold inline-flex items-center gap-1"
+                        >
+                          <span>📅 Add Event</span>
+                        </a>
+                      </td>
+                      <td class="py-3">
+                        <div class="flex items-center gap-2">
+                          @if (b.phone) {
+                            <button
+                              type="button"
+                              (click)="openWhatsApp(b.phone, b.name)"
+                              class="px-2 py-0.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-semibold inline-flex items-center gap-1 cursor-pointer"
+                              title="WhatsApp"
+                            >
+                              <span>🟢 WhatsApp</span>
+                            </button>
+                          }
+                          <a
+                            [href]="getEmailLink(b.email, b.name, 'Discovery Call')"
+                            class="px-2 py-0.5 rounded-full bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold inline-flex items-center gap-1"
+                            title="Email"
+                          >
+                            <span>✉️</span>
+                          </a>
+                        </div>
+                      </td>
+                      <td class="py-3 text-right">
+                        <select (change)="updateBookingStatus(b.id, $event)" class="text-xs px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold border-none outline-none cursor-pointer hover:bg-emerald-100 transition-colors">
+                          @for (status of bookingStatuses; track status) {
+                            <option [value]="status" [selected]="b.status === status">{{ status }}</option>
+                          }
+                        </select>
+                      </td>
+                    </tr>
+                  } @empty {
+                    <tr>
+                      <td colspan="5" class="py-8 text-center text-xs text-gray-400">
+                        No discovery calls scheduled yet.
                       </td>
                     </tr>
                   }
@@ -348,8 +573,23 @@
                       <td class="px-6 py-4 text-xs font-mono text-gray-400">
                         {{ app.date }}
                       </td>
-                      <td class="px-6 py-4 text-xs font-mono text-[#27AE60]">
-                        📄 {{ app.resumeFileName }}
+                      <td class="px-6 py-4 text-xs font-mono">
+                        @if (app.resumeUrl) {
+                          <a
+                            [href]="app.resumeUrl"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center gap-1.5 text-[#27AE60] hover:text-[#219653] font-semibold hover:underline bg-[#27AE60]/10 px-2.5 py-1 rounded-lg"
+                            title="Open Resume PDF in New Tab"
+                          >
+                            <span>📄 {{ app.resumeFileName || 'View Resume' }}</span>
+                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </a>
+                        } @else {
+                          <span class="text-gray-400">📄 {{ app.resumeFileName || 'None' }}</span>
+                        }
                       </td>
                       <td class="px-6 py-4">
                         <select (change)="updateApplicationStatus(app.id, $event)" class="text-xs px-2.5 py-1 rounded-full bg-gray-100 text-gray-700 font-bold border-none outline-none cursor-pointer hover:bg-gray-200 transition-colors">
@@ -366,6 +606,237 @@
                         >
                           Remove
                         </button>
+                      </td>
+                    </tr>
+                  } @empty {
+                    <tr>
+                      <td colspan="7" class="px-6 py-12 text-center text-sm text-gray-400">
+                        No candidate applications received yet. New submissions will appear here live.
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- ── TAB: CLIENT INQUIRIES & LEADS ──────────────────────────────────── -->
+      @if (activeTab() === 'inquiries') {
+        <div class="space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <p class="text-sm text-gray-500">Live inquiries from potential clients via the <a routerLink="/contact" target="_blank" class="text-[#27AE60] font-bold hover:underline">/contact</a> page.</p>
+            </div>
+            <button
+              type="button"
+              (click)="downloadInquiriesExcel()"
+              class="px-6 py-3 rounded-full bg-[#0D1B2A] hover:bg-[#27AE60] text-white font-bold text-sm shadow-md cursor-pointer inline-flex items-center gap-2 transition-colors"
+            >
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+              </svg>
+              <span>Download Leads as Excel</span>
+            </button>
+          </div>
+
+          <!-- Inquiries Table -->
+          <div class="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm">
+                <thead class="bg-gray-50 border-b border-gray-200 text-xs font-bold text-gray-500 uppercase">
+                  <tr>
+                    <th class="px-6 py-4">Client & Company</th>
+                    <th class="px-6 py-4">Service & Budget</th>
+                    <th class="px-6 py-4">Direct Contact</th>
+                    <th class="px-6 py-4">Date</th>
+                    <th class="px-6 py-4">Status</th>
+                    <th class="px-6 py-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                  @for (inq of allInquiries; track inq.id) {
+                    <tr class="hover:bg-gray-50/70 transition-colors">
+                      <td class="px-6 py-4">
+                        <span class="font-bold text-[#0D1B2A] block">{{ inq.name }}</span>
+                        @if (inq.company) {
+                          <span class="text-xs font-medium text-gray-500 block">🏢 {{ inq.company }}</span>
+                        }
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="text-xs font-semibold text-gray-800 block">{{ inq.serviceInterest }}</span>
+                        <span class="text-xs text-emerald-600 font-bold">{{ inq.budgetRange }}</span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <div class="space-y-1">
+                          <div class="flex items-center gap-2">
+                            <a [href]="'mailto:' + inq.email" class="text-xs text-gray-600 hover:text-[#27AE60]">{{ inq.email }}</a>
+                            <a [href]="getEmailLink(inq.email, inq.name, inq.serviceInterest)" class="text-xs text-blue-600 hover:underline" title="Send Email">✉️</a>
+                          </div>
+                          @if (inq.phone) {
+                            <div class="flex items-center gap-2">
+                              <span class="text-xs font-mono text-gray-500">{{ inq.phone }}</span>
+                              <button
+                                type="button"
+                                (click)="openWhatsApp(inq.phone, inq.name)"
+                                class="text-xs font-bold text-emerald-600 hover:underline cursor-pointer"
+                                title="Chat on WhatsApp"
+                              >
+                                🟢 WhatsApp
+                              </button>
+                            </div>
+                          }
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 text-xs font-mono text-gray-400">
+                        {{ inq.date }}
+                      </td>
+                      <td class="px-6 py-4">
+                        <select (change)="updateInquiryStatus(inq.id, $event)" class="text-xs px-2.5 py-1 rounded-full bg-gray-100 text-gray-700 font-bold border-none outline-none cursor-pointer hover:bg-gray-200 transition-colors">
+                          @for (status of inquiryStatuses; track status) {
+                            <option [value]="status" [selected]="inq.status === status">{{ status }}</option>
+                          }
+                        </select>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <div class="flex items-center justify-end gap-3">
+                          <button
+                            type="button"
+                            (click)="viewInquiryDetails(inq)"
+                            class="text-xs text-[#27AE60] hover:text-[#219653] font-bold cursor-pointer"
+                          >
+                            View Brief
+                          </button>
+                          <button
+                            type="button"
+                            (click)="deleteInquiry(inq.id)"
+                            class="text-xs text-red-500 hover:text-red-700 font-semibold cursor-pointer"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  } @empty {
+                    <tr>
+                      <td colspan="6" class="px-6 py-12 text-center text-sm text-gray-400">
+                        No client project inquiries received yet. Inquiries submitted via /contact will appear here live.
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- ── TAB: SCHEDULED CALLS & SESSIONS ────────────────────────────────── -->
+      @if (activeTab() === 'bookings') {
+        <div class="space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <p class="text-sm text-gray-500">Live discovery bookings from the interactive calendar on <a routerLink="/contact" target="_blank" class="text-[#27AE60] font-bold hover:underline">/contact</a>.</p>
+            </div>
+            <button
+              type="button"
+              (click)="downloadBookingsExcel()"
+              class="px-6 py-3 rounded-full bg-[#0D1B2A] hover:bg-[#27AE60] text-white font-bold text-sm shadow-md cursor-pointer inline-flex items-center gap-2 transition-colors"
+            >
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+              </svg>
+              <span>Download Bookings as Excel</span>
+            </button>
+          </div>
+
+          <!-- Bookings Table -->
+          <div class="bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm">
+                <thead class="bg-gray-50 border-b border-gray-200 text-xs font-bold text-gray-500 uppercase">
+                  <tr>
+                    <th class="px-6 py-4">Client & Company</th>
+                    <th class="px-6 py-4">Meeting Time (IST)</th>
+                    <th class="px-6 py-4">Agenda / Goals</th>
+                    <th class="px-6 py-4">Direct Outreach</th>
+                    <th class="px-6 py-4">Calendar</th>
+                    <th class="px-6 py-4">Status</th>
+                    <th class="px-6 py-4 text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                  @for (b of allBookings; track b.id) {
+                    <tr class="hover:bg-gray-50/70 transition-colors">
+                      <td class="px-6 py-4">
+                        <span class="font-bold text-[#0D1B2A] block">{{ b.name }}</span>
+                        @if (b.company) {
+                          <span class="text-xs text-gray-500 block">🏢 {{ b.company }}</span>
+                        }
+                      </td>
+                      <td class="px-6 py-4">
+                        <span class="font-semibold text-gray-900 block text-xs">{{ b.bookingDate }}</span>
+                        <span class="text-xs text-emerald-600 font-mono font-bold">{{ b.bookingTime }} IST</span>
+                      </td>
+                      <td class="px-6 py-4 max-w-xs">
+                        <p class="text-xs text-gray-600 line-clamp-2">{{ b.agenda || 'General Discovery & Architecture scoping' }}</p>
+                      </td>
+                      <td class="px-6 py-4">
+                        <div class="space-y-1">
+                          <div class="flex items-center gap-2">
+                            <a [href]="'mailto:' + b.email" class="text-xs text-gray-600 hover:text-[#27AE60]">{{ b.email }}</a>
+                            <a [href]="getEmailLink(b.email, b.name, 'Discovery Call')" class="text-xs text-blue-600 hover:underline">✉️</a>
+                          </div>
+                          @if (b.phone) {
+                            <div class="flex items-center gap-2">
+                              <span class="text-xs font-mono text-gray-500">{{ b.phone }}</span>
+                              <button
+                                type="button"
+                                (click)="openWhatsApp(b.phone, b.name)"
+                                class="text-xs font-bold text-emerald-600 hover:underline cursor-pointer"
+                              >
+                                🟢 WhatsApp
+                              </button>
+                            </div>
+                          }
+                        </div>
+                      </td>
+                      <td class="px-6 py-4">
+                        <a
+                          [href]="getGoogleCalendarUrl(b)"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="px-3 py-1.5 rounded-full bg-gray-100 hover:bg-emerald-50 hover:text-emerald-700 text-gray-700 text-xs font-bold inline-flex items-center gap-1.5 transition-colors"
+                          title="Open in Google Calendar"
+                        >
+                          <span>📅 Add Event</span>
+                          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </a>
+                      </td>
+                      <td class="px-6 py-4">
+                        <select (change)="updateBookingStatus(b.id, $event)" class="text-xs px-2.5 py-1 rounded-full bg-gray-100 text-gray-700 font-bold border-none outline-none cursor-pointer hover:bg-gray-200 transition-colors">
+                          @for (status of bookingStatuses; track status) {
+                            <option [value]="status" [selected]="b.status === status">{{ status }}</option>
+                          }
+                        </select>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <button
+                          type="button"
+                          (click)="deleteBooking(b.id)"
+                          class="text-xs text-red-500 hover:text-red-700 font-semibold cursor-pointer"
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  } @empty {
+                    <tr>
+                      <td colspan="7" class="px-6 py-12 text-center text-sm text-gray-400">
+                        No discovery sessions booked yet. Bookings made on /contact will show here live.
                       </td>
                     </tr>
                   }
@@ -443,7 +914,7 @@
               type="text"
               [(ngModel)]="jobForm.location"
               name="location"
-              placeholder="e.g. Remote / New Delhi"
+              placeholder="e.g. Remote / Bangalore"
               class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-[#27AE60] focus:outline-none text-sm text-gray-900"
             />
           </div>
@@ -501,6 +972,83 @@
             </button>
           </div>
         </form>
+
+      </div>
+    </div>
+  }
+
+  <!-- ── 4. INQUIRY / LEAD DETAILS MODAL ─────────────────────────────────── -->
+  @if (selectedInquiry(); as inq) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+      <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+        <button
+          type="button"
+          (click)="closeInquiryDetails()"
+          class="absolute top-6 right-6 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 transition-colors cursor-pointer"
+        >
+          ✕
+        </button>
+
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-600 block mb-1">CLIENT PROJECT BRIEF</span>
+        <h3 class="text-2xl font-black text-[#0D1B2A] mb-1">{{ inq.name }}</h3>
+        @if (inq.company) {
+          <p class="text-sm font-semibold text-gray-500 mb-4">Company: {{ inq.company }}</p>
+        }
+
+        <div class="grid grid-cols-2 gap-4 py-4 border-y border-gray-100 my-4 text-xs">
+          <div>
+            <span class="text-gray-400 block uppercase font-bold text-[10px]">Service Interested</span>
+            <span class="font-bold text-gray-800 text-sm">{{ inq.serviceInterest }}</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block uppercase font-bold text-[10px]">Estimated Budget</span>
+            <span class="font-bold text-emerald-600 text-sm">{{ inq.budgetRange }}</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block uppercase font-bold text-[10px]">Email</span>
+            <a [href]="'mailto:' + inq.email" class="font-semibold text-blue-600 hover:underline">{{ inq.email }}</a>
+          </div>
+          <div>
+            <span class="text-gray-400 block uppercase font-bold text-[10px]">Phone</span>
+            <span class="font-mono text-gray-700">{{ inq.phone || 'Not provided' }}</span>
+          </div>
+        </div>
+
+        <div class="space-y-2 mb-6">
+          <span class="text-xs font-bold uppercase tracking-wider text-gray-600 block">Project Requirements / Scope:</span>
+          <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200/80 text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
+            {{ inq.message || 'No additional message was provided.' }}
+          </div>
+        </div>
+
+        <!-- 1-Click Action Buttons -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-gray-100">
+          <div class="flex items-center gap-2">
+            @if (inq.phone) {
+              <button
+                type="button"
+                (click)="openWhatsApp(inq.phone, inq.name)"
+                class="px-4 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs inline-flex items-center gap-1.5 shadow-sm cursor-pointer"
+              >
+                <span>🟢 WhatsApp Client</span>
+              </button>
+            }
+            <a
+              [href]="getEmailLink(inq.email, inq.name, inq.serviceInterest)"
+              class="px-4 py-2 rounded-full bg-[#0D1B2A] hover:bg-[#27AE60] text-white font-bold text-xs inline-flex items-center gap-1.5 shadow-sm"
+            >
+              <span>✉️ Send Email</span>
+            </a>
+          </div>
+
+          <button
+            type="button"
+            (click)="closeInquiryDetails()"
+            class="px-5 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-xs cursor-pointer"
+          >
+            Close
+          </button>
+        </div>
 
       </div>
     </div>
