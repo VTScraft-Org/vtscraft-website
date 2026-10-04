@@ -9,7 +9,7 @@ export interface JobApplication {
   resumeFileName: string;
   coverLetter: string;
   date: string;
-  status: 'Pending' | 'Reviewed' | 'Shortlisted' | 'Rejected';
+  status: 'Submitted' | 'Pending' | 'Reviewed' | 'Shortlisted' | 'Rejected';
 }
 
 @Injectable({

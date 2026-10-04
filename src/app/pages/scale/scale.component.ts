@@ -11,16 +11,16 @@ import { RouterLink } from '@angular/router';
 })
 export class ScaleComponent {
   industries = [
-    { title: 'Fintech', icon: '💳', highlight: 'Payments & Ledger Reconciliation' },
-    { title: 'Retail & E-Commerce', icon: '🛍️', highlight: 'Headless Storefronts & Logistics' },
-    { title: 'Healthcare', icon: '🏥', highlight: 'HIPAA Workflows & Patient Portals' },
-    { title: 'Sports', icon: '⚽', highlight: 'Telemetry, Bookings & Club Ops' },
-    { title: 'Logistics & Ops', icon: '🚚', highlight: 'Fleet Routing & Dispatch Funnels' },
-    { title: 'Real Estate', icon: '🏢', highlight: 'Tenant Management & PropTech' },
-    { title: 'SaaS & Services', icon: '⚡', highlight: 'Multi-Tenant Cloud Architectures' },
-    { title: 'Hospitality', icon: '🏨', highlight: 'Guest Booking & POS Aggregation' },
-    { title: 'Education & EdTech', icon: '🎓', highlight: 'LMS Engines & Adaptive Learning' },
-    { title: 'Professional Services', icon: '💼', highlight: 'Billing & Automated Workflows' },
+    { title: 'Fintech', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop', highlight: 'Payments & Ledger Reconciliation' },
+    { title: 'Retail & E-Commerce', image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=600&h=400&fit=crop', highlight: 'Headless Storefronts & Logistics' },
+    { title: 'Healthcare', image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&h=400&fit=crop', highlight: 'HIPAA Workflows & Patient Portals' },
+    { title: 'Sports', image: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=600&h=400&fit=crop', highlight: 'Telemetry, Bookings & Club Ops' },
+    { title: 'Logistics & Ops', image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=600&h=400&fit=crop', highlight: 'Fleet Routing & Dispatch Funnels' },
+    { title: 'Real Estate', image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop', highlight: 'Tenant Management & PropTech' },
+    { title: 'SaaS & Services', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop', highlight: 'Multi-Tenant Cloud Architectures' },
+    { title: 'Hospitality', image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop', highlight: 'Guest Booking & POS Aggregation' },
+    { title: 'Education & EdTech', image: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&h=400&fit=crop', highlight: 'LMS Engines & Adaptive Learning' },
+    { title: 'Professional Services', image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=400&fit=crop', highlight: 'Billing & Automated Workflows' },
   ];
 
   attributePills = [

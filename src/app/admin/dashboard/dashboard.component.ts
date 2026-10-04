@@ -58,6 +58,8 @@ export class AdminDashboardComponent {
     return this.jobsService.jobs();
   }
 
+  applicationStatuses: JobApplication['status'][] = ['Submitted', 'Pending', 'Reviewed', 'Shortlisted', 'Rejected'];
+
   get activeJobsCount(): number {
     return this.allJobs.filter(j => j.isActive).length;
   }
@@ -139,6 +141,12 @@ export class AdminDashboardComponent {
     if (confirm('Delete this application record?')) {
       this.applicationsService.deleteApplication(id);
     }
+  }
+
+  updateApplicationStatus(id: string, event: Event) {
+    const select = event.target as HTMLSelectElement;
+    const newStatus = select.value as JobApplication['status'];
+    this.applicationsService.updateStatus(id, newStatus);
   }
 
   // ─── Logout ──────────────────────────────────────────────────────────────

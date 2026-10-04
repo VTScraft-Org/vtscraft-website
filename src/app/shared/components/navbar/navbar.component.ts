@@ -41,6 +41,7 @@ export class NavbarComponent {
     { label: 'Home', route: '/' },
     {
       label: 'Services',
+      route: '/services',
       children: [
         { label: 'AI & LLM Automation',      route: '/services/ai-llm',                icon: '🤖' },
         { label: 'Software Development',      route: '/services/software-development',  icon: '💻' },

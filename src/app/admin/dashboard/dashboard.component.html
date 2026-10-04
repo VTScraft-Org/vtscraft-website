@@ -200,9 +200,11 @@
                       <td class="py-3 text-gray-600 text-xs">{{ app.position }}</td>
                       <td class="py-3 text-gray-400 text-xs font-mono">{{ app.date }}</td>
                       <td class="py-3">
-                        <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#27AE60]/10 text-[#27AE60] font-bold">
-                          {{ app.status }}
-                        </span>
+                        <select (change)="updateApplicationStatus(app.id, $event)" class="text-xs px-2.5 py-1 rounded-full bg-[#27AE60]/10 text-[#27AE60] font-bold border-none outline-none cursor-pointer hover:bg-[#27AE60]/20 transition-colors">
+                          @for (status of applicationStatuses; track status) {
+                            <option [value]="status" [selected]="app.status === status">{{ status }}</option>
+                          }
+                        </select>
                       </td>
                     </tr>
                   }
@@ -326,6 +328,7 @@
                     <th class="px-6 py-4">Position Applied</th>
                     <th class="px-6 py-4">Date</th>
                     <th class="px-6 py-4">Resume</th>
+                    <th class="px-6 py-4">Status</th>
                     <th class="px-6 py-4 text-right">Action</th>
                   </tr>
                 </thead>
@@ -347,6 +350,13 @@
                       </td>
                       <td class="px-6 py-4 text-xs font-mono text-[#27AE60]">
                         📄 {{ app.resumeFileName }}
+                      </td>
+                      <td class="px-6 py-4">
+                        <select (change)="updateApplicationStatus(app.id, $event)" class="text-xs px-2.5 py-1 rounded-full bg-gray-100 text-gray-700 font-bold border-none outline-none cursor-pointer hover:bg-gray-200 transition-colors">
+                          @for (status of applicationStatuses; track status) {
+                            <option [value]="status" [selected]="app.status === status">{{ status }}</option>
+                          }
+                        </select>
                       </td>
                       <td class="px-6 py-4 text-right">
                         <button
